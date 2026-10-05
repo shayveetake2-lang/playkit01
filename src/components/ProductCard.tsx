@@ -1,149 +1,130 @@
 "use client";
 
 import React from "react";
-import {
-  Sparkles,
-  Shirt,
-  Star,
-  ExternalLink,
-  Eye,
-} from "lucide-react";
+import Image from "next/image";
+import { Eye, Plus, ArrowUpRight } from "lucide-react";
 import { Product } from "@/data/products";
+import { useCart } from "@/context/CartContext";
 
 interface ProductCardProps {
   product: Product;
   onQuickView: (product: Product) => void;
+  priority?: boolean;
 }
 
-export default function ProductCard({ product, onQuickView }: ProductCardProps) {
+export default function ProductCard({
+  product,
+  onQuickView,
+  priority = false,
+}: ProductCardProps) {
+  const { addItem } = useCart();
   const isPrompt = product.category === "prompt";
-  const imageSrc = product.primaryImage || (product as any).image;
-  const badgeLabel = isPrompt
-    ? product.promptDetails?.aiEngine || "PromptBase"
-    : product.merchDetails?.merchType || "Redbubble";
+  const imageSrc =
+    product.primaryImage ||
+    (product as unknown as { image?: string }).image ||
+    "";
+  const categoryLabel = isPrompt
+    ? product.promptDetails?.aiEngine || "Prompt Formula"
+    : product.merchDetails?.merchType || "Garment Piece";
 
   return (
-    <div className="group relative flex flex-col rounded-2xl border border-white/[0.08] bg-slate-900/60 p-3.5 transition-all duration-300 hover:border-indigo-500/40 hover:bg-slate-900/90 hover:shadow-xl hover:shadow-indigo-950/20">
-      {/* Thumbnail Container */}
-      <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-slate-950">
-        <img
+    <article className="group relative flex flex-col bg-[#FAF9F5] border-b border-[#E7E5E0] md:border-b-0 pb-6 md:pb-0 transition-colors">
+      {/* Strict Aspect Ratio Image Container */}
+      <div
+        onClick={() => onQuickView(product)}
+        className={`relative w-full overflow-hidden bg-[#F5F3EE] cursor-pointer ${
+          isPrompt ? "aspect-[4/3]" : "aspect-[3/4]"
+        }`}
+      >
+        <Image
           src={imageSrc}
           alt={product.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
+          fill
+          priority={priority}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
         />
 
-        {/* Top Badges */}
-        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5 z-10">
-          <span
-            className={`inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-semibold rounded-md backdrop-blur-md border ${
-              isPrompt
-                ? "bg-indigo-950/80 text-indigo-200 border-indigo-700/50 shadow-sm"
-                : "bg-slate-900/85 text-slate-200 border-slate-700/60 shadow-sm"
-            }`}
-          >
-            {isPrompt ? (
-              <Sparkles className="h-3 w-3 text-indigo-400" />
-            ) : (
-              <Shirt className="h-3 w-3 text-slate-400" />
-            )}
-            <span>{badgeLabel}</span>
+        {/* Minimalist Volume/Edition Stamp */}
+        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
+          <span className="px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.2em] bg-[#FAF9F5]/90 backdrop-blur-xs text-[#121212] border border-[#E7E5E0]">
+            {categoryLabel}
           </span>
-
           {product.isMostPurchased && (
-            <span className="inline-flex items-center px-1.5 py-0.5 text-[9px] font-black uppercase rounded bg-amber-400/90 text-slate-950 shadow-sm">
-              Popular
-            </span>
-          )}
-          {!product.isMostPurchased && product.isRecentlyAdded && (
-            <span className="inline-flex items-center px-1.5 py-0.5 text-[9px] font-black uppercase rounded bg-emerald-400/90 text-slate-950 shadow-sm">
-              New
+            <span className="px-2 py-0.5 text-[9px] font-semibold uppercase tracking-widest bg-[#121212] text-[#FAF9F5]">
+              Edition 01
             </span>
           )}
         </div>
 
-        {/* Hover Quick View Overlay button */}
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-950/40 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100">
-          <button
-            type="button"
-            onClick={() => onQuickView(product)}
-            className="flex items-center gap-1.5 rounded-xl bg-slate-900/95 px-3.5 py-2 text-xs font-semibold text-white shadow-xl hover:bg-indigo-600 transition-colors border border-slate-700 hover:border-indigo-500"
-          >
-            <Eye className="h-3.5 w-3.5" />
-            <span>Quick View</span>
-          </button>
+        {/* Custom Editorial Hover Indicator - strictly pointer-events-none */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/15 pointer-events-none">
+          <div className="w-20 h-20 rounded-full border border-white/80 bg-white/30 backdrop-blur-xs flex items-center justify-center text-white shadow-sm transform scale-90 group-hover:scale-100 transition-transform duration-300">
+            <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-white drop-shadow-xs">
+              Discover
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Info Content */}
-      <div className="flex flex-1 flex-col justify-between pt-3.5">
+      {/* Editorial Content */}
+      <div className="pt-4 flex-1 flex flex-col justify-between">
         <div>
-          {/* Engine/Type & Rating */}
-          <div className="flex items-center justify-between text-[11px] font-medium text-slate-400 mb-1">
-            <span className="text-indigo-400 font-semibold truncate max-w-[140px]">
-              {isPrompt ? "Prompt Formula" : "Apparel & Gear"}
+          <div className="flex items-baseline justify-between gap-2 mb-1.5">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-[#7A6A5C] font-semibold">
+              {isPrompt ? "Computational Formula" : "Physical Edition"}
             </span>
-            <div className="flex items-center gap-1 text-amber-400">
-              <Star className="h-3 w-3 fill-amber-400" />
-              <span>{product.rating}</span>
-              <span className="text-slate-500">({product.reviewsCount})</span>
-            </div>
+            <span className="font-serif text-sm text-[#121212] font-medium">
+              ${product.price.toFixed(2)}
+            </span>
           </div>
 
-          {/* Title */}
           <h3
             onClick={() => onQuickView(product)}
-            className="font-bold text-slate-100 text-sm line-clamp-1 hover:text-indigo-300 cursor-pointer transition-colors"
+            className="font-serif text-base text-[#121212] font-normal tracking-tight line-clamp-1 hover:text-[#7A6A5C] cursor-pointer transition-colors"
           >
             {product.title}
           </h3>
 
-          {/* Snippet / Description */}
-          <p className="mt-1 text-xs text-slate-400 line-clamp-2 leading-relaxed">
+          <p className="mt-1 text-xs text-[#666662] line-clamp-2 leading-relaxed font-light">
             {product.shortDescription || product.description}
           </p>
         </div>
 
-        {/* Footer: Price & Direct External Action */}
-        <div className="mt-3.5 pt-3 border-t border-white/[0.08] flex items-center justify-between">
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-base font-black text-white">
-              ${product.price.toFixed(2)}
-            </span>
-            {product.originalPrice && (
-              <span className="text-xs line-through text-slate-500">
-                ${product.originalPrice.toFixed(2)}
-              </span>
-            )}
-          </div>
-
-          <div className="flex items-center gap-1.5">
+        {/* Action Row */}
+        <div className="mt-4 pt-3 border-t border-[#E7E5E0] flex items-center justify-between text-xs">
+          <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => onQuickView(product)}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
-              title="Quick preview"
+              className="text-xs uppercase tracking-widest text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1"
             >
-              <Eye className="h-4 w-4" />
+              <Eye className="h-3.5 w-3.5 stroke-[1.5]" />
+              <span>Inspect</span>
             </button>
 
-            <a
-              href={product.externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-sm transition-all hover:opacity-95 active:scale-95 ${
-                isPrompt
-                  ? "bg-indigo-600 hover:bg-indigo-500 shadow-indigo-950/40"
-                  : "bg-slate-800 hover:bg-slate-700 border border-white/[0.1]"
-              }`}
-              title={`Buy on ${isPrompt ? "PromptBase" : "Redbubble"}`}
+            <button
+              type="button"
+              onClick={() => addItem(product)}
+              className="text-xs uppercase tracking-widest text-[#7A6A5C] hover:text-[#121212] transition-colors flex items-center gap-1"
             >
-              <span>{isPrompt ? "Prompt" : "Merch"}</span>
-              <ExternalLink className="h-3 w-3" />
-            </a>
+              <Plus className="h-3.5 w-3.5 stroke-[1.5]" />
+              <span>Add to Bag</span>
+            </button>
           </div>
+
+          <a
+            href={product.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[11px] uppercase tracking-wider text-[#666662] hover:text-[#121212] transition-colors flex items-center gap-0.5"
+            title={`View on ${isPrompt ? "PromptBase" : "Redbubble"}`}
+          >
+            <span>{isPrompt ? "PromptBase" : "Redbubble"}</span>
+            <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
+          </a>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

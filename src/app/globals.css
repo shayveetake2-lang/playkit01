@@ -1,54 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
+@theme {
+  --font-serif: "Playfair Display", Didot, "Bodoni MT", Georgia, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-canvas: #FAF9F5;
+  --color-canvas-subtle: #F5F3EE;
+  --color-canvas-card: #FFFFFF;
+  --color-onyx: #121212;
+  --color-charcoal: #242424;
+  --color-muted: #666662;
+  --color-hairline: #E7E5E0;
+  --color-hairline-dark: #D4D0C8;
+  --color-bronze: #7A6A5C;
+}
+
 :root {
-  --background: #090d14;
-  --foreground: #f1f5f9;
+  --background: #FAF9F5;
+  --foreground: #121212;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Luxury executive glass panels & micro-accents */
-.glass-panel {
-  background: rgba(13, 18, 30, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Route Transition Animation */
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.glass-card {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.animate-page-enter {
+  animation: pageEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.glass-card:hover {
-  border-color: rgba(99, 102, 241, 0.35);
-  box-shadow: 0 16px 36px -12px rgba(99, 102, 241, 0.15);
-  transform: translateY(-3px);
+/* Editorial hairline utilities */
+.hairline-b {
+  border-bottom: 1px solid #E7E5E0;
 }
 
-/* Custom subtle scrollbar */
+.hairline-t {
+  border-top: 1px solid #E7E5E0;
+}
+
+.hairline-r {
+  border-right: 1px solid #E7E5E0;
+}
+
+.hairline-l {
+  border-left: 1px solid #E7E5E0;
+}
+
+/* Custom luxury scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #090d14;
+  background: #FAF9F5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
+  background: #D8D5CD;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #B8B3A8;
 }

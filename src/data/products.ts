@@ -423,6 +423,7 @@ export const initialProducts: Product[] = [
 ];
 
 // Helper to convert Sanity raw item to local Product interface
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function mapSanityProduct(item: any): Product {
   const imageUrl =
     item.imageUrl ||

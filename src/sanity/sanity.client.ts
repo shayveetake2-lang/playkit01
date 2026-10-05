@@ -11,9 +11,10 @@ export const sanityClient = createClient({
 
 const builder = createImageUrlBuilder(sanityClient);
 
-export function urlForImage(source: any) {
+export function urlForImage(source: unknown) {
   if (!source) return null;
-  return builder.image(source).auto("format").fit("max").url();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return builder.image(source as any).auto("format").fit("max").url();
 }
 
 // GROQ Query for all active products

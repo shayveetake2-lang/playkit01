@@ -2,20 +2,25 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import {
-  Sparkles,
   Search,
   SlidersHorizontal,
-  ExternalLink,
-  Zap,
-  CheckCircle,
+  ArrowUpRight,
+  Sparkles,
 } from "lucide-react";
-import { Product, initialProducts, getLiveProducts, getPromptProducts } from "@/data/products";
+import {
+  Product,
+  initialProducts,
+  getLiveProducts,
+  getPromptProducts,
+} from "@/data/products";
 import { brandConfig } from "@/data/socials";
 import ProductCard from "@/components/ProductCard";
 import ProductQuickViewModal from "@/components/ProductQuickViewModal";
 
 export default function PromptsPage() {
-  const [products, setProducts] = useState<Product[]>(getPromptProducts(initialProducts));
+  const [products, setProducts] = useState<Product[]>(
+    getPromptProducts(initialProducts)
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedEngine, setSelectedEngine] = useState<string>("All");
   const [sortBy, setSortBy] = useState<string>("popular");
@@ -43,7 +48,9 @@ export default function PromptsPage() {
         const matchesSearch =
           prompt.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           prompt.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          prompt.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
+          prompt.tags.some((t) =>
+            t.toLowerCase().includes(searchQuery.toLowerCase())
+          );
 
         const matchesEngine =
           selectedEngine === "All" ||
@@ -62,69 +69,70 @@ export default function PromptsPage() {
   }, [products, searchQuery, selectedEngine, sortBy]);
 
   return (
-    <main className="min-h-screen bg-[#090d14] text-slate-100 py-12">
+    <main className="min-h-screen bg-[#FAF9F5] text-[#121212] py-12 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Page Header */}
-        <div className="relative rounded-3xl border border-white/[0.08] bg-gradient-to-r from-slate-900 via-indigo-950/20 to-slate-900 p-8 sm:p-12 mb-10 overflow-hidden">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-indigo-950/80 text-indigo-300 border border-indigo-800/40 mb-4">
-              <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
-              <span>PromptBase Verified Collection</span>
+        {/* Editorial Section Masthead */}
+        <div className="border-b border-[#E7E5E0] pb-10 mb-12">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+              Directory 01 • Computational Formulas
+            </span>
+            <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#666662]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#121212]" />
+              <span>PromptBase Verified Storefront</span>
             </div>
+          </div>
 
-            <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              AI Prompts & Generator Blueprints
-            </h1>
+          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-[#121212] font-normal tracking-tight">
+            The Prompt Archive
+          </h1>
 
-            <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-              Explore battle-tested prompt architectures designed for Gemini Image, Claude, and Midjourney to produce consistent commercial-grade imagery, UI assets, and executive copy. Fulfilled instantly via PromptBase.
-            </p>
+          <p className="mt-4 text-xs sm:text-sm text-[#666662] max-w-2xl leading-relaxed font-light">
+            Engineered prompt architectures calibrated across Gemini Image, Claude, and Midjourney to produce deterministic commercial-grade imagery, UI assets, and executive copy. Fulfilled safely via PromptBase.
+          </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-slate-400">
-              <span className="flex items-center gap-1.5 text-slate-200">
-                <CheckCircle className="h-4 w-4 text-indigo-400" /> Tested Across Seeds
-              </span>
-              <span className="flex items-center gap-1.5 text-slate-200">
-                <Zap className="h-4 w-4 text-amber-400" /> Instant Digital Reveal
-              </span>
-              <a
-                href={brandConfig.socials.promptbase}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 font-semibold"
-              >
-                <span>Visit PromptBase Profile @ploykit</span>
-                <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            </div>
+          <div className="mt-6 flex flex-wrap items-center gap-6 text-[11px] uppercase tracking-wider text-[#666662]">
+            <a
+              href={brandConfig.socials.promptbase}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1 font-semibold"
+            >
+              <span>PromptBase @ploykit</span>
+              <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
+            </a>
+            <span>•</span>
+            <span>Tested Across Seeds</span>
+            <span>•</span>
+            <span>Instant Digital Reveal</span>
           </div>
         </div>
 
         {/* Filter & Search Bar */}
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8 bg-slate-900/60 p-4 rounded-2xl border border-white/[0.08]">
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-10 pb-6 border-b border-[#E7E5E0]">
           {/* Search Box */}
-          <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#666662] stroke-[1.5]" />
             <input
               type="text"
-              placeholder="Search prompts by keyword, model, or tag..."
+              placeholder="Search by keyword, engine, or tag..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-sm bg-slate-950 border border-white/[0.08] rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
+              className="w-full pl-9 pr-4 py-2.5 text-xs bg-[#FFFFFF] border border-[#E7E5E0] text-[#121212] placeholder-[#666662] focus:outline-none focus:border-[#121212] transition-colors"
             />
           </div>
 
           {/* Engine Selector Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-2 md:pb-0">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0">
             {engines.map((engine) => (
               <button
                 key={engine}
                 type="button"
                 onClick={() => setSelectedEngine(engine)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
+                className={`px-3.5 py-2 text-xs uppercase tracking-widest whitespace-nowrap transition-colors border ${
                   selectedEngine === engine
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-950"
-                    : "bg-slate-950 text-slate-400 hover:text-white border border-white/[0.08] hover:border-slate-700"
+                    ? "bg-[#121212] text-[#FAF9F5] border-[#121212]"
+                    : "bg-[#FFFFFF] text-[#666662] border-[#E7E5E0] hover:text-[#121212] hover:border-[#121212]"
                 }`}
               >
                 {engine}
@@ -133,12 +141,12 @@ export default function PromptsPage() {
           </div>
 
           {/* Sort Selector */}
-          <div className="flex items-center gap-2">
-            <SlidersHorizontal className="h-4 w-4 text-slate-400" />
+          <div className="flex items-center gap-2 self-start lg:self-auto">
+            <SlidersHorizontal className="h-3.5 w-3.5 text-[#666662] stroke-[1.5]" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-slate-950 text-xs text-slate-300 border border-white/[0.08] rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500"
+              className="bg-[#FFFFFF] text-xs text-[#121212] uppercase tracking-wider border border-[#E7E5E0] px-3 py-2.5 focus:outline-none focus:border-[#121212]"
             >
               <option value="popular">Most Popular</option>
               <option value="rating">Highest Rated</option>
@@ -149,23 +157,23 @@ export default function PromptsPage() {
         </div>
 
         {/* Results Counter */}
-        <div className="flex items-center justify-between text-xs text-slate-400 mb-6">
+        <div className="flex items-center justify-between text-xs text-[#666662] uppercase tracking-wider mb-8">
           <span>
-            Showing <strong className="text-white">{filteredPrompts.length}</strong> verified prompt formulas
+            Archival Index: <strong className="text-[#121212] font-semibold">{filteredPrompts.length}</strong> Blueprints
           </span>
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="text-indigo-400 hover:underline"
+              className="text-[#121212] hover:text-[#7A6A5C] underline underline-offset-4"
             >
-              Clear search &quot;{searchQuery}&quot;
+              Reset filter &ldquo;{searchQuery}&rdquo;
             </button>
           )}
         </div>
 
         {/* Products Grid */}
         {filteredPrompts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredPrompts.map((prompt) => (
               <ProductCard
                 key={prompt.id}
@@ -175,11 +183,13 @@ export default function PromptsPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 border border-dashed border-white/[0.08] rounded-2xl bg-slate-950/40">
-            <Sparkles className="h-10 w-10 text-slate-600 mx-auto mb-3" />
-            <h3 className="text-base font-bold text-white">No Prompts Found</h3>
-            <p className="text-xs text-slate-400 mt-1">
-              Try adjusting your search query or selecting &quot;All&quot; engines.
+          <div className="text-center py-24 border border-[#E7E5E0] bg-[#FFFFFF]">
+            <Sparkles className="h-8 w-8 text-[#7A6A5C] mx-auto mb-3 stroke-[1.5]" />
+            <h3 className="font-serif text-lg text-[#121212]">
+              No Blueprints Found in This Index
+            </h3>
+            <p className="text-xs text-[#666662] mt-1 max-w-sm mx-auto font-light">
+              Try adjusting your query or resetting filters to inspect the entire archive.
             </p>
           </div>
         )}
