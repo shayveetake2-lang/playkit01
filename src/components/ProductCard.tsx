@@ -28,11 +28,11 @@ export default function ProductCard({
     : product.merchDetails?.merchType || "Garment Piece";
 
   return (
-    <article className="group relative flex flex-col bg-[#FAF9F5] border-b border-[#E7E5E0] md:border-b-0 pb-6 md:pb-0 transition-colors">
-      {/* Strict Aspect Ratio Image Container */}
+    <article className="group relative flex flex-col p-3 bg-white border border-[#E7E5E0] shadow-[0_2px_14px_rgba(18,18,18,0.04),0_1px_3px_rgba(18,18,18,0.02)] hover:shadow-[0_8px_30px_rgba(18,18,18,0.08)] transition-all duration-300">
+      {/* Museum Passe-Partout Framed Art Container */}
       <div
         onClick={() => onQuickView(product)}
-        className={`relative w-full overflow-hidden bg-[#F5F3EE] cursor-pointer ${
+        className={`relative w-full overflow-hidden bg-[#F5F3EE] border border-[#E7E5E0]/60 cursor-pointer ${
           isPrompt ? "aspect-[4/3]" : "aspect-[3/4]"
         }`}
       >
@@ -45,9 +45,9 @@ export default function ProductCard({
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
         />
 
-        {/* Minimalist Volume/Edition Stamp */}
-        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
-          <span className="px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.2em] bg-[#FAF9F5]/90 backdrop-blur-xs text-[#121212] border border-[#E7E5E0]">
+        {/* Embossed Archival Seal */}
+        <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5 z-10">
+          <span className="px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.2em] bg-[#FAF9F5]/95 backdrop-blur-xs text-[#121212] border border-[#E7E5E0] shadow-2xs">
             {categoryLabel}
           </span>
           {product.isMostPurchased && (
@@ -57,9 +57,9 @@ export default function ProductCard({
           )}
         </div>
 
-        {/* Custom Editorial Hover Indicator - strictly pointer-events-none */}
+        {/* Hover Action Indicator - strictly pointer-events-none */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/15 pointer-events-none">
-          <div className="w-20 h-20 rounded-full border border-white/80 bg-white/30 backdrop-blur-xs flex items-center justify-center text-white shadow-sm transform scale-90 group-hover:scale-100 transition-transform duration-300">
+          <div className="w-20 h-20 rounded-full border border-white/90 bg-white/40 backdrop-blur-xs flex items-center justify-center text-white shadow-sm transform scale-90 group-hover:scale-100 transition-transform duration-300">
             <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-white drop-shadow-xs">
               Discover
             </span>
@@ -67,11 +67,11 @@ export default function ProductCard({
         </div>
       </div>
 
-      {/* Editorial Content */}
+      {/* Editorial Content Suite */}
       <div className="pt-4 flex-1 flex flex-col justify-between">
         <div>
           <div className="flex items-baseline justify-between gap-2 mb-1.5">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[#7A6A5C] font-semibold">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
               {isPrompt ? "Computational Formula" : "Physical Edition"}
             </span>
             <span className="font-serif text-sm text-[#121212] font-medium">

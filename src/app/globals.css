@@ -44,6 +44,33 @@ body {
   animation: pageEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Infinite Editorial Marquee Ticker (38s majestically paced) */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Museum Matting Frame Depth */
+.museum-matting {
+  background-color: #FFFFFF;
+  border: 1px solid #E7E5E0;
+  box-shadow: 0 2px 14px rgba(18, 18, 18, 0.04), 0 1px 3px rgba(18, 18, 18, 0.02);
+}
+
 /* Editorial hairline utilities */
 .hairline-b {
   border-bottom: 1px solid #E7E5E0;
