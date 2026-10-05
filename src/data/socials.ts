@@ -7,8 +7,6 @@ export interface SocialLinks {
 
 export const brandConfig = {
   name: "playkit01",
-  domain: "playkit01.store",
-  websiteUrl: "https://playkit01.store",
   tagline: "Curated AI Prompts & Cyber-Aesthetic Street Merch",
   description:
     "Empowering creators and collectors with battle-tested generative AI prompts and high-fidelity streetwear, stickers, and gear.",
