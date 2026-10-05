@@ -8,8 +8,6 @@ import {
   ExternalLink,
   Truck,
   ShieldCheck,
-  CheckCircle,
-  Tag,
 } from "lucide-react";
 import { getMerch, Product } from "@/data/products";
 import { brandConfig } from "@/data/socials";

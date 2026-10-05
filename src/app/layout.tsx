@@ -43,6 +43,11 @@ export const metadata: Metadata = {
     description:
       "Curated AI prompts, streetwear tees, stickers, and mugs by playkit01.",
   },
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

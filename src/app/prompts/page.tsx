@@ -6,10 +6,7 @@ import {
   Search,
   SlidersHorizontal,
   ExternalLink,
-  ShieldCheck,
   Zap,
-  Tag,
-  Star,
   CheckCircle,
 } from "lucide-react";
 import { getPrompts, Product } from "@/data/products";

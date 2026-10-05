@@ -22,6 +22,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
     <div className="group relative flex flex-col rounded-2xl border border-slate-800 bg-slate-900/70 p-3.5 transition-all duration-300 hover:border-violet-500/50 hover:bg-slate-900 hover:shadow-xl hover:shadow-violet-950/20">
       {/* Thumbnail Container */}
       <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-slate-950">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.image}
           alt={product.title}

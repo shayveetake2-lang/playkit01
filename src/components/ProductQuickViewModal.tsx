@@ -1,18 +1,17 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import {
   X,
   ExternalLink,
   Sparkles,
   Shirt,
   Star,
-  CheckCircle2,
   Layers,
   Ratio,
   FileText,
-  Palette,
+  Copy,
+  Check,
 } from "lucide-react";
 import { Product } from "@/data/products";
 
@@ -25,6 +24,8 @@ export default function ProductQuickViewModal({
   product,
   onClose,
 }: ProductQuickViewModalProps) {
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -47,8 +48,15 @@ export default function ProductQuickViewModal({
       ? "bg-cyan-950/80 text-cyan-300 border-cyan-800/60"
       : "bg-rose-950/80 text-rose-300 border-rose-800/60";
 
+  const handleCopyPrompt = () => {
+    if (!product.promptDetails?.promptPreviewSnippet) return;
+    navigator.clipboard.writeText(product.promptDetails.promptPreviewSnippet);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-in fade-in duration-200">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity"
@@ -70,6 +78,7 @@ export default function ProductQuickViewModal({
 
         {/* Media Preview Column */}
         <div className="relative h-64 md:h-auto md:w-5/12 bg-slate-950 flex-shrink-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={product.image}
             alt={product.title}
@@ -149,7 +158,26 @@ export default function ProductQuickViewModal({
                 </div>
 
                 <div className="text-xs">
-                  <p className="text-slate-400 font-medium mb-1">Prompt Sample Preview:</p>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <p className="text-slate-400 font-medium">Prompt Sample Preview:</p>
+                    <button
+                      type="button"
+                      onClick={handleCopyPrompt}
+                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-850 hover:bg-slate-800 text-cyan-300 border border-slate-700/60 transition-colors"
+                    >
+                      {copied ? (
+                        <>
+                          <Check className="h-3 w-3 text-emerald-400" />
+                          <span className="text-emerald-400">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3 w-3" />
+                          <span>Copy Preview</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                   <p className="font-mono text-[11px] p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-cyan-300/90 italic">
                     &quot;{product.promptDetails.promptPreviewSnippet}&quot;
                   </p>
@@ -248,8 +276,8 @@ export default function ProductQuickViewModal({
               rel="noopener noreferrer"
               className={`flex items-center justify-center gap-2.5 w-full py-3.5 px-6 rounded-xl font-bold text-white shadow-lg transition-transform hover:scale-[1.02] active:scale-[0.98] ${
                 isPrompt
-                  ? "bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 shadow-cyan-900/30"
-                  : "bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 shadow-rose-900/30"
+                  ? "bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 shadow-cyan-950/50"
+                  : "bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 shadow-rose-950/50"
               }`}
             >
               <span>
