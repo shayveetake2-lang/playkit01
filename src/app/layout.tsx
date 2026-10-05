@@ -10,17 +10,18 @@ export const metadata: Metadata = {
     template: "%s | playkit01",
   },
   description:
-    "Curated Midjourney, DALL-E and Claude prompts, plus cyberpunk streetwear t-shirts, holographic stickers, and ceramic mugs by playkit01.",
+    "Curated Gemini, Claude and Midjourney prompts, plus cyberpunk streetwear t-shirts, holographic stickers, and ceramic mugs by playkit01.",
   keywords: [
     "playkit01",
     "playkit01.store",
     "AI Prompts",
     "PromptBase",
     "Redbubble",
-    "Midjourney Prompts",
-    "Cyberpunk T-Shirt",
+    "Gemini Image Prompts",
+    "Claude Prompts",
+    "Streetwear T-Shirt",
     "Graphic Tees",
-    "Stickers",
+    "Vinyl Stickers",
     "Mugs",
   ],
   authors: [{ name: "playkit01", url: "https://playkit01.store" }],
@@ -57,7 +58,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className="min-h-screen flex flex-col bg-slate-950 text-slate-100 antialiased selection:bg-violet-500 selection:text-white">
+      <body className="min-h-screen flex flex-col bg-[#090d14] text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
         <Navbar />
         <div className="flex-1">{children}</div>
         <Footer />

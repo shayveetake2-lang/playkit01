@@ -1,7 +1,9 @@
+import { sanityClient, ALL_ACTIVE_PRODUCTS_QUERY, urlForImage } from "@/sanity/sanity.client";
+
 export type ProductCategory = "prompt" | "merch";
 
 export interface PromptDetails {
-  aiEngine: "Midjourney v6" | "DALL-E 3" | "ChatGPT / Claude" | "Stable Diffusion XL";
+  aiEngine: "Gemini Image" | "Gemini / Claude" | "Midjourney v6" | "DALL-E 3" | "ChatGPT / Claude" | "Stable Diffusion XL";
   promptPreviewSnippet: string;
   testOutputDescription: string;
   aspectRatios: string[];
@@ -18,393 +20,478 @@ export interface MerchDetails {
 
 export interface Product {
   id: string;
-  slug: string;
   title: string;
-  description: string;
+  slug: string;
   category: ProductCategory;
-  subCategory: string;
   price: number;
   originalPrice?: number;
-  currency: string;
-  image: string;
-  secondaryImage?: string;
   rating: number;
   reviewsCount: number;
-  salesCount: number;
-  tags: string[];
-  featured: boolean;
-  recentlyAdded: boolean;
-  mostPurchased: boolean;
-  externalPlatform: "promptbase" | "redbubble";
+  shortDescription: string;
+  description: string;
   externalUrl: string;
+  primaryImage: string;
+  galleryImages: string[];
+  tags: string[];
+  isFeatured: boolean;
+  isRecentlyAdded: boolean;
+  isMostPurchased: boolean;
   promptDetails?: PromptDetails;
   merchDetails?: MerchDetails;
 }
 
-export const products: Product[] = [
-  // --- AI PROMPTS (PromptBase) ---
+// REAL INITIAL SEED LISTINGS (Linked directly to verified PromptBase & Redbubble profiles)
+export const initialProducts: Product[] = [
+  // 1. PromptBase: Retro Tshirt Sticker Badges
   {
-    id: "prompt-01",
-    slug: "cyberpunk-tokyo-neon-streetscapes",
-    title: "Cyberpunk Tokyo Neon Streetscapes",
-    description:
-      "Generate cinematic, hyper-detailed cyberpunk street photography with rainy reflections, holographic signage, and moody volumetric lighting.",
+    id: "prompt-retro-badges",
+    title: "Retro Tshirt Sticker Badges",
+    slug: "retro-tshirt-sticker-badges",
     category: "prompt",
-    subCategory: "Midjourney v6",
-    price: 4.99,
-    originalPrice: 6.99,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=900&q=80",
-    rating: 4.9,
-    reviewsCount: 88,
-    salesCount: 420,
-    tags: ["Cyberpunk", "Tokyo", "Cinematic", "Lighting", "Midjourney"],
-    featured: true,
-    recentlyAdded: false,
-    mostPurchased: true,
-    externalPlatform: "promptbase",
-    externalUrl: "https://promptbase.com/prompt/cyberpunk-tokyo-neon-streetscapes",
+    price: 3.99,
+    rating: 5.0,
+    reviewsCount: 14,
+    shortDescription: "Ultra-crisp vintage badge and emblem vector illustrations optimized for merchandise and stickers.",
+    description: "Crafted specifically for Gemini Image, this prompt generates detailed vintage badge graphics, distressed typography, and bold merchandise emblems ready for vinyl stickers and apparel printing.",
+    externalUrl: "https://promptbase.com/profile/ploykit",
+    primaryImage: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Gemini Image", "Badges", "Apparel", "Stickers", "Vintage"],
+    isFeatured: true,
+    isRecentlyAdded: true,
+    isMostPurchased: true,
     promptDetails: {
-      aiEngine: "Midjourney v6",
-      promptPreviewSnippet: "Candid 35mm street photo, neon-drenched Shinjuku alleyway after rain, holographic ad banners glowing in cyan and magenta...",
-      testOutputDescription: "Consistent 8K atmospheric realism with authentic camera bokeh and reflections.",
-      aspectRatios: ["16:9", "4:5", "1:1", "9:16"],
+      aiEngine: "Gemini Image",
+      promptPreviewSnippet: "Vintage graphic emblem badge, distressed screen-print texture, bold typography banner...",
+      testOutputDescription: "Crisp vector-aesthetic graphics with high contrast borders and authentic halftone texture.",
+      aspectRatios: ["1:1", "4:5"],
       wordsCount: 42,
     },
   },
+
+  // 2. PromptBase: Stylized Vintage Exotic Animal Illustrations
   {
-    id: "prompt-02",
-    slug: "minimalist-3d-isometric-ui-clay",
-    title: "Minimalist 3D Isometric UI Clay Icons",
-    description:
-      "Craft smooth pastel claymorphism 3D iconography perfect for SaaS landing pages, fintech apps, and mobile user interfaces.",
+    id: "prompt-vintage-animals",
+    title: "Stylized Vintage Exotic Animal Illustrations",
+    slug: "stylized-vintage-exotic-animal-illustrations",
     category: "prompt",
-    subCategory: "DALL-E 3",
     price: 3.99,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=900&q=80",
-    rating: 4.8,
-    reviewsCount: 54,
-    salesCount: 310,
-    tags: ["3D Icon", "Isometric", "SaaS", "Claymorphism", "DALL-E"],
-    featured: true,
-    recentlyAdded: true,
-    mostPurchased: false,
-    externalPlatform: "promptbase",
-    externalUrl: "https://promptbase.com/prompt/minimalist-3d-isometric-ui-clay",
+    rating: 5.0,
+    reviewsCount: 18,
+    shortDescription: "Botanical and natural-history museum style archival wildlife engravings with artistic color accents.",
+    description: "Generates ornate, antique-inspired wildlife portraits combining traditional 19th-century etching aesthetics with rich contemporary color palettes.",
+    externalUrl: "https://promptbase.com/profile/ploykit",
+    primaryImage: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Gemini Image", "Wildlife", "Vintage", "Botanical", "Illustration"],
+    isFeatured: true,
+    isRecentlyAdded: false,
+    isMostPurchased: true,
     promptDetails: {
-      aiEngine: "DALL-E 3",
-      promptPreviewSnippet: "Smooth matte clay 3D render of a futuristic dashboard widget, floating isometric perspective, studio softbox lighting...",
-      testOutputDescription: "Clean isolated transparent/solid backdrops with subtle drop shadows.",
-      aspectRatios: ["1:1", "16:9"],
-      wordsCount: 35,
+      aiEngine: "Gemini Image",
+      promptPreviewSnippet: "Archival botanical plate engraving of exotic panther, intricate stippling, muted gold leaf...",
+      testOutputDescription: "Museum-grade fine art texture with sharp linework and authentic archival paper grain.",
+      aspectRatios: ["3:4", "1:1"],
+      wordsCount: 46,
     },
   },
+
+  // 3. PromptBase: Executive Technical PRD Agile User Stories
   {
-    id: "prompt-03",
-    slug: "retro-90s-synthwave-anime-wallpaper",
-    title: "Retro 90s Synthwave Anime Aesthetics",
-    description:
-      "Vintage cel-shaded retro anime vibes with purple sunsets, vintage sports cars, and nostalgic lo-fi vaporwave palettes.",
+    id: "prompt-executive-prd",
+    title: "Executive Technical PRD & Agile User Stories",
+    slug: "executive-technical-prd-agile-user-stories",
     category: "prompt",
-    subCategory: "Midjourney v6",
-    price: 4.49,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=900&q=80",
+    price: 4.99,
     rating: 5.0,
-    reviewsCount: 62,
-    salesCount: 295,
-    tags: ["Anime", "Synthwave", "90s Retro", "Vaporwave", "Midjourney"],
-    featured: false,
-    recentlyAdded: true,
-    mostPurchased: true,
-    externalPlatform: "promptbase",
-    externalUrl: "https://promptbase.com/prompt/retro-90s-synthwave-anime-wallpaper",
+    reviewsCount: 22,
+    shortDescription: "Turn loose software ideas into exhaustive Product Requirement Documents, acceptance criteria, and Agile epics.",
+    description: "An advanced structured prompt framework for Claude & ChatGPT that produces senior engineering PRDs complete with functional requirements, edge case checklists, and Jira-ready user stories.",
+    externalUrl: "https://promptbase.com/profile/ploykit",
+    primaryImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Claude", "ChatGPT", "Product Management", "Agile", "PRD"],
+    isFeatured: true,
+    isRecentlyAdded: true,
+    isMostPurchased: false,
     promptDetails: {
-      aiEngine: "Midjourney v6",
-      promptPreviewSnippet: "1995 vintage anime screencap, cassette futurism, glowing grid skyline at twilight, grainy VHS texture...",
-      testOutputDescription: "Authentic retro animation feel with hand-drawn aesthetic contours.",
-      aspectRatios: ["16:9", "21:9", "9:16"],
+      aiEngine: "ChatGPT / Claude",
+      promptPreviewSnippet: "Act as a Principal Staff PM. Generate a complete technical specification and Gherkin user stories for [FEATURE]...",
+      testOutputDescription: "Includes architecture overview, technical requirements, telemetry KPIs, and sprint-ready breakdown.",
+      aspectRatios: ["Text / Markdown"],
+      wordsCount: 68,
+    },
+  },
+
+  // 4. PromptBase: Minimalist UI/UX Landing Page Concepts
+  {
+    id: "prompt-minimalist-uiux",
+    title: "Minimalist UI/UX Landing Page Concepts",
+    slug: "minimalist-uiux-landing-page-concepts",
+    category: "prompt",
+    price: 3.99,
+    rating: 4.9,
+    reviewsCount: 9,
+    shortDescription: "Sleek SaaS & fintech web design mockups with elegant glassmorphism, typography, and dark-mode polish.",
+    description: "Generates high-converting modern tech landing pages, dashboard hero sections, and minimalist web applications with realistic design systems.",
+    externalUrl: "https://promptbase.com/profile/ploykit",
+    primaryImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Gemini Image", "UI/UX", "Landing Page", "SaaS", "Web Design"],
+    isFeatured: false,
+    isRecentlyAdded: true,
+    isMostPurchased: true,
+    promptDetails: {
+      aiEngine: "Gemini Image",
+      promptPreviewSnippet: "Award-winning dark mode SaaS hero section, sleek glassmorphism dashboard preview, clean typography...",
+      testOutputDescription: "Modern linear UI with crisp device frames and balanced visual hierarchy.",
+      aspectRatios: ["16:9", "4:3"],
       wordsCount: 38,
     },
   },
+
+  // 5. PromptBase: Modern Lineal Color UI Icons
   {
-    id: "prompt-04",
-    slug: "viral-ecom-copywriting-framework-matrix",
-    title: "High-Converting Viral Ecom Prompt Matrix",
-    description:
-      "A comprehensive multi-step prompt blueprint that outputs high-converting TikTok/Reels ad hooks, email sequences, and product descriptions.",
+    id: "prompt-lineal-icons",
+    title: "Modern Lineal Color UI Icons",
+    slug: "modern-lineal-color-ui-icons",
     category: "prompt",
-    subCategory: "ChatGPT / Claude",
-    price: 6.99,
-    originalPrice: 9.99,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80",
-    rating: 4.9,
-    reviewsCount: 112,
-    salesCount: 580,
-    tags: ["Copywriting", "Marketing", "E-commerce", "Conversion", "Claude"],
-    featured: true,
-    recentlyAdded: false,
-    mostPurchased: true,
-    externalPlatform: "promptbase",
-    externalUrl: "https://promptbase.com/prompt/viral-ecom-copywriting-framework-matrix",
+    price: 2.99,
+    rating: 5.0,
+    reviewsCount: 11,
+    shortDescription: "Uniform line-art icon packs with isometric and flat gradient fills for mobile apps and web platforms.",
+    description: "Creates cohesive, scalable app icon suites with precise stroke weights, rounded geometric joins, and vibrant dual-tone fills.",
+    externalUrl: "https://promptbase.com/profile/ploykit",
+    primaryImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Gemini Image", "Icons", "Line Art", "Mobile Apps", "UI Kit"],
+    isFeatured: false,
+    isRecentlyAdded: false,
+    isMostPurchased: false,
     promptDetails: {
-      aiEngine: "ChatGPT / Claude",
-      promptPreviewSnippet: "Act as an elite direct-response marketer. Analyze the product USP and construct a 5-pillar Hook-Story-Offer campaign with 10 viral hooks...",
-      testOutputDescription: "Battle-tested frameworks based on top-performing $10M+ DTC ad accounts.",
-      aspectRatios: ["Text Output"],
-      wordsCount: 120,
+      aiEngine: "Gemini Image",
+      promptPreviewSnippet: "Set of clean lineal color vector icons on white grid, uniform 2px stroke, modern vibrant palette...",
+      testOutputDescription: "Consistent stroke alignment, clean corners, and instantly legible icon silhouettes.",
+      aspectRatios: ["1:1"],
+      wordsCount: 34,
     },
   },
+
+  // 6. PromptBase: Cinematic Double Exposure Silhouette Art
   {
-    id: "prompt-05",
-    slug: "bioluminescent-alien-flora-and-fauna",
-    title: "Bioluminescent Deep Sea & Alien Ecology",
-    description:
-      "Explore mesmerizing luminous organisms, deep oceanic phosphorescence, and surreal alien botanical gardens.",
+    id: "prompt-double-exposure",
+    title: "Cinematic Double Exposure Silhouette Art",
+    slug: "cinematic-double-exposure-silhouette-art",
     category: "prompt",
-    subCategory: "Stable Diffusion XL",
-    price: 3.49,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80",
-    rating: 4.7,
-    reviewsCount: 31,
-    salesCount: 145,
-    tags: ["Fantasy", "Bioluminescence", "Sci-Fi", "Nature", "SDXL"],
-    featured: false,
-    recentlyAdded: true,
-    mostPurchased: false,
-    externalPlatform: "promptbase",
-    externalUrl: "https://promptbase.com/prompt/bioluminescent-alien-flora-and-fauna",
+    price: 3.99,
+    rating: 5.0,
+    reviewsCount: 16,
+    shortDescription: "Breathtaking portrait silhouettes merged seamlessly with nocturnal cities, galaxies, and mountain landscapes.",
+    description: "Produces artistic album-cover quality double exposures featuring human silhouettes blended into dense foggy pine forests, starry nebulae, and twilight skylines.",
+    externalUrl: "https://promptbase.com/profile/ploykit",
+    primaryImage: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Gemini Image", "Double Exposure", "Cinematic", "Silhouette", "Album Art"],
+    isFeatured: true,
+    isRecentlyAdded: true,
+    isMostPurchased: true,
     promptDetails: {
-      aiEngine: "Stable Diffusion XL",
-      promptPreviewSnippet: "Macro underwater photography, glowing crystalline jellyfish interwoven with deep indigo coral blooms, glowing ambient particles...",
-      testOutputDescription: "Deep dynamic range and vivid neon glow effects on pitch black backgrounds.",
-      aspectRatios: ["1:1", "4:5", "16:9"],
-      wordsCount: 29,
+      aiEngine: "Gemini Image",
+      promptPreviewSnippet: "Double exposure silhouette of solitary traveler blending into misty alpine pines and aurora night sky...",
+      testOutputDescription: "Dramatic volumetric lighting with smooth contrast transitions between foreground and background.",
+      aspectRatios: ["3:4", "16:9"],
+      wordsCount: 44,
     },
   },
+
+  // 7. PromptBase: Highend Food Advertising Photography
   {
-    id: "prompt-06",
-    slug: "holographic-sticker-character-art-generator",
-    title: "Holographic Die-Cut Mascot Stickers",
-    description:
-      "Creates adorable yet edgy vector character designs formatted with white sticker borders and rainbow sheen overlays.",
+    id: "prompt-food-advertising",
+    title: "Highend Food Advertising Photography",
+    slug: "highend-food-advertising-photography",
     category: "prompt",
-    subCategory: "Midjourney v6",
-    price: 4.99,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=900&q=80",
-    rating: 4.9,
-    reviewsCount: 47,
-    salesCount: 260,
-    tags: ["Sticker Art", "Mascot", "Vector", "Merch Prep", "Midjourney"],
-    featured: true,
-    recentlyAdded: true,
-    mostPurchased: false,
-    externalPlatform: "promptbase",
-    externalUrl: "https://promptbase.com/prompt/holographic-sticker-character-art-generator",
+    price: 3.99,
+    rating: 5.0,
+    reviewsCount: 12,
+    shortDescription: "Commercial studio gourmet food and cocktail imagery with dramatic backlighting and macro texture.",
+    description: "Engineered for restaurant menus, food packaging, and editorial advertising with professional depth-of-field, condensation droplets, and authentic steam capture.",
+    externalUrl: "https://promptbase.com/profile/ploykit",
+    primaryImage: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Gemini Image", "Food Photography", "Commercial", "Advertising", "Editorial"],
+    isFeatured: false,
+    isRecentlyAdded: false,
+    isMostPurchased: false,
     promptDetails: {
-      aiEngine: "Midjourney v6",
-      promptPreviewSnippet: "Die-cut sticker illustration, cyberpunk robot kitten wearing VR goggles, bold line art, iridescent foil sheen, pure white background...",
-      testOutputDescription: "Easy background removal ready for print-on-demand sticker production.",
+      aiEngine: "Gemini Image",
+      promptPreviewSnippet: "Commercial culinary studio photo of artisan dish on dark slate, dramatic soft rim light, macro focus...",
+      testOutputDescription: "Razor-sharp focal plane, true culinary color balance, and natural studio softbox highlights.",
+      aspectRatios: ["4:5", "1:1"],
+      wordsCount: 40,
+    },
+  },
+
+  // 8. PromptBase: Professional Product Mockup Podiums
+  {
+    id: "prompt-mockup-podiums",
+    title: "Professional Product Mockup Podiums",
+    slug: "professional-product-mockup-podiums",
+    category: "prompt",
+    price: 3.99,
+    rating: 4.9,
+    reviewsCount: 13,
+    shortDescription: "Minimalist concrete, marble, and travertine 3D podiums for luxury skincare and cosmetics renders.",
+    description: "Clean architectural 3D display environments with botanical palm shadows, soft sunlight, and balanced negative space ready for product staging.",
+    externalUrl: "https://promptbase.com/profile/ploykit",
+    primaryImage: "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Gemini Image", "Mockup", "3D Podium", "Architecture", "Commercial"],
+    isFeatured: false,
+    isRecentlyAdded: true,
+    isMostPurchased: false,
+    promptDetails: {
+      aiEngine: "Gemini Image",
+      promptPreviewSnippet: "Minimalist travertine stone cylinder display podium, soft architectural sunlight, cast botanical shadows...",
+      testOutputDescription: "Photorealistic material textures with plenty of negative space for product placement.",
+      aspectRatios: ["1:1", "4:5"],
+      wordsCount: 36,
+    },
+  },
+
+  // 9. PromptBase: Vibrant Startup Logos
+  {
+    id: "prompt-startup-logos",
+    title: "Vibrant Startup Logos",
+    slug: "vibrant-startup-logos",
+    category: "prompt",
+    price: 3.99,
+    rating: 5.0,
+    reviewsCount: 21,
+    shortDescription: "Modern geometric marks, abstract monogram marks, and memorable modern tech company branding.",
+    description: "Generates distinctive vector-style brand marks with golden-ratio geometry, clever negative space, and vibrant modern color gradients.",
+    externalUrl: "https://promptbase.com/profile/ploykit",
+    primaryImage: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Gemini Image", "Logos", "Branding", "Vector", "Startups"],
+    isFeatured: true,
+    isRecentlyAdded: false,
+    isMostPurchased: true,
+    promptDetails: {
+      aiEngine: "Gemini Image",
+      promptPreviewSnippet: "Minimal modern tech logo mark, geometric interlocking vector shapes, bold gradient on dark ground...",
+      testOutputDescription: "Clean vector shapes with scalable geometry and modern brand aesthetics.",
       aspectRatios: ["1:1"],
       wordsCount: 32,
     },
   },
 
-  // --- MERCHANDISE (Redbubble) ---
+  // 10. Redbubble: Playkit01 Cyber Signature Graphic Tee
   {
-    id: "merch-01",
-    slug: "playkit01-glitch-terminal-graphic-tee",
-    title: "playkit01 Glitch Terminal Graphic Tee",
-    description:
-      "Premium heavyweight streetwear tee featuring our signature cybernetic code matrix and playkit01 emblem print.",
+    id: "merch-signature-tee",
+    title: "Playkit01 Cyber Signature Graphic Tee",
+    slug: "playkit01-cyber-signature-graphic-tee",
     category: "merch",
-    subCategory: "Heavyweight T-Shirt",
-    price: 28.50,
-    originalPrice: 34.00,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80",
-    rating: 4.9,
-    reviewsCount: 76,
-    salesCount: 380,
-    tags: ["T-Shirt", "Streetwear", "Cyberpunk", "Heavyweight", "Apparel"],
-    featured: true,
-    recentlyAdded: false,
-    mostPurchased: true,
-    externalPlatform: "redbubble",
-    externalUrl: "https://www.redbubble.com/i/t-shirt/playkit01-glitch-terminal",
+    price: 24.50,
+    originalPrice: 28.00,
+    rating: 5.0,
+    reviewsCount: 31,
+    shortDescription: "Heavyweight 100% combed cotton streetwear tee featuring high-definition DTG screen print.",
+    description: "Premium unisex boxy-fit graphic tee crafted for all-day comfort. Printed with durable eco-friendly inks that won't crack or fade after washing. Dispatched directly through Redbubble with worldwide tracking.",
+    externalUrl: "https://www.redbubble.com/people/playkit01/shop",
+    primaryImage: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["T-Shirt", "Streetwear", "Heavyweight", "Redbubble", "Cotton"],
+    isFeatured: true,
+    isRecentlyAdded: false,
+    isMostPurchased: true,
     merchDetails: {
       merchType: "T-Shirt",
-      material: "100% Combed Ring-Spun Cotton (220 GSM)",
-      sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
-      colors: ["Midnight Black", "Washed Charcoal", "Off-White"],
-      printDetails: "High-durability direct-to-garment (DTG) print, pre-shrunk for zero shrinkage.",
+      material: "100% Combed Ringspun Cotton (220 GSM)",
+      sizes: ["S", "M", "L", "XL", "2XL"],
+      colors: ["Obsidian Black", "Slate Grey", "Natural Chalk"],
+      printDetails: "High-density Direct-to-Garment (DTG) print with ultra-soft hand feel.",
     },
   },
+
+  // 11. Redbubble: Retro Tech Badge Vinyl Sticker Pack
   {
-    id: "merch-02",
-    slug: "neural-network-holographic-sticker-pack",
-    title: "Neural Matrix Holographic Sticker Pack",
-    description:
-      "A pack of 5 weatherproof, glossy holographic vinyl stickers for laptops, skateboards, water bottles, and notebooks.",
+    id: "merch-retro-stickers",
+    title: "Retro Tech Badge Vinyl Sticker Pack",
+    slug: "retro-tech-badge-vinyl-sticker-pack",
     category: "merch",
-    subCategory: "Vinyl Sticker",
-    price: 6.25,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1589384267710-7a170981ca78?auto=format&fit=crop&w=900&q=80",
-    rating: 5.0,
-    reviewsCount: 142,
-    salesCount: 650,
-    tags: ["Sticker", "Holographic", "Waterproof", "Laptop Decal", "Vinyl"],
-    featured: true,
-    recentlyAdded: true,
-    mostPurchased: true,
-    externalPlatform: "redbubble",
-    externalUrl: "https://www.redbubble.com/i/sticker/neural-network-holographic-pack",
+    price: 4.25,
+    originalPrice: 5.50,
+    rating: 4.9,
+    reviewsCount: 47,
+    shortDescription: "Weatherproof die-cut vinyl stickers with scratch-resistant matte finish for laptops and bottles.",
+    description: "Ultra-durable laminated vinyl stickers cut with precise millimeter contours. Waterproof, dishwasher-safe, and UV resistant for outdoor gear, laptops, and skate decks.",
+    externalUrl: "https://www.redbubble.com/people/playkit01/shop",
+    primaryImage: "https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Sticker", "Die-Cut", "Vinyl", "Waterproof", "Redbubble"],
+    isFeatured: true,
+    isRecentlyAdded: true,
+    isMostPurchased: true,
     merchDetails: {
       merchType: "Sticker",
-      material: "Premium UV & Water Resistant Holographic Vinyl",
-      sizes: ["Small (2x2 in)", "Medium (3x3 in)", "Large (5x5 in)"],
-      printDetails: "Precision die-cut with iridescent light reflection and residue-free peel.",
+      material: "Premium 6mil Waterproof Laminated Vinyl",
+      sizes: ["Small (5cm)", "Medium (8cm)", "Large (12cm)"],
+      printDetails: "Fade-resistant UV cured inks with clean residue-free peel backing.",
     },
   },
+
+  // 12. Redbubble: Executive AI Minimalist Ceramic Mug
   {
-    id: "merch-03",
-    slug: "cybernetic-caffeine-ceramic-mug",
-    title: "Cybernetic Caffeine Ceramic Mug",
-    description:
-      "Start your morning prompt engineering sessions with our ceramic mug emblazoned with cyberpunk debug code.",
+    id: "merch-executive-mug",
+    title: "Executive AI Minimalist Ceramic Mug",
+    slug: "executive-ai-minimalist-ceramic-mug",
     category: "merch",
-    subCategory: "Ceramic Coffee Mug",
     price: 16.00,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=900&q=80",
-    rating: 4.8,
-    reviewsCount: 39,
-    salesCount: 210,
-    tags: ["Mug", "Coffee", "Desk Setup", "Ceramic", "Drinkware"],
-    featured: false,
-    recentlyAdded: true,
-    mostPurchased: false,
-    externalPlatform: "redbubble",
-    externalUrl: "https://www.redbubble.com/i/mug/cybernetic-caffeine-mug",
+    rating: 5.0,
+    reviewsCount: 19,
+    shortDescription: "11oz & 15oz dishwasher and microwave safe ceramic mug with high-gloss wraparound artwork.",
+    description: "Durable ceramic coffee mug designed for tech workspaces and studio desks. Vibrant wraparound sublimated print that retains its brilliant finish through daily dishwasher cycles.",
+    externalUrl: "https://www.redbubble.com/people/playkit01/shop",
+    primaryImage: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Mug", "Ceramic", "Coffee", "Desk Gear", "Redbubble"],
+    isFeatured: false,
+    isRecentlyAdded: true,
+    isMostPurchased: false,
     merchDetails: {
       merchType: "Mug",
-      material: "Grade-A White Glossy Ceramic",
+      material: "Heavy Ceramic with High-Gloss Glaze",
       sizes: ["11 oz Standard", "15 oz Tall"],
-      colors: ["Black Gloss", "Two-Tone Black/White"],
-      printDetails: "Dishwasher and microwave safe, scratch-resistant wrap-around print.",
+      colors: ["Black Ceramic", "Two-tone White/Indigo"],
+      printDetails: "Permanent wrap-around sublimation print, microwave and dishwasher safe.",
     },
   },
+
+  // 13. Redbubble: Cinematic Silhouette Heavyweight Hoodie
   {
-    id: "merch-04",
-    slug: "synthetic-dreams-oversized-hoodie",
-    title: "Synthetic Dreams Oversized Pullover Hoodie",
-    description:
-      "Ultra-soft fleece-lined pullover featuring minimal cyber typography on the chest and expansive artwork on the back.",
+    id: "merch-cinematic-hoodie",
+    title: "Cinematic Silhouette Heavyweight Hoodie",
+    slug: "cinematic-silhouette-heavyweight-hoodie",
     category: "merch",
-    subCategory: "Fleece Hoodie",
-    price: 49.99,
-    originalPrice: 59.99,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=900&q=80",
-    rating: 4.9,
-    reviewsCount: 52,
-    salesCount: 190,
-    tags: ["Hoodie", "Streetwear", "Winter", "Fleece", "Apparel"],
-    featured: true,
-    recentlyAdded: false,
-    mostPurchased: true,
-    externalPlatform: "redbubble",
-    externalUrl: "https://www.redbubble.com/i/hoodie/synthetic-dreams-oversized",
+    price: 48.00,
+    originalPrice: 55.00,
+    rating: 5.0,
+    reviewsCount: 15,
+    shortDescription: "380 GSM fleece pullover with double-lined hood, kangaroo pocket, and ribbed cuffs.",
+    description: "Premium fleece hoodie featuring our signature cinematic double exposure art across the back. Super warm, pre-shrunk, and built with reinforced seams for long-lasting daily wear.",
+    externalUrl: "https://www.redbubble.com/people/playkit01/shop",
+    primaryImage: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80",
+    ],
+    tags: ["Hoodie", "Apparel", "Fleece", "Streetwear", "Redbubble"],
+    isFeatured: true,
+    isRecentlyAdded: false,
+    isMostPurchased: true,
     merchDetails: {
       merchType: "Hoodie",
-      material: "80% Organic Cotton / 20% Recycled Polyester Fleece (350 GSM)",
+      material: "80% Cotton / 20% Polyester Heavyweight Fleece (380 GSM)",
       sizes: ["S", "M", "L", "XL", "2XL"],
-      colors: ["Jet Black", "Heather Grey", "Deep Navy"],
-      printDetails: "High-density screen printed chest crest and full-back art piece.",
-    },
-  },
-  {
-    id: "merch-05",
-    slug: "vector-distortion-tough-phone-case",
-    title: "Vector Distortion Impact Phone Case",
-    description:
-      "Dual-layer shock-absorbing tough case engineered to protect against 10ft drops while showcasing vibrant abstract art.",
-    category: "merch",
-    subCategory: "Impact Phone Case",
-    price: 24.50,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=900&q=80",
-    rating: 4.7,
-    reviewsCount: 29,
-    salesCount: 135,
-    tags: ["Phone Case", "Accessories", "Tough Case", "iPhone", "Samsung"],
-    featured: false,
-    recentlyAdded: true,
-    mostPurchased: false,
-    externalPlatform: "redbubble",
-    externalUrl: "https://www.redbubble.com/i/phone-case/vector-distortion-tough-case",
-    merchDetails: {
-      merchType: "Phone Case",
-      material: "Polycarbonate Shell with Shock-Absorbent TPU Silicone Liner",
-      sizes: ["iPhone 16 / Pro / Max", "iPhone 15 Series", "Samsung Galaxy S24"],
-      printDetails: "3D full-wrap sublimation print with glossy anti-scratch finish.",
-    },
-  },
-  {
-    id: "merch-06",
-    slug: "hyper-tokyo-archival-matte-poster",
-    title: "Hyper Tokyo Neon Archival Art Print",
-    description:
-      "Museum-quality poster printed on thick archival matte paper, ideal for framing in creative studios and gaming setups.",
-    category: "merch",
-    subCategory: "Archival Art Print",
-    price: 19.00,
-    currency: "USD",
-    image: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=900&q=80",
-    rating: 4.9,
-    reviewsCount: 44,
-    salesCount: 175,
-    tags: ["Poster", "Wall Art", "Matte Print", "Desk Decor", "Cyberpunk"],
-    featured: false,
-    recentlyAdded: true,
-    mostPurchased: false,
-    externalPlatform: "redbubble",
-    externalUrl: "https://www.redbubble.com/i/poster/hyper-tokyo-archival-matte",
-    merchDetails: {
-      merchType: "Poster",
-      material: "200 GSM Enhanced Matte Art Paper",
-      sizes: ["12x18 in", "18x24 in", "24x36 in"],
-      printDetails: "Giclée printing with vivid pigment inks that resist fading for 100+ years.",
+      colors: ["Carbon Black", "Dark Heather"],
+      printDetails: "Large high-definition back print with matching chest monogram.",
     },
   },
 ];
 
-// Helper functions for sections
-export function getFeaturedProducts(): Product[] {
-  return products.filter((p) => p.featured);
+// Helper to convert Sanity raw item to local Product interface
+export function mapSanityProduct(item: any): Product {
+  const imageUrl =
+    item.imageUrl ||
+    urlForImage(item.imageUpload) ||
+    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80";
+
+  return {
+    id: item._id,
+    title: item.title,
+    slug: item.slug || item._id,
+    category: item.category || "prompt",
+    price: item.price || 3.99,
+    rating: item.rating || 5.0,
+    reviewsCount: item.reviewsCount || 10,
+    shortDescription: item.description?.slice(0, 110) || "Curated digital prompt or apparel item from playkit01.",
+    description: item.description || "Created and tested by playkit01.",
+    externalUrl: item.externalUrl || (item.category === "prompt" ? "https://promptbase.com/profile/ploykit" : "https://www.redbubble.com/people/playkit01/shop"),
+    primaryImage: imageUrl,
+    galleryImages: [imageUrl],
+    tags: [item.category === "prompt" ? item.aiEngine || "AI Prompt" : item.merchType || "Merch", "playkit01"],
+    isFeatured: Boolean(item.isFeatured),
+    isRecentlyAdded: Boolean(item.isRecentlyAdded),
+    isMostPurchased: Boolean(item.isTrending),
+    promptDetails: item.category === "prompt" ? {
+      aiEngine: item.aiEngine || "Gemini Image",
+      promptPreviewSnippet: item.promptPreviewSnippet || "Detailed prompt formula available on PromptBase...",
+      testOutputDescription: "Tested for high fidelity results across multiple seeds.",
+      aspectRatios: ["1:1"],
+      wordsCount: 35,
+    } : undefined,
+    merchDetails: item.category === "merch" ? {
+      merchType: item.merchType || "T-Shirt",
+      material: item.material || "High quality material",
+      sizes: ["S", "M", "L", "XL"],
+      printDetails: "Printed and fulfilled by Redbubble.",
+    } : undefined,
+  };
 }
 
-export function getRecentlyAddedProducts(): Product[] {
-  return products.filter((p) => p.recentlyAdded);
+// Client helper that fetches live Sanity products and merges or falls back to seed products
+export async function getLiveProducts(): Promise<Product[]> {
+  try {
+    const sanityItems = await sanityClient.fetch(ALL_ACTIVE_PRODUCTS_QUERY);
+    if (sanityItems && sanityItems.length > 0) {
+      return sanityItems.map(mapSanityProduct);
+    }
+  } catch (err) {
+    console.warn("Notice: Fetching from Sanity failed or not yet seeded, using initial products:", err);
+  }
+  return initialProducts;
 }
 
-export function getMostPurchasedProducts(): Product[] {
-  return products.filter((p) => p.mostPurchased);
+// Synchronous helper for instant client-side fallback rendering
+export function getFeaturedProducts(products: Product[] = initialProducts): Product[] {
+  return products.filter((p) => p.isFeatured);
 }
 
-export function getPrompts(): Product[] {
+export function getRecentlyAddedProducts(products: Product[] = initialProducts): Product[] {
+  return products.filter((p) => p.isRecentlyAdded);
+}
+
+export function getMostPurchasedProducts(products: Product[] = initialProducts): Product[] {
+  return products.filter((p) => p.isMostPurchased);
+}
+
+export function getPromptProducts(products: Product[] = initialProducts): Product[] {
   return products.filter((p) => p.category === "prompt");
 }
 
-export function getMerch(): Product[] {
+export function getMerchProducts(products: Product[] = initialProducts): Product[] {
   return products.filter((p) => p.category === "merch");
-}
-
-export function getProductBySlug(slug: string): Product | undefined {
-  return products.find((p) => p.slug === slug);
 }

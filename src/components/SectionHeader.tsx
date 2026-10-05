@@ -23,8 +23,8 @@ export default function SectionHeader({
     <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
       <div>
         {badge && (
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-violet-950/70 text-violet-300 border border-violet-800/40 mb-2">
-            {Icon && <Icon className="h-3 w-3 text-violet-400" />}
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-indigo-950/80 text-indigo-300 border border-indigo-800/40 mb-2.5">
+            {Icon && <Icon className="h-3 w-3 text-indigo-400" />}
             <span>{badge}</span>
           </div>
         )}
@@ -39,7 +39,7 @@ export default function SectionHeader({
       {viewAllHref && (
         <Link
           href={viewAllHref}
-          className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-violet-400 hover:text-violet-300 transition-colors group flex-shrink-0"
+          className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-indigo-400 hover:text-indigo-300 transition-colors group flex-shrink-0"
         >
           <span>{viewAllText}</span>
           <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />

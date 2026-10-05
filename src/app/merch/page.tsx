@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Shirt,
   Search,
@@ -9,17 +9,25 @@ import {
   Truck,
   ShieldCheck,
 } from "lucide-react";
-import { getMerch, Product } from "@/data/products";
+import { Product, initialProducts, getLiveProducts, getMerchProducts } from "@/data/products";
 import { brandConfig } from "@/data/socials";
 import ProductCard from "@/components/ProductCard";
 import ProductQuickViewModal from "@/components/ProductQuickViewModal";
 
 export default function MerchPage() {
-  const allMerch = useMemo(() => getMerch(), []);
+  const [products, setProducts] = useState<Product[]>(getMerchProducts(initialProducts));
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string>("All");
   const [sortBy, setSortBy] = useState<string>("popular");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    getLiveProducts().then((live) => {
+      if (live && live.length > 0) {
+        setProducts(getMerchProducts(live));
+      }
+    });
+  }, []);
 
   const merchTypes = [
     "All",
@@ -32,7 +40,7 @@ export default function MerchPage() {
   ];
 
   const filteredMerch = useMemo(() => {
-    return allMerch
+    return products
       .filter((item) => {
         const matchesSearch =
           item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -46,36 +54,36 @@ export default function MerchPage() {
         return matchesSearch && matchesType;
       })
       .sort((a, b) => {
-        if (sortBy === "popular") return b.salesCount - a.salesCount;
+        if (sortBy === "popular") return b.reviewsCount - a.reviewsCount;
         if (sortBy === "rating") return b.rating - a.rating;
         if (sortBy === "price-low") return a.price - b.price;
         if (sortBy === "price-high") return b.price - a.price;
         return 0;
       });
-  }, [allMerch, searchQuery, selectedType, sortBy]);
+  }, [products, searchQuery, selectedType, sortBy]);
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 py-12">
+    <main className="min-h-screen bg-[#090d14] text-slate-100 py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Page Header */}
-        <div className="relative rounded-3xl border border-rose-900/40 bg-gradient-to-r from-slate-900 via-rose-950/20 to-slate-900 p-8 sm:p-12 mb-10 overflow-hidden">
+        <div className="relative rounded-3xl border border-white/[0.08] bg-gradient-to-r from-slate-900 via-slate-900/80 to-indigo-950/20 p-8 sm:p-12 mb-10 overflow-hidden">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-rose-950/80 text-rose-300 border border-rose-800/50 mb-4">
-              <Shirt className="h-3.5 w-3.5 text-rose-400" />
-              <span>Redbubble Official Collection</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-slate-900 text-slate-200 border border-slate-700/60 mb-4">
+              <Shirt className="h-3.5 w-3.5 text-indigo-400" />
+              <span>Redbubble Official Storefront</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              T-Shirts, Stickers, Mugs & Studio Gear
+              T-Shirts, Stickers, Mugs & Studio Apparel
             </h1>
 
             <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-              Streetwear aesthetic meets cybernetic tech art. Heavyweight 220 GSM cotton tees, holographic UV-coated vinyl stickers, and glossy ceramic drinkware printed on-demand and shipped worldwide via Redbubble.
+              Streetwear aesthetic meets cybernetic tech art. Heavyweight 220 GSM cotton tees, waterproof UV-coated vinyl stickers, and glossy ceramic drinkware printed on-demand and shipped worldwide via Redbubble.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-slate-400">
               <span className="flex items-center gap-1.5 text-slate-200">
-                <Truck className="h-4 w-4 text-rose-400" /> Global Tracked Shipping
+                <Truck className="h-4 w-4 text-indigo-400" /> Global Tracked Shipping
               </span>
               <span className="flex items-center gap-1.5 text-slate-200">
                 <ShieldCheck className="h-4 w-4 text-emerald-400" /> 30-Day Money-Back Guarantee
@@ -84,9 +92,9 @@ export default function MerchPage() {
                 href={brandConfig.socials.redbubble}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-rose-400 hover:text-rose-300 font-semibold"
+                className="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 font-semibold"
               >
-                <span>Visit Redbubble Shop</span>
+                <span>Visit Redbubble Shop @playkit01</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </div>
@@ -94,7 +102,7 @@ export default function MerchPage() {
         </div>
 
         {/* Filter & Search Bar */}
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8 bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8 bg-slate-900/60 p-4 rounded-2xl border border-white/[0.08]">
           {/* Search Box */}
           <div className="relative flex-1">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -103,7 +111,7 @@ export default function MerchPage() {
               placeholder="Search by apparel type, sticker name, or artwork theme..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-sm bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 transition-colors"
+              className="w-full pl-10 pr-4 py-2 text-sm bg-slate-950 border border-white/[0.08] rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
             />
           </div>
 
@@ -116,8 +124,8 @@ export default function MerchPage() {
                 onClick={() => setSelectedType(type)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
                   selectedType === type
-                    ? "bg-rose-600 text-white shadow-md shadow-rose-950"
-                    : "bg-slate-950 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700"
+                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-950"
+                    : "bg-slate-950 text-slate-400 hover:text-white border border-white/[0.08] hover:border-slate-700"
                 }`}
               >
                 {type}
@@ -131,7 +139,7 @@ export default function MerchPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-slate-950 text-xs text-slate-300 border border-slate-800 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500"
+              className="bg-slate-950 text-xs text-slate-300 border border-white/[0.08] rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500"
             >
               <option value="popular">Most Popular</option>
               <option value="rating">Highest Rated</option>
@@ -149,7 +157,7 @@ export default function MerchPage() {
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="text-rose-400 hover:underline"
+              className="text-indigo-400 hover:underline"
             >
               Clear search &quot;{searchQuery}&quot;
             </button>
@@ -168,7 +176,7 @@ export default function MerchPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 border border-dashed border-slate-800 rounded-2xl bg-slate-950/40">
+          <div className="text-center py-20 border border-dashed border-white/[0.08] rounded-2xl bg-slate-950/40">
             <Shirt className="h-10 w-10 text-slate-600 mx-auto mb-3" />
             <h3 className="text-base font-bold text-white">No Merch Found</h3>
             <p className="text-xs text-slate-400 mt-1">
