@@ -58,7 +58,7 @@ export default function HomePage() {
             <div className="flex items-center gap-2">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#121212]" />
               <span className="truncate">
-                OFFICIAL DISPATCH • PROMPTBASE & REDBUBBLE VERIFIED
+                OFFICIAL DISPATCH • PROMPTBASE & FOURTHWALL VERIFIED
               </span>
             </div>
           </div>
@@ -142,15 +142,13 @@ export default function HomePage() {
                   <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
                 </a>
                 <span>•</span>
-                <a
-                  href={brandConfig.socials.redbubble}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#121212] transition-colors flex items-center gap-1"
+                <Link
+                  href="/merch"
+                  className="hover:text-[#121212] transition-colors flex items-center gap-1 font-medium text-[#121212]"
                 >
-                  <span>Redbubble @playkit01</span>
+                  <span>Fourthwall Storefront</span>
                   <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -200,8 +198,8 @@ export default function HomePage() {
                 </div>
 
                 {/* Archival Specimen Swatch Card (z-20 stacking tier) */}
-                {/* On desktop (md+): floats over bottom-right. On mobile (<md): sits neatly below */}
-                <div className="mt-4 md:mt-0 md:absolute md:-bottom-8 md:-right-8 z-20 w-full md:w-64 p-4 bg-[#FAF9F5] border border-[#E7E5E0] shadow-lg">
+                {/* On desktop (md+): floats over bottom-right. On mobile (<md): uncouples from absolute and stacks below cleanly with border-t */}
+                <div className="mt-4 pt-4 border-t border-[#E7E5E0] md:border-t-0 md:pt-4 md:mt-0 md:absolute md:-bottom-8 md:-right-8 z-20 w-full md:w-64 p-4 bg-[#FAF9F5] border md:border-[#E7E5E0] shadow-lg">
                   <div className="flex items-center gap-2 mb-2 pb-2 border-b border-[#E7E5E0]">
                     <Binary className="h-3.5 w-3.5 text-[#7A6A5C] stroke-[1.5]" />
                     <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#121212]">
@@ -210,15 +208,15 @@ export default function HomePage() {
                   </div>
                   <div className="space-y-1.5 text-[11px]">
                     <div className="flex items-center justify-between">
-                      <span className="text-[#666662]">Architecture</span>
-                      <span className="font-medium text-[#121212]">Retro Badge</span>
+                      <span className="text-[#666662]">Formula</span>
+                      <span className="font-medium text-[#121212]">Retro Badge Architecture</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-[#666662]">Seed Variance</span>
                       <span className="font-medium text-[#121212]">Deterministic</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-[#666662]">Master Scale</span>
+                      <span className="text-[#666662]">Resolution</span>
                       <span className="font-medium text-[#121212]">4096 × 4096px</span>
                     </div>
                   </div>
@@ -229,14 +227,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. CONTINUOUS EDITORIAL MARQUEE TICKER (38s Majestic Pace with Hover-to-Pause) */}
+      {/* 2. CONTINUOUS EDITORIAL MARQUEE TICKER (35s Majestic Pace with Hover-to-Pause) */}
       <section className="border-b border-[#E7E5E0] bg-[#F5F3EE] overflow-hidden py-3">
         <div className="animate-marquee items-center gap-8 text-[11px] uppercase tracking-[0.25em] text-[#121212] font-medium whitespace-nowrap">
           <span>ISSUE 01 • COMPUTATIONAL FORMULAS</span>
           <span className="text-[#7A6A5C]">•</span>
           <span>VERIFIED ON PROMPTBASE ARCHIVE</span>
           <span className="text-[#7A6A5C]">•</span>
-          <span>REDBUBBLE ARCHIVAL STREETWEAR</span>
+          <span>FOURTHWALL ARCHIVAL APPAREL</span>
           <span className="text-[#7A6A5C]">•</span>
           <span>100% COMBED COTTON APPAREL</span>
           <span className="text-[#7A6A5C]">•</span>
@@ -253,7 +251,7 @@ export default function HomePage() {
           <span className="text-[#7A6A5C]">•</span>
           <span>VERIFIED ON PROMPTBASE ARCHIVE</span>
           <span className="text-[#7A6A5C]">•</span>
-          <span>REDBUBBLE ARCHIVAL STREETWEAR</span>
+          <span>FOURTHWALL ARCHIVAL APPAREL</span>
           <span className="text-[#7A6A5C]">•</span>
           <span>100% COMBED COTTON APPAREL</span>
           <span className="text-[#7A6A5C]">•</span>
@@ -357,7 +355,7 @@ export default function HomePage() {
           <SectionHeader
             chapter="NO. II"
             title="The Permanent Collection"
-            subtitle="The highest-rated community editions with verified acquisitions on PromptBase and Redbubble."
+            subtitle="The highest-rated community editions with verified acquisitions on PromptBase and Fourthwall."
             badge="Archival Standards"
             viewAllHref="/merch"
             viewAllText="Explore all editions"
@@ -426,7 +424,7 @@ export default function HomePage() {
                   <div className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-[#121212] shrink-0 mt-0.5 stroke-[1.5]" />
                     <p className="text-xs text-[#666662] leading-relaxed">
-                      <strong className="text-[#121212] font-medium">Redbubble Garment Production:</strong> Direct-to-garment digital screen printing on 100% ringspun cotton, worldwide tracked logistics, and 30-day returns.
+                      <strong className="text-[#121212] font-medium">Fourthwall Headless Commerce:</strong> Premium ringspun cotton screen prints, tracked worldwide logistics, and secure checkout on checkout.playkit01.store.
                     </p>
                   </div>
                 </div>
@@ -453,10 +451,8 @@ export default function HomePage() {
                   <ArrowUpRight className="h-5 w-5 text-[#121212] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform stroke-[1.5]" />
                 </a>
 
-                <a
-                  href={brandConfig.socials.redbubble}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/merch"
                   className="p-6 border border-[#E7E5E0] bg-[#FAF9F5] hover:bg-[#F5F3EE] transition-colors flex items-center justify-between group block shadow-2xs"
                 >
                   <div>
@@ -464,21 +460,21 @@ export default function HomePage() {
                       Physical Garments & Goods
                     </span>
                     <span className="font-serif text-lg text-[#121212] font-normal group-hover:text-[#7A6A5C] transition-colors mt-0.5 block">
-                      Redbubble Shop @playkit01
+                      Fourthwall Physical Editions
                     </span>
                     <p className="text-xs text-[#666662] mt-1 font-light">
                       Heavyweight tees, vinyl stickers & mugs
                     </p>
                   </div>
                   <ArrowUpRight className="h-5 w-5 text-[#121212] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform stroke-[1.5]" />
-                </a>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* QUICK VIEW EDITORIAL MODAL (z-60) */}
+      {/* QUICK VIEW EDITORIAL MODAL (Strict z-60) */}
       <ProductQuickViewModal
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}

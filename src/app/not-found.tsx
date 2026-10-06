@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 py-24 text-center">
       <div className="max-w-md mx-auto space-y-6">
-        <span className="text-xs uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+        <span className="text-xs uppercase tracking-[0.25em] text-[#8C7A6B] font-semibold">
           Error 404 • Index Missing
         </span>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { X, ArrowUpRight, Copy, Check, Plus } from "lucide-react";
 import { Product } from "@/data/products";
@@ -16,11 +16,17 @@ export default function ProductQuickViewModal({
   onClose,
 }: ProductQuickViewModalProps) {
   const [copied, setCopied] = useState(false);
+  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
   const { addItem } = useCart();
+
+  const handleClose = useCallback(() => {
+    setSelectedVariantId(null);
+    onClose();
+  }, [onClose]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     };
     if (product) {
       document.body.style.overflow = "hidden";
@@ -30,9 +36,12 @@ export default function ProductQuickViewModal({
       document.body.style.overflow = "unset";
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [product, onClose]);
+  }, [product, handleClose]);
 
   if (!product) return null;
+
+  const defaultVariantId = product.fourthwallVariantId || product.variants?.[0]?.id || "";
+  const activeVariantId = selectedVariantId || defaultVariantId;
 
   const isPrompt = product.category === "prompt";
   const imageSrc =
@@ -48,8 +57,12 @@ export default function ProductQuickViewModal({
   };
 
   const handleAddToBag = () => {
-    addItem(product);
+    addItem(product, 1, activeVariantId);
+    handleClose();
   };
+
+  const activeVariant = product.variants?.find((v) => v.id === activeVariantId);
+  const displayPrice = activeVariant?.price || product.price;
 
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-in fade-in duration-200">
@@ -97,11 +110,11 @@ export default function ProductQuickViewModal({
         <div className="flex-1 p-6 sm:p-8 overflow-y-auto flex flex-col justify-between">
           <div>
             <div className="flex items-baseline justify-between gap-4 mb-2">
-              <span className="text-xs uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+              <span className="text-xs uppercase tracking-[0.25em] text-[#8C7A6B] font-semibold">
                 Archival Record • Vol. 01
               </span>
               <span className="font-serif text-2xl text-[#121212] font-normal">
-                ${product.price.toFixed(2)}
+                ${displayPrice.toFixed(2)}
               </span>
             </div>
 
@@ -113,6 +126,31 @@ export default function ProductQuickViewModal({
               {product.description || product.shortDescription}
             </p>
 
+            {/* Fourthwall Variant Selector for Merch */}
+            {!isPrompt && product.variants && product.variants.length > 1 && (
+              <div className="mt-6 pt-4 border-t border-[#E7E5E0]">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-[#121212] font-semibold block mb-2">
+                  Select Dimension / Specimen
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {product.variants.map((variant) => (
+                    <button
+                      key={variant.id}
+                      type="button"
+                      onClick={() => setSelectedVariantId(variant.id)}
+                      className={`px-3 py-1.5 text-xs uppercase tracking-wider border transition-colors ${
+                        activeVariantId === variant.id
+                          ? "bg-[#121212] text-[#FAF9F5] border-[#121212]"
+                          : "bg-white text-[#666662] border-[#E7E5E0] hover:text-[#121212] hover:border-[#121212]"
+                      }`}
+                    >
+                      {variant.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Specifications Grid */}
             <div className="mt-6 pt-6 border-t border-[#E7E5E0] space-y-3">
               <span className="text-[10px] uppercase tracking-[0.2em] text-[#121212] font-semibold block">
@@ -122,7 +160,7 @@ export default function ProductQuickViewModal({
               {isPrompt && product.promptDetails && (
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div className="p-2.5 border border-[#E7E5E0] bg-[#FFFFFF]">
-                    <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C] block">
+                    <span className="text-[10px] uppercase tracking-wider text-[#8C7A6B] block">
                       Target Engine
                     </span>
                     <span className="font-medium text-[#121212] mt-0.5 block">
@@ -130,7 +168,7 @@ export default function ProductQuickViewModal({
                     </span>
                   </div>
                   <div className="p-2.5 border border-[#E7E5E0] bg-[#FFFFFF]">
-                    <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C] block">
+                    <span className="text-[10px] uppercase tracking-wider text-[#8C7A6B] block">
                       Aspect Formats
                     </span>
                     <span className="font-medium text-[#121212] mt-0.5 block">
@@ -143,7 +181,7 @@ export default function ProductQuickViewModal({
               {!isPrompt && product.merchDetails && (
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div className="p-2.5 border border-[#E7E5E0] bg-[#FFFFFF]">
-                    <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C] block">
+                    <span className="text-[10px] uppercase tracking-wider text-[#8C7A6B] block">
                       Material Quality
                     </span>
                     <span className="font-medium text-[#121212] mt-0.5 block truncate">
@@ -151,7 +189,7 @@ export default function ProductQuickViewModal({
                     </span>
                   </div>
                   <div className="p-2.5 border border-[#E7E5E0] bg-[#FFFFFF]">
-                    <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C] block">
+                    <span className="text-[10px] uppercase tracking-wider text-[#8C7A6B] block">
                       Print Specification
                     </span>
                     <span className="font-medium text-[#121212] mt-0.5 block truncate">
@@ -165,7 +203,7 @@ export default function ProductQuickViewModal({
               {isPrompt && product.promptDetails?.promptPreviewSnippet && (
                 <div className="mt-3 p-3 bg-[#F5F3EE] border border-[#E7E5E0]">
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C] font-medium">
+                    <span className="text-[10px] uppercase tracking-wider text-[#8C7A6B] font-medium">
                       Formula Blueprint Preview
                     </span>
                     <button
@@ -195,23 +233,25 @@ export default function ProductQuickViewModal({
 
           {/* Action Row */}
           <div className="mt-8 pt-6 border-t border-[#E7E5E0] flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <button
-              onClick={handleAddToBag}
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 border border-[#121212] text-xs uppercase tracking-[0.2em] font-medium text-[#121212] hover:bg-[#121212] hover:text-[#FAF9F5] transition-colors"
-            >
-              <Plus className="h-3.5 w-3.5 stroke-[1.5]" />
-              <span>Add to Archive Bag</span>
-            </button>
-
-            <a
-              href={product.externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-[#121212] text-xs uppercase tracking-[0.2em] font-medium text-[#FAF9F5] hover:bg-[#262626] transition-colors"
-            >
-              <span>Acquire on {isPrompt ? "PromptBase" : "Redbubble"}</span>
-              <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
-            </a>
+            {!isPrompt ? (
+              <button
+                onClick={handleAddToBag}
+                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-[#121212] text-xs uppercase tracking-[0.2em] font-medium text-[#FAF9F5] hover:bg-[#262626] transition-colors"
+              >
+                <Plus className="h-3.5 w-3.5 stroke-[1.5]" />
+                <span>Add to Archive Bag</span>
+              </button>
+            ) : (
+              <a
+                href={product.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-[#121212] text-xs uppercase tracking-[0.2em] font-medium text-[#FAF9F5] hover:bg-[#262626] transition-colors"
+              >
+                <span>Acquire Blueprint on PromptBase</span>
+                <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
+              </a>
+            )}
           </div>
         </div>
       </div>

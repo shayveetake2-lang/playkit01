@@ -10,10 +10,9 @@ import {
 import {
   Product,
   initialProducts,
-  getLiveProducts,
   getMerchProducts,
 } from "@/data/products";
-import { brandConfig } from "@/data/socials";
+import { getFourthwallProducts } from "@/lib/fourthwall";
 import ProductCard from "@/components/ProductCard";
 import ProductQuickViewModal from "@/components/ProductQuickViewModal";
 
@@ -27,9 +26,9 @@ export default function MerchPage() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    getLiveProducts().then((live) => {
+    getFourthwallProducts().then((live) => {
       if (live && live.length > 0) {
-        setProducts(getMerchProducts(live));
+        setProducts(live);
       }
     });
   }, []);
@@ -75,12 +74,12 @@ export default function MerchPage() {
         {/* Editorial Section Masthead */}
         <div className="border-b border-[#E7E5E0] pb-10 mb-12">
           <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] font-semibold">
               Directory 02 • Physical Garments & Objects
             </span>
             <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#666662]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#121212]" />
-              <span>Redbubble Verified Fulfilled Edition</span>
+              <span>Fourthwall Verified Fulfilled Edition</span>
             </div>
           </div>
 
@@ -89,23 +88,23 @@ export default function MerchPage() {
           </h1>
 
           <p className="mt-4 text-xs sm:text-sm text-[#666662] max-w-2xl leading-relaxed font-light">
-            Heavyweight 220 GSM ringspun cotton tees, waterproof UV-coated vinyl sticker packs, and glossy ceramic drinkware printed on-demand and dispatched worldwide via Redbubble with tracked delivery.
+            Heavyweight 220 GSM ringspun cotton tees, waterproof UV-coated vinyl sticker packs, and glossy ceramic drinkware printed on-demand and dispatched worldwide via Fourthwall with direct branded checkout on checkout.playkit01.store.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-6 text-[11px] uppercase tracking-wider text-[#666662]">
             <a
-              href={brandConfig.socials.redbubble}
+              href="https://checkout.playkit01.store"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1 font-semibold"
             >
-              <span>Redbubble Store @playkit01</span>
+              <span>Fourthwall Storefront @playkit01</span>
               <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
             </a>
             <span>•</span>
-            <span>Global Tracked Dispatch</span>
+            <span>Global Tracked Logistics</span>
             <span>•</span>
-            <span>30-Day Guarantee</span>
+            <span>Direct Branded Checkout</span>
           </div>
         </div>
 
@@ -172,7 +171,7 @@ export default function MerchPage() {
           )}
         </div>
 
-        {/* Products Grid */}
+        {/* Products Grid (Strict aspect-[3/4] museum matting preserved) */}
         {filteredMerch.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredMerch.map((item) => (
@@ -196,7 +195,7 @@ export default function MerchPage() {
         )}
       </div>
 
-      {/* QUICK VIEW MODAL */}
+      {/* QUICK VIEW MODAL (Strict z-60) */}
       <ProductQuickViewModal
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}

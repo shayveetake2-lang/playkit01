@@ -16,6 +16,7 @@
 }
 
 :root {
+  color-scheme: light;
   --background: #FAF9F5;
   --foreground: #121212;
 }
@@ -44,7 +45,7 @@ body {
   animation: pageEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Infinite Editorial Marquee Ticker (38s majestically paced) */
+/* Infinite Editorial Marquee Ticker (35s majestically paced) */
 @keyframes marquee {
   0% {
     transform: translateX(0%);
@@ -57,7 +58,7 @@ body {
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 38s linear infinite;
+  animation: marquee 35s linear infinite;
 }
 
 .animate-marquee:hover {

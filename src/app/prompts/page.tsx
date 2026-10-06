@@ -74,7 +74,7 @@ export default function PromptsPage() {
         {/* Editorial Section Masthead */}
         <div className="border-b border-[#E7E5E0] pb-10 mb-12">
           <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] font-semibold">
               Directory 01 • Computational Formulas
             </span>
             <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#666662]">

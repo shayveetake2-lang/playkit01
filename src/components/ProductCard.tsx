@@ -25,10 +25,10 @@ export default function ProductCard({
     "";
   const categoryLabel = isPrompt
     ? product.promptDetails?.aiEngine || "Prompt Formula"
-    : product.merchDetails?.merchType || "Garment Piece";
+    : product.merchDetails?.merchType || "Physical Edition";
 
   return (
-    <article className="group relative flex flex-col p-3 bg-white border border-[#E7E5E0] shadow-[0_2px_14px_rgba(18,18,18,0.04),0_1px_3px_rgba(18,18,18,0.02)] hover:shadow-[0_8px_30px_rgba(18,18,18,0.08)] transition-all duration-300">
+    <article className="group relative flex flex-col p-3 bg-white border border-[#E7E5E0] shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(18,18,18,0.08)] transition-all duration-300">
       {/* Museum Passe-Partout Framed Art Container */}
       <div
         onClick={() => onQuickView(product)}
@@ -57,7 +57,7 @@ export default function ProductCard({
           )}
         </div>
 
-        {/* Hover Action Indicator - strictly pointer-events-none */}
+        {/* Hover Action Indicator */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/15 pointer-events-none">
           <div className="w-20 h-20 rounded-full border border-white/90 bg-white/40 backdrop-blur-xs flex items-center justify-center text-white shadow-sm transform scale-90 group-hover:scale-100 transition-transform duration-300">
             <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-white drop-shadow-xs">
@@ -71,7 +71,7 @@ export default function ProductCard({
       <div className="pt-4 flex-1 flex flex-col justify-between">
         <div>
           <div className="flex items-baseline justify-between gap-2 mb-1.5">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] font-semibold">
               {isPrompt ? "Computational Formula" : "Physical Edition"}
             </span>
             <span className="font-serif text-sm text-[#121212] font-medium">
@@ -103,14 +103,27 @@ export default function ProductCard({
               <span>Inspect</span>
             </button>
 
-            <button
-              type="button"
-              onClick={() => addItem(product)}
-              className="text-xs uppercase tracking-widest text-[#7A6A5C] hover:text-[#121212] transition-colors flex items-center gap-1"
-            >
-              <Plus className="h-3.5 w-3.5 stroke-[1.5]" />
-              <span>Add to Bag</span>
-            </button>
+            {/* Prompts bypass cart; Merch adds to bag */}
+            {!isPrompt ? (
+              <button
+                type="button"
+                onClick={() => addItem(product, 1, product.fourthwallVariantId)}
+                className="text-xs uppercase tracking-widest text-[#7A6A5C] hover:text-[#121212] transition-colors flex items-center gap-1"
+              >
+                <Plus className="h-3.5 w-3.5 stroke-[1.5]" />
+                <span>Add to Bag</span>
+              </button>
+            ) : (
+              <a
+                href={product.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs uppercase tracking-widest text-[#7A6A5C] hover:text-[#121212] transition-colors flex items-center gap-1"
+              >
+                <span>Acquire</span>
+                <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
+              </a>
+            )}
           </div>
 
           <a
@@ -118,9 +131,9 @@ export default function ProductCard({
             target="_blank"
             rel="noopener noreferrer"
             className="text-[11px] uppercase tracking-wider text-[#666662] hover:text-[#121212] transition-colors flex items-center gap-0.5"
-            title={`View on ${isPrompt ? "PromptBase" : "Redbubble"}`}
+            title={isPrompt ? "View on PromptBase" : "Fourthwall Edition"}
           >
-            <span>{isPrompt ? "PromptBase" : "Redbubble"}</span>
+            <span>{isPrompt ? "PromptBase" : "Fourthwall"}</span>
             <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
           </a>
         </div>

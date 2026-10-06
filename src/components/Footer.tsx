@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
 
           <div className="space-y-2">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold flex items-center gap-1.5">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] font-semibold flex items-center gap-1.5">
               <PackageCheck className="h-3 w-3 stroke-[1.5]" />
               <span>Material Integrity</span>
             </span>
@@ -42,12 +42,12 @@ export default function Footer() {
               Heavyweight Garments & Editions
             </h4>
             <p className="text-xs text-[#666662] leading-relaxed">
-              Physical merchandise is fabricated on premium ringspun cotton and archival vinyl, fulfilled worldwide via Redbubble with tracked delivery.
+              Physical merchandise is fabricated on premium ringspun cotton and archival vinyl, fulfilled worldwide via Fourthwall with direct tracked checkout.
             </p>
           </div>
 
           <div className="space-y-2">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold flex items-center gap-1.5">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] font-semibold flex items-center gap-1.5">
               <ShieldCheck className="h-3 w-3 stroke-[1.5]" />
               <span>Verified Fulfillment</span>
             </span>
@@ -55,7 +55,7 @@ export default function Footer() {
               Guaranteed Buyer Protection
             </h4>
             <p className="text-xs text-[#666662] leading-relaxed">
-              Digital purchases are verified instantly on PromptBase; physical pieces carry Redbubble&apos;s 30-day global guarantee and secure checkout.
+              Digital purchases are verified instantly on PromptBase; physical pieces carry Fourthwall&apos;s verified global logistics and secure branded checkout.
             </p>
           </div>
         </div>
@@ -167,12 +167,12 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href={brandConfig.socials.redbubble}
+                  href="https://checkout.playkit01.store"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#7A6A5C] transition-colors flex items-center justify-between"
                 >
-                  <span>Redbubble</span>
+                  <span>Fourthwall</span>
                   <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
                 </a>
               </li>

@@ -12,6 +12,22 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "cdn.sanity.io",
       },
+      {
+        protocol: "https",
+        hostname: "*.fourthwall.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.fourthwall.com",
+      },
+      {
+        protocol: "https",
+        hostname: "assets.fourthwall.com",
+      },
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+      },
     ],
   },
 };
