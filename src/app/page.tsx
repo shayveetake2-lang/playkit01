@@ -227,6 +227,82 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 1.5. HOW IT WORKS EDITORIAL GUIDE */}
+      <section className="border-b border-[#E7E5E0] bg-[#FAF9F5] py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between border-b border-[#E7E5E0] pb-3 mb-8 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-[#121212]">METHODOLOGY</span>
+              <span>•</span>
+              <span>THREE-STEP ACQUISITION WORKFLOW</span>
+            </div>
+            <span className="font-mono text-[9px] hidden sm:inline">PROTOCOL 01</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 divide-y md:divide-y-0 divide-[#E7E5E0] border border-[#E7E5E0] md:border-0">
+            {/* Step 1: Discover */}
+            <div className="p-5 sm:p-6 bg-white border-0 md:border md:border-[#E7E5E0] shadow-[0_2px_12px_rgba(0,0,0,0.04)] flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4 border-b border-[#E7E5E0] pb-2">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+                    [01]
+                  </span>
+                  <span className="text-[9px] uppercase tracking-[0.2em] px-2 py-0.5 bg-[#FAF9F5] border border-[#E7E5E0] text-[#121212]">
+                    Exploration
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl text-[#121212] font-normal mb-2">
+                  Discover
+                </h3>
+                <p className="font-sans text-xs sm:text-sm text-[#666662] leading-relaxed font-light">
+                  Browse digital formulas or physical artifacts. Hand-curated blueprints stress-tested across premier AI engines alongside archival heavyweight apparel.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2: Acquire */}
+            <div className="p-5 sm:p-6 bg-white border-0 md:border md:border-[#E7E5E0] shadow-[0_2px_12px_rgba(0,0,0,0.04)] flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4 border-b border-[#E7E5E0] pb-2">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+                    [02]
+                  </span>
+                  <span className="text-[9px] uppercase tracking-[0.2em] px-2 py-0.5 bg-[#FAF9F5] border border-[#E7E5E0] text-[#121212]">
+                    Fulfillment
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl text-[#121212] font-normal mb-2">
+                  Acquire
+                </h3>
+                <p className="font-sans text-xs sm:text-sm text-[#666662] leading-relaxed font-light">
+                  Instant digital delivery or verified Fourthwall physical dispatch. Direct access to prompt variables and parameters, or worldwide tracked apparel logistics.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3: Create */}
+            <div className="p-5 sm:p-6 bg-white border-0 md:border md:border-[#E7E5E0] shadow-[0_2px_12px_rgba(0,0,0,0.04)] flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4 border-b border-[#E7E5E0] pb-2">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+                    [03]
+                  </span>
+                  <span className="text-[9px] uppercase tracking-[0.2em] px-2 py-0.5 bg-[#FAF9F5] border border-[#E7E5E0] text-[#121212]">
+                    Execution
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl text-[#121212] font-normal mb-2">
+                  Create
+                </h3>
+                <p className="font-sans text-xs sm:text-sm text-[#666662] leading-relaxed font-light">
+                  Apply prompts to your workflow or wear your gear. Seamlessly integrate calibrated outputs into production pipelines or represent the studio in standard cotton.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 2. CONTINUOUS EDITORIAL MARQUEE TICKER (35s Majestic Pace with Hover-to-Pause) */}
       <section className="border-b border-[#E7E5E0] bg-[#F5F3EE] overflow-hidden py-3">
         <div className="animate-marquee items-center gap-8 text-[11px] uppercase tracking-[0.25em] text-[#121212] font-medium whitespace-nowrap">

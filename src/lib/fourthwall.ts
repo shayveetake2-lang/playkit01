@@ -35,9 +35,11 @@ export async function fetchFourthwall<T>(
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => "");
-    throw new Error(
+    const error = new Error(
       `Fourthwall API error [${response.status} ${response.statusText}]: ${errorText}`
     );
+    (error as Error & { status?: number }).status = response.status;
+    throw error;
   }
 
   return response.json();
@@ -164,9 +166,14 @@ export async function getFourthwallProducts(): Promise<Product[]> {
     let rawData: { results?: RawFourthwallProduct[]; products?: RawFourthwallProduct[]; data?: RawFourthwallProduct[] } | RawFourthwallProduct[];
     try {
       rawData = await fetchFourthwall("/collections/all/products");
-    } catch {
-      // Fallback endpoint
-      rawData = await fetchFourthwall("/products");
+    } catch (err: unknown) {
+      // Fallback endpoint if collection endpoint returns 404
+      const status = (err as { status?: number })?.status;
+      if (status === 404) {
+        rawData = await fetchFourthwall("/products");
+      } else {
+        throw err;
+      }
     }
 
     let items: RawFourthwallProduct[] = [];
@@ -183,11 +190,31 @@ export async function getFourthwallProducts(): Promise<Product[]> {
     if (items.length > 0) {
       return items.map(mapFourthwallProduct);
     }
-  } catch (err) {
-    console.info(
-      "Notice: Live Fourthwall fetch returned fallback (using calibrated seed editions):",
-      err instanceof Error ? err.message : err
-    );
+  } catch (err: unknown) {
+    const errorObj = err as { status?: number; message?: string; name?: string };
+    const status = errorObj?.status;
+    const is5xx = typeof status === "number" && status >= 500 && status < 600;
+    const isNetworkError =
+      err instanceof TypeError ||
+      errorObj?.name === "FetchError" ||
+      (typeof errorObj?.message === "string" && (
+        errorObj.message.includes("fetch") ||
+        errorObj.message.includes("network") ||
+        errorObj.message.includes("ENOTFOUND") ||
+        errorObj.message.includes("ECONNREFUSED") ||
+        /\b(500|502|503|504)\b/.test(errorObj.message)
+      ));
+
+    if (is5xx || isNetworkError) {
+      console.info(
+        "Notice: Live Fourthwall fetch returned 5xx server or network offline error (using calibrated seed editions):",
+        err instanceof Error ? err.message : err
+      );
+      return getMerchProducts(initialProducts);
+    }
+
+    // Re-throw 4xx errors (e.g. 401 Unauthorized) to immediately alert on token/configuration issues
+    throw err;
   }
 
   // Graceful offline & development fallback

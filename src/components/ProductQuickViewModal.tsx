@@ -239,7 +239,7 @@ export default function ProductQuickViewModal({
                 className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-[#121212] text-xs uppercase tracking-[0.2em] font-medium text-[#FAF9F5] hover:bg-[#262626] transition-colors"
               >
                 <Plus className="h-3.5 w-3.5 stroke-[1.5]" />
-                <span>Add to Archive Bag</span>
+                <span>Add Garment to Bag</span>
               </button>
             ) : (
               <a
@@ -248,7 +248,7 @@ export default function ProductQuickViewModal({
                 rel="noopener noreferrer"
                 className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-[#121212] text-xs uppercase tracking-[0.2em] font-medium text-[#FAF9F5] hover:bg-[#262626] transition-colors"
               >
-                <span>Acquire Blueprint on PromptBase</span>
+                <span>Get Instant Prompt Link</span>
                 <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
               </a>
             )}

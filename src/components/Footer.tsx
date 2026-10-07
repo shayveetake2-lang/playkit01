@@ -112,13 +112,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/prompts" className="hover:text-[#7A6A5C] transition-colors">
-                  Gemini Image Blueprints
+                <Link href="/studio" className="hover:text-[#7A6A5C] transition-colors">
+                  Studio Monograph
                 </Link>
               </li>
               <li>
-                <Link href="/prompts" className="hover:text-[#7A6A5C] transition-colors">
-                  Claude & Midjourney Systems
+                <Link href="/help" className="hover:text-[#7A6A5C] transition-colors">
+                  Atelier FAQ & Help
                 </Link>
               </li>
             </ul>
@@ -151,9 +151,20 @@ export default function Footer() {
           {/* Directory Column 3 */}
           <div className="lg:col-span-2 space-y-3">
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold block">
-              Verified Outlets
+              Inquiry / Socials
             </span>
             <ul className="space-y-2 text-xs uppercase tracking-wider text-[#121212]">
+              <li>
+                <a
+                  href={brandConfig.socials.linktree}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#7A6A5C] transition-colors flex items-center justify-between"
+                >
+                  <span>Linktree</span>
+                  <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
+                </a>
+              </li>
               <li>
                 <a
                   href={brandConfig.socials.promptbase}

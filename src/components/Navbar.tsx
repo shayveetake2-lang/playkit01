@@ -48,8 +48,8 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/", label: "Index" },
-    { href: "/prompts", label: "Archive" },
-    { href: "/merch", label: "Editions" },
+    { href: "/prompts", label: "Archive", subtext: "(AI Prompts)" },
+    { href: "/merch", label: "Editions", subtext: "(Apparel & Merch)" },
   ];
 
   return (
@@ -90,20 +90,29 @@ export default function Navbar() {
               </button>
 
               {/* Desktop Concise Links */}
-              <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-xs uppercase tracking-[0.2em] font-medium text-[#121212]">
+              <nav className="hidden md:flex items-center gap-6 lg:gap-8">
                 {navLinks.map((link) => {
                   const isActive = pathname === link.href;
                   return (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`relative py-1 hover:text-[#7A6A5C] transition-colors ${
-                        isActive
-                          ? "text-[#121212] font-semibold"
-                          : "text-[#666662]"
-                      }`}
+                      className="group relative py-1 flex flex-col items-start hover:text-[#7A6A5C] transition-colors"
                     >
-                      {link.label}
+                      <span
+                        className={`text-xs uppercase tracking-[0.2em] font-medium ${
+                          isActive
+                            ? "text-[#121212] font-semibold"
+                            : "text-[#666662]"
+                        }`}
+                      >
+                        {link.label}
+                      </span>
+                      {link.subtext && (
+                        <span className="font-sans text-[9px] text-[#7A6A5C] tracking-normal font-normal">
+                          {link.subtext}
+                        </span>
+                      )}
                       {isActive && (
                         <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#121212]" />
                       )}
@@ -187,19 +196,26 @@ export default function Navbar() {
         {/* Mobile Slide-down Drawer */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-[#E7E5E0] bg-[#FAF9F5] px-6 py-8 space-y-6 animate-in slide-in-from-top-2 duration-200">
-            <div className="flex flex-col space-y-4 text-xs uppercase tracking-[0.25em]">
+            <div className="flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`py-1 text-[#121212] ${
+                  className={`flex flex-col py-1 text-[#121212] ${
                     pathname === link.href
                       ? "font-semibold underline underline-offset-4"
                       : "text-[#666662]"
                   }`}
                 >
-                  {link.label}
+                  <span className="text-xs uppercase tracking-[0.25em]">
+                    {link.label}
+                  </span>
+                  {link.subtext && (
+                    <span className="font-sans text-[10px] text-[#7A6A5C] tracking-normal font-normal mt-0.5">
+                      {link.subtext}
+                    </span>
+                  )}
                 </Link>
               ))}
             </div>

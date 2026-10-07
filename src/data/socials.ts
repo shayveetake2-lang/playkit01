@@ -3,6 +3,7 @@ export interface SocialLinks {
   linkedin: string;
   promptbase: string;
   redbubble: string;
+  linktree: string;
 }
 
 export const brandConfig = {
@@ -15,5 +16,6 @@ export const brandConfig = {
     linkedin: "https://www.linkedin.com/in/play-kit-380995440/",
     promptbase: "https://promptbase.com/profile/ploykit",
     redbubble: "https://www.redbubble.com/people/playkit01/shop",
+    linktree: "https://linktr.ee/playkit01",
   },
 };
