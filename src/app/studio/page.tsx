@@ -1,9 +1,10 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Terminal, Sparkles, Layers, ArrowUpRight } from "lucide-react";
 import { brandConfig } from "@/data/socials";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Studio Monograph",
   description:
     "An editorial profile piece on PLAYKIT 01 — exploring generative prompt architecture, automatic AI agents, and physical editions.",
@@ -15,8 +16,8 @@ export default function StudioPage() {
       {/* 1. Header / Chapter Identifier */}
       <section className="border-b border-[#E7E5E0] pt-12 sm:pt-20 pb-12 sm:pb-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
-          <div className="flex items-center justify-between border-b border-[#E7E5E0] pb-3 mb-10 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-[#E7E5E0] pb-3 mb-10 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="font-mono text-[#121212] font-semibold">[CHAPTER NO. 00]</span>
               <span>•</span>
               <span>STUDIO MONOGRAPH</span>

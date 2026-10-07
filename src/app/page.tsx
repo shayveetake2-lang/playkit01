@@ -230,8 +230,8 @@ export default function HomePage() {
       {/* 1.5. HOW IT WORKS EDITORIAL GUIDE */}
       <section className="border-b border-[#E7E5E0] bg-[#FAF9F5] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between border-b border-[#E7E5E0] pb-3 mb-8 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-[#E7E5E0] pb-3 mb-8 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="font-semibold text-[#121212]">METHODOLOGY</span>
               <span>•</span>
               <span>THREE-STEP ACQUISITION WORKFLOW</span>

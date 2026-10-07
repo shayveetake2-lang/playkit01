@@ -26,11 +26,17 @@ export default function MerchPage() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    getFourthwallProducts().then((live) => {
-      if (live && live.length > 0) {
-        setProducts(live);
-      }
-    });
+    getFourthwallProducts()
+      .then((live) => {
+        if (live && live.length > 0) {
+          setProducts(live);
+        }
+      })
+      .catch((err) => {
+        // 4xx (e.g. 401 invalid token) is re-thrown by the client on purpose so it is
+        // never silently masked. Surface it loudly but keep the page usable.
+        console.error("Fourthwall storefront request rejected - check NEXT_PUBLIC_FOURTHWALL_TOKEN:", err);
+      });
   }, []);
 
   const merchTypes = [

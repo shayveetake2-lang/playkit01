@@ -193,17 +193,20 @@ export async function getFourthwallProducts(): Promise<Product[]> {
   } catch (err: unknown) {
     const errorObj = err as { status?: number; message?: string; name?: string };
     const status = errorObj?.status;
-    const is5xx = typeof status === "number" && status >= 500 && status < 600;
+    const hasHttpStatus = typeof status === "number";
+
+    // 5xx server responses -> fall back to seed data
+    const is5xx = hasHttpStatus && status >= 500 && status < 600;
+
+    // Transport-level failures (offline, DNS, refused, CORS-blocked fetch) never carry an
+    // HTTP status. Only inspect the message when there is NO status, so a 4xx response body
+    // that happens to contain words like "fetch" or "500" can never be misclassified.
     const isNetworkError =
-      err instanceof TypeError ||
-      errorObj?.name === "FetchError" ||
-      (typeof errorObj?.message === "string" && (
-        errorObj.message.includes("fetch") ||
-        errorObj.message.includes("network") ||
-        errorObj.message.includes("ENOTFOUND") ||
-        errorObj.message.includes("ECONNREFUSED") ||
-        /\b(500|502|503|504)\b/.test(errorObj.message)
-      ));
+      !hasHttpStatus &&
+      (err instanceof TypeError ||
+        errorObj?.name === "FetchError" ||
+        (typeof errorObj?.message === "string" &&
+          /fetch|network|ENOTFOUND|ECONNREFUSED|ECONNRESET|ETIMEDOUT/i.test(errorObj.message)));
 
     if (is5xx || isNetworkError) {
       console.info(
