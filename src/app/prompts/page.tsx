@@ -37,6 +37,7 @@ export default function PromptsPage() {
   const engines = [
     "All",
     "Gemini Image",
+    "Gemini",
     "ChatGPT / Claude",
     "Midjourney v6",
     "DALL-E 3",
