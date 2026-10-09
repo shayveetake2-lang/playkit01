@@ -19,3 +19,4 @@ export default function PromptsLayout({
 }) {
   return children;
 }
+
