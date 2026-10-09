@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 96" width="390" height="96" fill="none">
+  <!-- Wordmark -->
+  <text x="0" y="58" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="400" fill="#121212" letter-spacing="0.14em">PLAYKIT 01</text>
+  <!-- Subtitle -->
+  <text x="2" y="86" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="600" fill="#7A6A5C" letter-spacing="0.32em">STUDIO ARCHIVE</text>
+  <!-- Geometric Accent Square -->
+  <rect x="360" y="32" width="8" height="8" fill="#8C7A6B"/>
+</svg>

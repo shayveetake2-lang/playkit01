@@ -220,11 +220,11 @@ export default function HomePage() {
                 </div>
 
                 {/* Subtitle Caption */}
-                <div className="pt-3 flex items-center justify-between text-xs">
-                  <span className="font-serif italic text-[#121212] truncate max-w-[220px]">
+                <div className="pt-3 flex items-center justify-between text-xs w-full min-w-0 gap-2">
+                  <span className="font-serif italic text-[#121212] flex-1 min-w-0 truncate">
                     {heroMerchProduct.title}
                   </span>
-                  <span className="font-mono text-[11px] text-[#121212] font-semibold">
+                  <span className="font-mono text-[11px] text-[#121212] font-semibold shrink-0">
                     ${heroMerchProduct.price.toFixed(2)}
                   </span>
                 </div>

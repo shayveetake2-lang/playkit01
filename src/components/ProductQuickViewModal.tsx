@@ -77,7 +77,7 @@ export default function ProductQuickViewModal({
         {/* Dismiss Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 text-[#666662] hover:text-[#121212] transition-colors"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 p-2 text-[#666662] hover:text-[#121212] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer bg-white/70 sm:bg-transparent backdrop-blur-xs sm:backdrop-blur-none rounded-full sm:rounded-none"
           aria-label="Close modal"
         >
           <X className="h-5 w-5 stroke-[1.5]" />
@@ -87,7 +87,7 @@ export default function ProductQuickViewModal({
         <div
           className={`relative w-full md:w-1/2 bg-[#F5F3EE] shrink-0 border-b md:border-b-0 md:border-r border-[#E7E5E0] ${
             isPrompt ? "aspect-[4/3] md:aspect-auto" : "aspect-[3/4] md:aspect-auto"
-          } min-h-[300px] md:min-h-[500px]`}
+          } min-h-[200px] max-h-[260px] md:min-h-[480px] md:max-h-none`}
         >
           <Image
             src={imageSrc}
@@ -97,7 +97,7 @@ export default function ProductQuickViewModal({
             sizes="(max-width: 768px) 100vw, 50vw"
           />
 
-          <div className="absolute top-4 left-4">
+          <div className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4">
             <span className="px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold bg-[#FAF9F5]/90 backdrop-blur-xs text-[#121212] border border-[#E7E5E0]">
               {isPrompt
                 ? product.promptDetails?.aiEngine || "Prompt Formula"
@@ -107,7 +107,7 @@ export default function ProductQuickViewModal({
         </div>
 
         {/* Content Column */}
-        <div className="flex-1 p-6 sm:p-8 overflow-y-auto flex flex-col justify-between">
+        <div className="flex-1 p-5 sm:p-8 overflow-y-auto flex flex-col justify-between min-w-0">
           <div>
             <div className="flex items-baseline justify-between gap-4 mb-2">
               <span className="text-xs uppercase tracking-[0.25em] text-[#8C7A6B] font-semibold">
@@ -223,7 +223,7 @@ export default function ProductQuickViewModal({
                       )}
                     </button>
                   </div>
-                  <p className="font-mono text-[11px] text-[#242424] leading-relaxed break-all">
+                  <p className="font-mono text-[11px] text-[#242424] leading-relaxed break-words whitespace-pre-wrap">
                     {product.promptDetails.promptPreviewSnippet}
                   </p>
                 </div>

@@ -75,10 +75,10 @@ export default function CartDrawer() {
         onClick={() => !isCheckingOut && setIsCartOpen(false)}
       />
 
-      <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
-        <div className="w-screen max-w-md bg-[#FAF9F5] text-[#121212] shadow-2xl border-l border-[#E7E5E0] flex flex-col justify-between animate-in slide-in-from-right duration-300">
+      <div className="fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-10">
+        <div className="w-screen max-w-full sm:max-w-md bg-[#FAF9F5] text-[#121212] shadow-2xl border-l border-[#E7E5E0] flex flex-col justify-between animate-in slide-in-from-right duration-300">
           {/* Header */}
-          <div className="p-6 border-b border-[#E7E5E0] flex items-center justify-between">
+          <div className="p-5 sm:p-6 border-b border-[#E7E5E0] flex items-center justify-between">
             <div className="flex items-baseline gap-2">
               <h2 className="font-serif text-xl font-normal tracking-tight text-[#121212]">
                 Your Archive
@@ -90,7 +90,7 @@ export default function CartDrawer() {
             <button
               onClick={() => setIsCartOpen(false)}
               disabled={isCheckingOut}
-              className="p-2 text-[#666662] hover:text-[#121212] transition-colors disabled:opacity-50"
+              className="p-2 text-[#666662] hover:text-[#121212] transition-colors disabled:opacity-50 min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
               aria-label="Close archive bag"
             >
               <X className="h-5 w-5 stroke-[1.5]" />
@@ -139,16 +139,16 @@ export default function CartDrawer() {
                       </div>
 
                       {/* Details */}
-                      <div className="flex-1 flex flex-col justify-between">
-                        <div>
+                      <div className="flex-1 flex flex-col justify-between min-w-0">
+                        <div className="min-w-0">
                           <div className="flex items-start justify-between gap-2">
-                            <h3 className="font-serif text-sm text-[#121212] leading-snug line-clamp-1">
+                            <h3 className="font-serif text-sm text-[#121212] leading-snug line-clamp-1 break-words">
                               {product.title}
                             </h3>
                             <button
                               onClick={() => removeItem(itemKey)}
                               disabled={isCheckingOut}
-                              className="text-[#666662] hover:text-[#121212] transition-colors p-1 disabled:opacity-50"
+                              className="text-[#666662] hover:text-[#121212] transition-colors p-1 disabled:opacity-50 shrink-0"
                               title="Remove item"
                             >
                               <Trash2 className="h-3.5 w-3.5 stroke-[1.5]" />

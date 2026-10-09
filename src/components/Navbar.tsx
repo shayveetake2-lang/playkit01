@@ -80,7 +80,7 @@ export default function Navbar() {
               <Link href="/" className="inline-flex flex-col items-start group">
                 {logoAvailable ? (
                   <Image
-                    src="/logo.png"
+                    src="/logo.svg"
                     alt="PLAYKIT 01"
                     width={130}
                     height={32}
@@ -167,7 +167,7 @@ export default function Navbar() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-1.5 text-[#121212] hover:text-[#7A6A5C] transition-colors cursor-pointer"
+                className="md:hidden p-2.5 -mr-2 text-[#121212] hover:text-[#7A6A5C] transition-colors cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Toggle navigation"
               >
                 {mobileMenuOpen ? (

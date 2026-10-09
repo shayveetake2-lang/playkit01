@@ -240,7 +240,7 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="e.g. Alex Mercer"
-                        className={`w-full px-3.5 py-2.5 border text-xs bg-[#FAF9F5] focus:outline-none focus:border-[#121212] transition-colors ${
+                        className={`w-full px-3.5 py-2.5 border text-base sm:text-xs bg-[#FAF9F5] focus:outline-none focus:border-[#121212] transition-colors ${
                           errors.name ? "border-red-500" : "border-[#E7E5E0]"
                         }`}
                       />
@@ -257,7 +257,7 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="alex@domain.com"
-                        className={`w-full px-3.5 py-2.5 border text-xs bg-[#FAF9F5] focus:outline-none focus:border-[#121212] transition-colors ${
+                        className={`w-full px-3.5 py-2.5 border text-base sm:text-xs bg-[#FAF9F5] focus:outline-none focus:border-[#121212] transition-colors ${
                           errors.email ? "border-red-500" : "border-[#E7E5E0]"
                         }`}
                       />
@@ -275,7 +275,7 @@ export default function ContactPage() {
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       placeholder="e.g. Custom Prompt Formula for Architectural Visuals"
-                      className="w-full px-3.5 py-2.5 border border-[#E7E5E0] text-xs bg-[#FAF9F5] focus:outline-none focus:border-[#121212] transition-colors"
+                      className="w-full px-3.5 py-2.5 border border-[#E7E5E0] text-base sm:text-xs bg-[#FAF9F5] focus:outline-none focus:border-[#121212] transition-colors"
                     />
                   </div>
 
@@ -289,7 +289,7 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Describe your requirements, preferred models (Gemini, Midjourney, Claude), target delivery date, or Fourthwall order question..."
-                      className={`w-full px-3.5 py-2.5 border text-xs bg-[#FAF9F5] focus:outline-none focus:border-[#121212] transition-colors resize-y ${
+                      className={`w-full px-3.5 py-2.5 border text-base sm:text-xs bg-[#FAF9F5] focus:outline-none focus:border-[#121212] transition-colors resize-y ${
                         errors.message ? "border-red-500" : "border-[#E7E5E0]"
                       }`}
                     />

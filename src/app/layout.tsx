@@ -56,7 +56,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen flex flex-col bg-[#FAF9F5] text-[#121212] antialiased selection:bg-[#E8E4DC] selection:text-[#121212]">
+      <body className="min-h-screen flex flex-col bg-[#FAF9F5] text-[#121212] antialiased selection:bg-[#E8E4DC] selection:text-[#121212] overflow-x-hidden">
         <CartProvider>
           <Navbar />
           <CartDrawer />

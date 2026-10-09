@@ -28,7 +28,7 @@ export default function ProductCard({
     : product.merchDetails?.merchType || "Physical Edition";
 
   return (
-    <article className="group relative flex flex-col p-3 bg-white border border-[#E7E5E0] shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(18,18,18,0.08)] transition-all duration-300">
+    <article className="group relative flex flex-col p-3 bg-white border border-[#E7E5E0] shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(18,18,18,0.08)] transition-all duration-300 w-full overflow-hidden">
       {/* Museum Passe-Partout Framed Art Container */}
       <div
         onClick={() => onQuickView(product)}
@@ -41,17 +41,17 @@ export default function ProductCard({
           alt={product.title}
           fill
           priority={priority}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
         />
 
         {/* Embossed Archival Seal */}
-        <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5 z-10">
-          <span className="px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.2em] bg-[#FAF9F5]/95 backdrop-blur-xs text-[#121212] border border-[#E7E5E0] shadow-2xs">
+        <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5 z-10 max-w-[calc(100%-20px)]">
+          <span className="px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.2em] bg-[#FAF9F5]/95 backdrop-blur-xs text-[#121212] border border-[#E7E5E0] shadow-2xs truncate">
             {categoryLabel}
           </span>
           {product.isMostPurchased && (
-            <span className="px-2 py-0.5 text-[9px] font-semibold uppercase tracking-widest bg-[#121212] text-[#FAF9F5]">
+            <span className="px-2 py-0.5 text-[9px] font-semibold uppercase tracking-widest bg-[#121212] text-[#FAF9F5] shrink-0">
               Edition 01
             </span>
           )}
@@ -68,74 +68,63 @@ export default function ProductCard({
       </div>
 
       {/* Editorial Content Suite */}
-      <div className="pt-4 flex-1 flex flex-col justify-between">
-        <div>
-          <div className="flex items-baseline justify-between gap-2 mb-1.5">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] font-semibold">
-              {isPrompt ? "Computational Formula" : "Physical Edition"}
+      <div className="pt-3.5 flex-1 flex flex-col justify-between w-full min-w-0">
+        <div className="w-full min-w-0">
+          <div className="flex items-center justify-between gap-2 mb-1.5 w-full min-w-0">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-[#8C7A6B] font-semibold flex-1 min-w-0 truncate">
+              {isPrompt ? "Prompt Formula" : "Physical Edition"}
             </span>
-            <span className="font-serif text-sm text-[#121212] font-medium">
+            <span className="font-serif text-sm text-[#121212] font-medium shrink-0">
               ${product.price.toFixed(2)}
             </span>
           </div>
 
           <h3
             onClick={() => onQuickView(product)}
-            className="font-serif text-base text-[#121212] font-normal tracking-tight line-clamp-1 hover:text-[#7A6A5C] cursor-pointer transition-colors"
+            className="font-serif text-base text-[#121212] font-normal tracking-tight line-clamp-1 break-words hover:text-[#7A6A5C] cursor-pointer transition-colors w-full"
+            title={product.title}
           >
             {product.title}
           </h3>
 
-          <p className="mt-1 text-xs text-[#666662] line-clamp-2 leading-relaxed font-light">
+          <p className="mt-1 text-xs text-[#666662] line-clamp-2 leading-relaxed font-light break-words">
             {product.shortDescription || product.description}
           </p>
         </div>
 
-        {/* Action Row */}
-        <div className="mt-4 pt-3 border-t border-[#E7E5E0] flex items-center justify-between text-xs">
-          <div className="flex items-center gap-3">
+        {/* Streamlined Action Row: Balanced 2-Action Layout for Universal Fit */}
+        <div className="mt-3.5 pt-3 border-t border-[#E7E5E0] flex items-center justify-between gap-2 text-xs w-full min-w-0">
+          <button
+            type="button"
+            onClick={() => onQuickView(product)}
+            className="text-[11px] uppercase tracking-widest text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1 shrink-0 py-1"
+          >
+            <Eye className="h-3.5 w-3.5 stroke-[1.5]" />
+            <span>Inspect</span>
+          </button>
+
+          {/* Primary Action Button (Add to Bag for merch, Direct acquire link for prompts) */}
+          {!isPrompt ? (
             <button
               type="button"
-              onClick={() => onQuickView(product)}
-              className="text-xs uppercase tracking-widest text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1"
+              onClick={() => addItem(product, 1, product.fourthwallVariantId)}
+              className="text-[11px] uppercase tracking-wider font-medium text-[#7A6A5C] hover:text-[#121212] transition-colors flex items-center gap-1 shrink-0 py-1"
             >
-              <Eye className="h-3.5 w-3.5 stroke-[1.5]" />
-              <span>Inspect</span>
+              <Plus className="h-3.5 w-3.5 stroke-[1.75]" />
+              <span>Add to Bag</span>
             </button>
-
-            {/* Prompts bypass cart; Merch adds to bag */}
-            {!isPrompt ? (
-              <button
-                type="button"
-                onClick={() => addItem(product, 1, product.fourthwallVariantId)}
-                className="text-xs uppercase tracking-widest text-[#7A6A5C] hover:text-[#121212] transition-colors flex items-center gap-1"
-              >
-                <Plus className="h-3.5 w-3.5 stroke-[1.5]" />
-                <span>Add to Bag</span>
-              </button>
-            ) : (
-              <a
-                href={product.externalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs uppercase tracking-widest text-[#7A6A5C] hover:text-[#121212] transition-colors flex items-center gap-1"
-              >
-                <span>Acquire</span>
-                <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
-              </a>
-            )}
-          </div>
-
-          <a
-            href={product.externalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] uppercase tracking-wider text-[#666662] hover:text-[#121212] transition-colors flex items-center gap-0.5"
-            title={isPrompt ? "View on PromptBase" : "Fourthwall Edition"}
-          >
-            <span>{isPrompt ? "PromptBase" : "Fourthwall"}</span>
-            <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
-          </a>
+          ) : (
+            <a
+              href={product.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] uppercase tracking-wider font-medium text-[#7A6A5C] hover:text-[#121212] transition-colors flex items-center gap-1 shrink-0 py-1"
+              title="Acquire on PromptBase"
+            >
+              <span>PromptBase</span>
+              <ArrowUpRight className="h-3 w-3 stroke-[1.75]" />
+            </a>
+          )}
         </div>
       </div>
     </article>

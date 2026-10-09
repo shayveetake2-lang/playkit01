@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Atelier FAQ",
+  title: "Atelier Help & FAQ | PLAYKIT 01",
   description:
-    "Digital fulfillment via PromptBase, physical dispatch via Fourthwall, and garment care instructions for PLAYKIT 01 editions.",
+    "Frequently asked questions regarding prompt formula digital reveal, Fourthwall physical garment fulfillment, sizing, and archival care.",
+  openGraph: {
+    title: "Atelier Help & FAQ | PLAYKIT 01",
+    description:
+      "Frequently asked questions regarding prompt formula digital reveal, Fourthwall physical garment fulfillment, sizing, and archival care.",
+    type: "website",
+  },
 };
 
 export default function HelpLayout({
@@ -11,6 +17,5 @@ export default function HelpLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return children;
 }
-

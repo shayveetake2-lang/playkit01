@@ -130,12 +130,12 @@ export default function PromptsPage() {
               placeholder="Search by keyword, engine, or tag..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 text-xs bg-[#FFFFFF] border border-[#E7E5E0] text-[#121212] placeholder-[#666662] focus:outline-none focus:border-[#121212] transition-colors"
+              className="w-full pl-9 pr-4 py-2.5 text-base sm:text-xs bg-[#FFFFFF] border border-[#E7E5E0] text-[#121212] placeholder-[#666662] focus:outline-none focus:border-[#121212] transition-colors"
             />
           </div>
 
           {/* Engine Selector Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 max-w-full">
             {engines.map((engine) => (
               <button
                 key={engine}

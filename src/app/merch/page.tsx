@@ -143,12 +143,12 @@ export default function MerchPage() {
               placeholder="Search garments, cases, stickers, or mouse pads..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 text-xs bg-[#FFFFFF] border border-[#E7E5E0] text-[#121212] placeholder-[#666662] focus:outline-none focus:border-[#121212] transition-colors"
+              className="w-full pl-9 pr-4 py-2.5 text-base sm:text-xs bg-[#FFFFFF] border border-[#E7E5E0] text-[#121212] placeholder-[#666662] focus:outline-none focus:border-[#121212] transition-colors"
             />
           </div>
 
           {/* Type Selector Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 max-w-full">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.value}
