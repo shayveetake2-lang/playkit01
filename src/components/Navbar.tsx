@@ -8,6 +8,8 @@ import { Menu, X, ArrowUpRight, ShoppingBag, HelpCircle, Mail } from "lucide-rea
 import { brandConfig } from "@/data/socials";
 import { useCart } from "@/context/CartContext";
 
+import AnnouncementBar from "@/components/AnnouncementBar";
+
 export default function Navbar() {
   const pathname = usePathname();
   const { itemsCount, setIsCartOpen } = useCart();
@@ -57,15 +59,7 @@ export default function Navbar() {
   return (
     <>
       {/* Top Utility Masthead Bar */}
-      <div className="w-full bg-[#121212] text-[#FAF9F5] text-[10px] uppercase tracking-[0.25em] py-2 px-4 border-b border-[#262626]">
-        <div className="mx-auto max-w-7xl flex items-center justify-between">
-          <span className="hidden md:inline font-mono">VOL. 01 • 2026 ARCHIVE</span>
-          <span className="mx-auto md:mx-0 truncate">
-            INDEPENDENT STUDIO • VERIFIED DISPATCH (PROMPTBASE & FOURTHWALL)
-          </span>
-          <span className="hidden md:inline font-mono">GLOBAL FULFILLMENT</span>
-        </div>
-      </div>
+      <AnnouncementBar />
 
       {/* Main Sticky Masthead */}
       <header

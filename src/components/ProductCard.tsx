@@ -2,13 +2,14 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Eye, Plus, ArrowUpRight } from "lucide-react";
 import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 
 interface ProductCardProps {
   product: Product;
-  onQuickView: (product: Product) => void;
+  onQuickView?: (product: Product) => void;
   priority?: boolean;
 }
 
@@ -27,11 +28,21 @@ export default function ProductCard({
     ? product.promptDetails?.aiEngine || "Prompt Formula"
     : product.merchDetails?.merchType || "Physical Edition";
 
+  const pdpUrl = isPrompt ? `/prompts/${product.slug}` : `/merch/${product.slug}`;
+
+  const handleInspect = () => {
+    if (onQuickView) {
+      onQuickView(product);
+    } else {
+      window.location.href = pdpUrl;
+    }
+  };
+
   return (
     <article className="group relative flex flex-col p-3 bg-white border border-[#E7E5E0] shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(18,18,18,0.08)] transition-all duration-300 w-full overflow-hidden">
       {/* Museum Passe-Partout Framed Art Container */}
       <div
-        onClick={() => onQuickView(product)}
+        onClick={handleInspect}
         className={`relative w-full overflow-hidden bg-[#F5F3EE] border border-[#E7E5E0]/60 cursor-pointer ${
           isPrompt ? "aspect-[4/3]" : "aspect-[3/4]"
         }`}
@@ -79,12 +90,10 @@ export default function ProductCard({
             </span>
           </div>
 
-          <h3
-            onClick={() => onQuickView(product)}
-            className="font-serif text-base text-[#121212] font-normal tracking-tight line-clamp-1 break-words hover:text-[#7A6A5C] cursor-pointer transition-colors w-full"
-            title={product.title}
-          >
-            {product.title}
+          <h3 className="font-serif text-base text-[#121212] font-normal tracking-tight line-clamp-1 break-words hover:text-[#7A6A5C] transition-colors w-full">
+            <Link href={pdpUrl} title={product.title} className="hover:underline underline-offset-2">
+              {product.title}
+            </Link>
           </h3>
 
           <p className="mt-1 text-xs text-[#666662] line-clamp-2 leading-relaxed font-light break-words">
@@ -96,7 +105,7 @@ export default function ProductCard({
         <div className="mt-3.5 pt-3 border-t border-[#E7E5E0] flex items-center justify-between gap-2 text-xs w-full min-w-0">
           <button
             type="button"
-            onClick={() => onQuickView(product)}
+            onClick={handleInspect}
             className="text-[11px] uppercase tracking-widest text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1 shrink-0 py-1"
           >
             <Eye className="h-3.5 w-3.5 stroke-[1.5]" />

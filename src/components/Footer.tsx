@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ArrowUpRight, ShieldCheck, Terminal, PackageCheck } from "lucide-react";
 import { brandConfig } from "@/data/socials";
 import { InstagramIcon, LinkedinIcon } from "@/components/SocialIcons";
+import NewsletterSignup from "@/components/NewsletterSignup";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -55,7 +56,7 @@ export default function Footer() {
               Guaranteed Buyer Protection
             </h4>
             <p className="text-xs text-[#666662] leading-relaxed">
-              Digital purchases are verified instantly on PromptBase; physical pieces carry Fourthwall&apos;s verified global logistics and secure branded checkout.
+              Digital purchases are verified instantly on PromptBase; physical pieces carry Fourthwall&apos;s verified global logistics and 30-day replacement guarantee.
             </p>
           </div>
         </div>
@@ -64,19 +65,27 @@ export default function Footer() {
       {/* Main Directory Links */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Brand Colophon */}
-          <div className="lg:col-span-5 space-y-4">
-            <Link href="/" className="inline-block">
-              <span className="font-serif text-2xl font-normal tracking-[0.15em] text-[#121212] block">
-                PLAYKIT 01
-              </span>
-              <span className="text-[9px] uppercase tracking-[0.3em] text-[#7A6A5C] font-semibold block">
-                Atelier & Archive
-              </span>
-            </Link>
-            <p className="text-xs text-[#666662] leading-relaxed max-w-sm">
-              An independent creative studio exploring generative artificial intelligence prompt architecture and archival physical editions.
-            </p>
+          {/* Brand Colophon & Newsletter */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="space-y-3">
+              <Link href="/" className="inline-block">
+                <span className="font-serif text-2xl font-normal tracking-[0.15em] text-[#121212] block">
+                  PLAYKIT 01
+                </span>
+                <span className="text-[9px] uppercase tracking-[0.3em] text-[#7A6A5C] font-semibold block">
+                  Atelier & Archive
+                </span>
+              </Link>
+              <p className="text-xs text-[#666662] leading-relaxed max-w-sm">
+                An independent creative studio exploring generative artificial intelligence prompt architecture and archival physical editions.
+              </p>
+            </div>
+
+            {/* Newsletter Dispatch Box */}
+            <div className="pt-2 border-t border-[#E7E5E0]">
+              <NewsletterSignup variant="inline" />
+            </div>
+
             <div className="pt-2 flex items-center gap-4 text-xs">
               <a
                 href={brandConfig.socials.instagram}
@@ -101,33 +110,33 @@ export default function Footer() {
           </div>
 
           {/* Directory Column 1: Storefront */}
-          <div className="lg:col-span-3 space-y-3">
+          <div className="lg:col-span-2 space-y-3">
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold block">
               Storefront
             </span>
             <ul className="space-y-2 text-xs uppercase tracking-wider text-[#121212]">
               <li>
                 <Link href="/prompts" className="hover:text-[#7A6A5C] transition-colors">
-                  AI Prompt Formulas
+                  AI Prompt Archive
                 </Link>
               </li>
               <li>
                 <Link href="/merch" className="hover:text-[#7A6A5C] transition-colors">
-                  Physical Merch & Editions
+                  Physical Editions
                 </Link>
               </li>
               <li>
                 <Link href="/" className="hover:text-[#7A6A5C] transition-colors">
-                  Selected Works Showcase
+                  Selected Works
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Directory Column 2: Studio & Support */}
-          <div className="lg:col-span-2 space-y-3">
+          {/* Directory Column 2: Studio & Protocols */}
+          <div className="lg:col-span-3 space-y-3">
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold block">
-              The Studio
+              Studio & Policies
             </span>
             <ul className="space-y-2 text-xs uppercase tracking-wider text-[#121212]">
               <li>
@@ -136,7 +145,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-[#7A6A5C] transition-colors font-medium text-[#121212]">
+                <Link href="/contact" className="hover:text-[#7A6A5C] transition-colors font-medium">
                   Contact Atelier
                 </Link>
               </li>
@@ -145,13 +154,33 @@ export default function Footer() {
                   Help & FAQ
                 </Link>
               </li>
+              <li>
+                <Link href="/privacy" className="hover:text-[#7A6A5C] transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-[#7A6A5C] transition-colors">
+                  Terms & Licensing
+                </Link>
+              </li>
+              <li>
+                <Link href="/shipping" className="hover:text-[#7A6A5C] transition-colors">
+                  Shipping & Logistics
+                </Link>
+              </li>
+              <li>
+                <Link href="/refunds" className="hover:text-[#7A6A5C] transition-colors">
+                  Return & Refund Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Directory Column 3: Outlets */}
           <div className="lg:col-span-2 space-y-3">
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold block">
-              Verified Outlets
+              Verified Channels
             </span>
             <ul className="space-y-2 text-xs uppercase tracking-wider text-[#121212]">
               <li>
@@ -192,18 +221,28 @@ export default function Footer() {
         </div>
 
         {/* Bottom Colophon Bar */}
-        <div className="mt-16 pt-8 border-t border-[#E7E5E0] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#666662] tracking-wider">
+        <div className="mt-16 pt-8 border-t border-[#E7E5E0] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#666662] tracking-wider gap-4">
           <p>© {new Date().getFullYear()} PLAYKIT 01 Studio. All rights reserved.</p>
-          <div className="mt-2 sm:mt-0 flex items-center gap-4 text-[10px] uppercase tracking-widest text-[#7A6A5C]">
+          <div className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-widest text-[#7A6A5C]">
+            <Link href="/privacy" className="hover:text-[#121212] transition-colors">
+              Privacy
+            </Link>
+            <span>•</span>
+            <Link href="/terms" className="hover:text-[#121212] transition-colors">
+              Terms
+            </Link>
+            <span>•</span>
+            <Link href="/shipping" className="hover:text-[#121212] transition-colors">
+              Shipping
+            </Link>
+            <span>•</span>
+            <Link href="/refunds" className="hover:text-[#121212] transition-colors">
+              Refunds
+            </Link>
+            <span>•</span>
             <Link href="/contact" className="hover:text-[#121212] transition-colors">
               Contact
             </Link>
-            <span>•</span>
-            <Link href="/help" className="hover:text-[#121212] transition-colors">
-              FAQ
-            </Link>
-            <span>•</span>
-            <span>Printed in Digital Space</span>
           </div>
         </div>
       </div>

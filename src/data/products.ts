@@ -1,5 +1,7 @@
 import { sanityClient, ALL_ACTIVE_PRODUCTS_QUERY, urlForImage } from "@/sanity/sanity.client";
 import { getFourthwallProducts } from "@/lib/fourthwall";
+export { initialFourthwallProducts } from "@/data/fourthwallProducts";
+export { promptbaseProducts } from "@/data/promptbaseProducts";
 import { initialFourthwallProducts } from "@/data/fourthwallProducts";
 import { promptbaseProducts } from "@/data/promptbaseProducts";
 
@@ -81,7 +83,7 @@ export function mapSanityProduct(item: any): Product {
     reviewsCount: item.reviewsCount || 10,
     shortDescription: item.description?.slice(0, 110) || "Curated digital prompt or apparel item from playkit01.",
     description: item.description || "Created and tested by playkit01.",
-    externalUrl: item.externalUrl || (item.category === "prompt" ? "https://promptbase.com/profile/ploykit" : "https://www.redbubble.com/people/playkit01/shop"),
+    externalUrl: item.externalUrl || (item.category === "prompt" ? "https://promptbase.com/profile/ploykit" : "https://checkout.playkit01.store"),
     primaryImage: imageUrl,
     galleryImages: [imageUrl],
     tags: [item.category === "prompt" ? item.aiEngine || "AI Prompt" : item.merchType || "Merch", "playkit01"],
@@ -98,8 +100,8 @@ export function mapSanityProduct(item: any): Product {
     merchDetails: item.category === "merch" ? {
       merchType: item.merchType || "T-Shirt",
       material: item.material || "High quality material",
-      sizes: ["S", "M", "L", "XL"],
-      printDetails: "Printed and fulfilled by Redbubble.",
+      sizes: ["S", "M", "L", "XL", "2XL"],
+      printDetails: "Printed and fulfilled by Fourthwall.",
     } : undefined,
   };
 }
@@ -152,3 +154,23 @@ export function getPromptProducts(products: Product[] = initialProducts): Produc
 export function getMerchProducts(products: Product[] = initialProducts): Product[] {
   return products.filter((p) => p.category === "merch");
 }
+
+export function getProductBySlug(slug: string, products: Product[] = initialProducts): Product | undefined {
+  return products.find((p) => p.slug === slug || p.id === slug);
+}
+
+export function getPromptProductBySlug(slug: string): Product | undefined {
+  return initialPromptProducts.find((p) => p.slug === slug || p.id === slug);
+}
+
+export function getMerchProductBySlug(slug: string): Product | undefined {
+  return initialFourthwallProducts.find((p) => p.slug === slug || p.id === slug);
+}
+
+export function getRelatedProducts(product: Product, limit = 4): Product[] {
+  const pool = product.category === "prompt" ? initialPromptProducts : initialFourthwallProducts;
+  return pool
+    .filter((p) => p.id !== product.id && p.slug !== product.slug)
+    .slice(0, limit);
+}
+

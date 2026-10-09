@@ -25,6 +25,7 @@ interface FormData {
   inquiryType: string;
   subject: string;
   message: string;
+  website_url?: string;
 }
 
 export default function ContactPage() {
@@ -34,12 +35,14 @@ export default function ContactPage() {
     inquiryType: "Custom Prompt Architecture",
     subject: "",
     message: "",
+    website_url: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [receiptId, setReceiptId] = useState("");
   const [submittedAt, setSubmittedAt] = useState("");
+  const [serverError, setServerError] = useState<string | null>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedReceipt, setCopiedReceipt] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -90,29 +93,50 @@ export default function ContactPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
+    setServerError(null);
 
-    // Generate receipt and simulate transmission
-    setTimeout(() => {
-      const randomCode = Math.floor(1000 + Math.random() * 9000);
-      setReceiptId(`PLK-2026-${randomCode}`);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit transmission.");
+      }
+
+      setReceiptId(data.receiptId || `PLK-2026-${Math.floor(1000 + Math.random() * 9000)}`);
       setSubmittedAt(
-        new Date().toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        })
+        data.submittedAt ||
+          new Date().toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })
       );
-      setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 600);
+    } catch (err: unknown) {
+      console.error("Transmission error:", err);
+      setServerError(
+        err instanceof Error
+          ? err.message
+          : "An unexpected network error occurred. Please try again or email us directly."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(studioEmail);
@@ -186,6 +210,27 @@ export default function ContactPage() {
           <div className="lg:col-span-7 bg-white border border-[#E7E5E0] p-6 sm:p-10 shadow-[0_2px_14px_rgba(18,18,18,0.04)]">
             {!isSubmitted ? (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Honeypot Spam Trap (Hidden from legitimate users) */}
+                <div style={{ display: "none" }} aria-hidden="true">
+                  <label htmlFor="website_url">Leave this field blank</label>
+                  <input
+                    id="website_url"
+                    type="text"
+                    name="website_url"
+                    value={formData.website_url || ""}
+                    onChange={(e) => setFormData({ ...formData, website_url: e.target.value })}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
+                {/* Server Error Alert Banner */}
+                {serverError && (
+                  <div className="p-4 bg-rose-50 border border-rose-200 text-rose-800 text-xs">
+                    <strong>Transmission Alert:</strong> {serverError}
+                  </div>
+                )}
+
                 <div>
                   <span className="text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] font-semibold block mb-1">
                     Step 01 • Inquiry Classification

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { X, ArrowUpRight, Copy, Check, Plus } from "lucide-react";
 import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
@@ -265,8 +266,20 @@ export default function ProductQuickViewModal({
               </a>
             )}
           </div>
+
+          {/* Full Page Link */}
+          <div className="mt-3 text-center">
+            <Link
+              href={isPrompt ? `/prompts/${product.slug}` : `/merch/${product.slug}`}
+              onClick={handleClose}
+              className="text-[11px] uppercase tracking-wider text-[#7A6A5C] hover:text-[#121212] transition-colors underline underline-offset-4"
+            >
+              Open Standalone Product Page →
+            </Link>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+

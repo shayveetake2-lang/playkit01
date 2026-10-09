@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import { CartProvider } from "@/context/CartContext";
+import { ToastProvider } from "@/components/Toast";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://playkit01.store"),
@@ -20,7 +21,8 @@ export const metadata: Metadata = {
     "Editorial Streetwear",
     "Limited Editions",
     "PromptBase",
-    "Redbubble",
+    "Fourthwall",
+    "Creative Studio",
   ],
   authors: [{ name: "playkit01", url: "https://playkit01.store" }],
   creator: "playkit01",
@@ -58,10 +60,12 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className="min-h-screen flex flex-col bg-[#FAF9F5] text-[#121212] antialiased selection:bg-[#E8E4DC] selection:text-[#121212] overflow-x-hidden">
         <CartProvider>
-          <Navbar />
-          <CartDrawer />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <ToastProvider>
+            <Navbar />
+            <CartDrawer />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </ToastProvider>
         </CartProvider>
       </body>
     </html>
