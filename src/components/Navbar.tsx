@@ -49,7 +49,8 @@ export default function Navbar() {
   const navLinks = [
     { href: "/", label: "Index" },
     { href: "/prompts", label: "Archive", subtext: "(AI Prompts)" },
-    { href: "/merch", label: "Editions", subtext: "(Apparel & Merch)" },
+    { href: "/merch", label: "Editions", subtext: "(Physical Goods)" },
+    { href: "/#creator", label: "Creator", subtext: "(About)" },
   ];
 
   return (

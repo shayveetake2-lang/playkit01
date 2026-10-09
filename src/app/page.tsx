@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   CheckCircle,
   Binary,
+  Layers,
 } from "lucide-react";
 import {
   Product,
@@ -405,6 +406,156 @@ export default function HomePage() {
               priority={idx < 2}
             />
           ))}
+        </div>
+      </section>
+
+      {/* 4.5. ABOUT THE CREATOR (ARCHIVAL FOUNDER PROFILE) */}
+      <section id="creator" className="border-t border-[#E7E5E0] bg-[#FAF9F5] py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="border border-[#E7E5E0] bg-[#FFFFFF] p-8 sm:p-14 lg:p-16 shadow-[0_4px_24px_rgba(18,18,18,0.04)]">
+            {/* Dossier Header */}
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E7E5E0] pb-6 mb-10 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
+              <div className="flex items-center gap-3">
+                <span className="font-mono font-semibold text-[#121212]">[CHAPTER NO. 00]</span>
+                <span>•</span>
+                <span>CREATOR DOSSIER</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#121212]" />
+                <span>FOUNDER & ATELIER PROFILE</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+              {/* Left Column: Creator Bio & Studio Vision */}
+              <div className="lg:col-span-7 space-y-6">
+                <div>
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#8C7A6B] font-semibold block mb-2">
+                    About the Creator
+                  </span>
+                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#121212] font-normal leading-[1.15] tracking-tight">
+                    Engineering deterministic AI intelligence & archival physical streetwear.
+                  </h2>
+                </div>
+
+                <p className="font-serif text-lg sm:text-xl text-[#121212] leading-relaxed font-normal pt-2">
+                  PLAYKIT 01 is founded by a full-stack software engineer specializing in custom web applications, autonomous AI agents, and high-performance prompts that streamline business workflows.
+                </p>
+
+                <div className="space-y-4 text-xs sm:text-sm text-[#666662] leading-relaxed font-light pt-2 border-t border-[#E7E5E0]">
+                  <p>
+                    Rooted at the convergence of software craftsmanship and generative model research, the studio develops deterministic prompt formulas designed to eliminate AI hallucination and prompt pollution across Gemini Image, Claude, and Midjourney.
+                  </p>
+                  <p>
+                    Simultaneously, the physical arm of PLAYKIT 01 translates this cyber-aesthetic discipline into tangible heavyweight cotton streetwear, impact-resistant cases, and archival editions—fabricated to exacting standards and fulfilled globally via Fourthwall.
+                  </p>
+                </div>
+
+                {/* Creator Metrics */}
+                <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-[#E7E5E0]">
+                  <div>
+                    <span className="font-serif text-2xl text-[#121212] block">31+</span>
+                    <span className="text-[9px] uppercase tracking-wider text-[#7A6A5C] font-semibold block mt-0.5">
+                      Fourthwall Editions
+                    </span>
+                  </div>
+                  <div>
+                    <span className="font-serif text-2xl text-[#121212] block">14+</span>
+                    <span className="text-[9px] uppercase tracking-wider text-[#7A6A5C] font-semibold block mt-0.5">
+                      Prompt Blueprints
+                    </span>
+                  </div>
+                  <div>
+                    <span className="font-serif text-2xl text-[#121212] block">5.0★</span>
+                    <span className="text-[9px] uppercase tracking-wider text-[#7A6A5C] font-semibold block mt-0.5">
+                      Store Rating
+                    </span>
+                  </div>
+                  <div>
+                    <span className="font-serif text-2xl text-[#121212] block">220 GSM</span>
+                    <span className="text-[9px] uppercase tracking-wider text-[#7A6A5C] font-semibold block mt-0.5">
+                      Cotton Baseline
+                    </span>
+                  </div>
+                </div>
+
+                {/* Creator Links & Channels */}
+                <div className="pt-6 flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.2em]">
+                  <Link
+                    href="/studio"
+                    className="px-6 py-3.5 bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-colors flex items-center gap-2 font-medium"
+                  >
+                    <span>Read Studio Monograph</span>
+                    <ArrowRight className="h-3.5 w-3.5 stroke-[1.5]" />
+                  </Link>
+
+                  <a
+                    href={brandConfig.socials.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3.5 border border-[#121212] text-[#121212] hover:bg-[#121212] hover:text-[#FAF9F5] transition-colors flex items-center gap-2 font-medium"
+                  >
+                    <span>Connect on LinkedIn</span>
+                    <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Column: Key Engineering Disciplines */}
+              <div className="lg:col-span-5 space-y-4">
+                <div className="flex items-center gap-2 pb-2 border-b border-[#E7E5E0] text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+                  <Layers className="h-3.5 w-3.5 stroke-[1.5]" />
+                  <span>Core Technical Disciplines</span>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="p-5 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1.5 transition-colors hover:border-[#121212]">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[01]</span>
+                      <span className="text-[9px] uppercase tracking-wider text-[#8C7A6B] font-mono">AUTONOMOUS</span>
+                    </div>
+                    <h3 className="font-serif text-base text-[#121212] font-normal">Automated AI Agents</h3>
+                    <p className="text-xs text-[#666662] font-light leading-relaxed">
+                      Custom AI agents, LLM pipelines, and orchestration layers built to automate repetitive enterprise workflows.
+                    </p>
+                  </div>
+
+                  <div className="p-5 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1.5 transition-colors hover:border-[#121212]">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[02]</span>
+                      <span className="text-[9px] uppercase tracking-wider text-[#8C7A6B] font-mono">DETERMINISTIC</span>
+                    </div>
+                    <h3 className="font-serif text-base text-[#121212] font-normal">Calibrated Prompt Formulas</h3>
+                    <p className="text-xs text-[#666662] font-light leading-relaxed">
+                      Reproducible, battle-tested prompt architectures for Gemini Image, Claude, and Midjourney on PromptBase.
+                    </p>
+                  </div>
+
+                  <div className="p-5 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1.5 transition-colors hover:border-[#121212]">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[03]</span>
+                      <span className="text-[9px] uppercase tracking-wider text-[#8C7A6B] font-mono">FULL-STACK</span>
+                    </div>
+                    <h3 className="font-serif text-base text-[#121212] font-normal">Custom Web Applications</h3>
+                    <p className="text-xs text-[#666662] font-light leading-relaxed">
+                      High-performance Next.js architectures, TypeScript, headless commerce APIs, and microservice backends.
+                    </p>
+                  </div>
+
+                  <div className="p-5 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1.5 transition-colors hover:border-[#121212]">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[04]</span>
+                      <span className="text-[9px] uppercase tracking-wider text-[#8C7A6B] font-mono">PHYSICAL LOGISTICS</span>
+                    </div>
+                    <h3 className="font-serif text-base text-[#121212] font-normal">Archival Physical Streetwear</h3>
+                    <p className="text-xs text-[#666662] font-light leading-relaxed">
+                      Translating cyber-aesthetic linework into heavyweight apparel, tech sleeves, and vinyl stickers fulfilled by Fourthwall.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

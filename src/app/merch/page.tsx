@@ -6,62 +6,69 @@ import {
   SlidersHorizontal,
   ArrowUpRight,
   Shirt,
+  Loader2,
 } from "lucide-react";
-import {
-  Product,
-  initialProducts,
-  getMerchProducts,
-} from "@/data/products";
-import { getFourthwallProducts } from "@/lib/fourthwall";
+import { Product } from "@/data/products";
+import { getFourthwallProducts, FOURTHWALL_STOREFRONT_DOMAIN } from "@/lib/fourthwall";
 import ProductCard from "@/components/ProductCard";
 import ProductQuickViewModal from "@/components/ProductQuickViewModal";
 
+const CATEGORIES = [
+  { label: "All Editions", value: "All" },
+  { label: "Phone Cases", value: "Phone Case" },
+  { label: "T-Shirts", value: "T-Shirt" },
+  { label: "Hoodies", value: "Hoodie" },
+  { label: "Mouse Pads & Tech", value: "Mouse Pad" },
+  { label: "Stickers & Decals", value: "Sticker" },
+  { label: "Mugs & Drinkware", value: "Mug" },
+  { label: "Objects & Goods", value: "Accessories" },
+];
+
 export default function MerchPage() {
-  const [products, setProducts] = useState<Product[]>(
-    getMerchProducts(initialProducts)
-  );
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string>("All");
   const [sortBy, setSortBy] = useState<string>("popular");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
     getFourthwallProducts()
       .then((live) => {
-        if (live && live.length > 0) {
-          setProducts(live);
+        if (isMounted) {
+          if (live && live.length > 0) {
+            setProducts(live);
+          }
+          setIsLoading(false);
         }
       })
       .catch((err) => {
-        // 4xx (e.g. 401 invalid token) is re-thrown by the client on purpose so it is
-        // never silently masked. Surface it loudly but keep the page usable.
-        console.error("Fourthwall storefront request rejected - check NEXT_PUBLIC_FOURTHWALL_TOKEN:", err);
+        console.error("Fourthwall storefront catalog error:", err);
+        if (isMounted) setIsLoading(false);
       });
-  }, []);
 
-  const merchTypes = [
-    "All",
-    "T-Shirt",
-    "Sticker",
-    "Mug",
-    "Hoodie",
-    "Phone Case",
-    "Poster",
-  ];
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const filteredMerch = useMemo(() => {
     return products
       .filter((item) => {
+        const query = searchQuery.toLowerCase().trim();
         const matchesSearch =
-          item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.tags.some((t) =>
-            t.toLowerCase().includes(searchQuery.toLowerCase())
-          );
+          !query ||
+          item.title.toLowerCase().includes(query) ||
+          item.description.toLowerCase().includes(query) ||
+          item.tags.some((t) => t.toLowerCase().includes(query));
 
+        const itemType = item.merchDetails?.merchType || "";
         const matchesType =
           selectedType === "All" ||
-          item.merchDetails?.merchType === selectedType;
+          itemType === selectedType ||
+          (selectedType === "Accessories" &&
+            ["Accessories", "Home & Living", "Collectibles"].includes(itemType));
 
         return matchesSearch && matchesType;
       })
@@ -94,12 +101,12 @@ export default function MerchPage() {
           </h1>
 
           <p className="mt-4 text-xs sm:text-sm text-[#666662] max-w-2xl leading-relaxed font-light">
-            Heavyweight 220 GSM ringspun cotton tees, waterproof UV-coated vinyl sticker packs, and glossy ceramic drinkware printed on-demand and dispatched worldwide via Fourthwall with direct branded checkout on checkout.playkit01.store.
+            Heavyweight 220 GSM ringspun cotton tees, impact-resistant MagSafe phone cases, stitched neoprene mouse pads, waterproof UV-coated vinyl decals, and ceramic editions printed on-demand and dispatched worldwide via Fourthwall.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-6 text-[11px] uppercase tracking-wider text-[#666662]">
             <a
-              href="https://checkout.playkit01.store"
+              href={`https://${FOURTHWALL_STOREFRONT_DOMAIN}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1 font-semibold"
@@ -121,7 +128,7 @@ export default function MerchPage() {
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#666662] stroke-[1.5]" />
             <input
               type="text"
-              placeholder="Search garments by keyword or format..."
+              placeholder="Search garments, cases, stickers, or mouse pads..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-9 pr-4 py-2.5 text-xs bg-[#FFFFFF] border border-[#E7E5E0] text-[#121212] placeholder-[#666662] focus:outline-none focus:border-[#121212] transition-colors"
@@ -130,18 +137,18 @@ export default function MerchPage() {
 
           {/* Type Selector Pills */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0">
-            {merchTypes.map((type) => (
+            {CATEGORIES.map((cat) => (
               <button
-                key={type}
+                key={cat.value}
                 type="button"
-                onClick={() => setSelectedType(type)}
+                onClick={() => setSelectedType(cat.value)}
                 className={`px-3.5 py-2 text-xs uppercase tracking-widest whitespace-nowrap transition-colors border ${
-                  selectedType === type
+                  selectedType === cat.value
                     ? "bg-[#121212] text-[#FAF9F5] border-[#121212]"
                     : "bg-[#FFFFFF] text-[#666662] border-[#E7E5E0] hover:text-[#121212] hover:border-[#121212]"
                 }`}
               >
-                {type}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -177,8 +184,15 @@ export default function MerchPage() {
           )}
         </div>
 
-        {/* Products Grid (Strict aspect-[3/4] museum matting preserved) */}
-        {filteredMerch.length > 0 ? (
+        {/* Products Grid */}
+        {isLoading ? (
+          <div className="text-center py-24 border border-[#E7E5E0] bg-[#FFFFFF] flex flex-col items-center justify-center gap-3">
+            <Loader2 className="h-6 w-6 animate-spin text-[#121212]" />
+            <p className="text-xs uppercase tracking-widest text-[#666662]">
+              Loading Archival Editions from Fourthwall...
+            </p>
+          </div>
+        ) : filteredMerch.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredMerch.map((item) => (
               <ProductCard

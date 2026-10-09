@@ -1,4 +1,5 @@
 import { sanityClient, ALL_ACTIVE_PRODUCTS_QUERY, urlForImage } from "@/sanity/sanity.client";
+import { getFourthwallProducts } from "@/lib/fourthwall";
 
 export type ProductCategory = "prompt" | "merch";
 
@@ -11,7 +12,7 @@ export interface PromptDetails {
 }
 
 export interface MerchDetails {
-  merchType: "T-Shirt" | "Sticker" | "Mug" | "Hoodie" | "Phone Case" | "Poster";
+  merchType: "T-Shirt" | "Sticker" | "Mug" | "Hoodie" | "Phone Case" | "Poster" | "Mouse Pad" | "Home & Living" | "Accessories" | string;
   material: string;
   sizes?: string[];
   colors?: string[];
@@ -313,146 +314,6 @@ export const initialProducts: Product[] = [
       wordsCount: 32,
     },
   },
-
-  // 10. Fourthwall: Playkit01 Cyber Signature Graphic Tee
-  {
-    id: "merch-signature-tee",
-    title: "Playkit01 Cyber Signature Graphic Tee",
-    slug: "playkit01-cyber-signature-graphic-tee",
-    category: "merch",
-    price: 24.50,
-    originalPrice: 28.00,
-    rating: 5.0,
-    reviewsCount: 31,
-    shortDescription: "Heavyweight 100% combed cotton streetwear tee featuring high-definition DTG screen print.",
-    description: "Premium unisex boxy-fit graphic tee crafted for all-day comfort. Printed with durable eco-friendly inks that won't crack or fade after washing. Dispatched directly through Fourthwall with worldwide tracking.",
-    externalUrl: "https://playkit01.store/merch",
-    primaryImage: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80",
-    ],
-    tags: ["T-Shirt", "Streetwear", "Heavyweight", "Fourthwall", "Cotton"],
-    isFeatured: true,
-    isRecentlyAdded: false,
-    isMostPurchased: true,
-    fourthwallVariantId: "fw_var_tee_01",
-    variants: [
-      { id: "fw_var_tee_01", name: "Medium / Obsidian Black", price: 24.50, inStock: true },
-      { id: "fw_var_tee_02", name: "Large / Obsidian Black", price: 24.50, inStock: true },
-      { id: "fw_var_tee_03", name: "XL / Obsidian Black", price: 24.50, inStock: true },
-    ],
-    merchDetails: {
-      merchType: "T-Shirt",
-      material: "100% Combed Ringspun Cotton (220 GSM)",
-      sizes: ["S", "M", "L", "XL", "2XL"],
-      colors: ["Obsidian Black", "Slate Grey", "Natural Chalk"],
-      printDetails: "High-density Direct-to-Garment (DTG) print with ultra-soft hand feel.",
-    },
-  },
-
-  // 11. Fourthwall: Retro Tech Badge Vinyl Sticker Pack
-  {
-    id: "merch-retro-stickers",
-    title: "Retro Tech Badge Vinyl Sticker Pack",
-    slug: "retro-tech-badge-vinyl-sticker-pack",
-    category: "merch",
-    price: 4.25,
-    originalPrice: 5.50,
-    rating: 4.9,
-    reviewsCount: 47,
-    shortDescription: "Weatherproof die-cut vinyl stickers with scratch-resistant matte finish for laptops and bottles.",
-    description: "Ultra-durable laminated vinyl stickers cut with precise millimeter contours. Waterproof, dishwasher-safe, and UV resistant for outdoor gear, laptops, and skate decks.",
-    externalUrl: "https://playkit01.store/merch",
-    primaryImage: "https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=800&auto=format&fit=crop&q=80",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=800&auto=format&fit=crop&q=80",
-    ],
-    tags: ["Sticker", "Die-Cut", "Vinyl", "Waterproof", "Fourthwall"],
-    isFeatured: true,
-    isRecentlyAdded: true,
-    isMostPurchased: true,
-    fourthwallVariantId: "fw_var_sticker_01",
-    variants: [
-      { id: "fw_var_sticker_01", name: "Medium (8cm)", price: 4.25, inStock: true },
-      { id: "fw_var_sticker_02", name: "Large (12cm)", price: 5.50, inStock: true },
-    ],
-    merchDetails: {
-      merchType: "Sticker",
-      material: "Premium 6mil Waterproof Laminated Vinyl",
-      sizes: ["Small (5cm)", "Medium (8cm)", "Large (12cm)"],
-      printDetails: "Fade-resistant UV cured inks with clean residue-free peel backing.",
-    },
-  },
-
-  // 12. Fourthwall: Executive AI Minimalist Ceramic Mug
-  {
-    id: "merch-executive-mug",
-    title: "Executive AI Minimalist Ceramic Mug",
-    slug: "executive-ai-minimalist-ceramic-mug",
-    category: "merch",
-    price: 16.00,
-    rating: 5.0,
-    reviewsCount: 19,
-    shortDescription: "11oz & 15oz dishwasher and microwave safe ceramic mug with high-gloss wraparound artwork.",
-    description: "Durable ceramic coffee mug designed for tech workspaces and studio desks. Vibrant wraparound sublimated print that retains its brilliant finish through daily dishwasher cycles.",
-    externalUrl: "https://playkit01.store/merch",
-    primaryImage: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80",
-    ],
-    tags: ["Mug", "Ceramic", "Coffee", "Desk Gear", "Fourthwall"],
-    isFeatured: false,
-    isRecentlyAdded: true,
-    isMostPurchased: false,
-    fourthwallVariantId: "fw_var_mug_01",
-    variants: [
-      { id: "fw_var_mug_01", name: "11 oz Standard", price: 16.00, inStock: true },
-      { id: "fw_var_mug_02", name: "15 oz Tall", price: 18.50, inStock: true },
-    ],
-    merchDetails: {
-      merchType: "Mug",
-      material: "Heavy Ceramic with High-Gloss Glaze",
-      sizes: ["11 oz Standard", "15 oz Tall"],
-      colors: ["Black Ceramic", "Two-tone White/Indigo"],
-      printDetails: "Permanent wrap-around sublimation print, microwave and dishwasher safe.",
-    },
-  },
-
-  // 13. Fourthwall: Cinematic Silhouette Heavyweight Hoodie
-  {
-    id: "merch-cinematic-hoodie",
-    title: "Cinematic Silhouette Heavyweight Hoodie",
-    slug: "cinematic-silhouette-heavyweight-hoodie",
-    category: "merch",
-    price: 48.00,
-    originalPrice: 55.00,
-    rating: 5.0,
-    reviewsCount: 15,
-    shortDescription: "380 GSM fleece pullover with double-lined hood, kangaroo pocket, and ribbed cuffs.",
-    description: "Premium fleece hoodie featuring our signature cinematic double exposure art across the back. Super warm, pre-shrunk, and built with reinforced seams for long-lasting daily wear.",
-    externalUrl: "https://playkit01.store/merch",
-    primaryImage: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80",
-    ],
-    tags: ["Hoodie", "Apparel", "Fleece", "Streetwear", "Fourthwall"],
-    isFeatured: true,
-    isRecentlyAdded: false,
-    isMostPurchased: true,
-    fourthwallVariantId: "fw_var_hoodie_01",
-    variants: [
-      { id: "fw_var_hoodie_01", name: "Medium / Carbon Black", price: 48.00, inStock: true },
-      { id: "fw_var_hoodie_02", name: "Large / Carbon Black", price: 48.00, inStock: true },
-      { id: "fw_var_hoodie_03", name: "XL / Carbon Black", price: 48.00, inStock: true },
-    ],
-    merchDetails: {
-      merchType: "Hoodie",
-      material: "80% Cotton / 20% Polyester Heavyweight Fleece (380 GSM)",
-      sizes: ["S", "M", "L", "XL", "2XL"],
-      colors: ["Carbon Black", "Dark Heather"],
-      printDetails: "Large high-definition back print with matching chest monogram.",
-    },
-  },
 ];
 
 // Helper to convert Sanity raw item to local Product interface
@@ -496,17 +357,30 @@ export function mapSanityProduct(item: any): Product {
   };
 }
 
-// Client helper that fetches live Sanity products and merges or falls back to seed products
+// Client helper that fetches both live digital formulas (Sanity) and physical editions (Fourthwall)
 export async function getLiveProducts(): Promise<Product[]> {
   try {
-    const sanityItems = await sanityClient.fetch(ALL_ACTIVE_PRODUCTS_QUERY);
-    if (sanityItems && sanityItems.length > 0) {
-      return sanityItems.map(mapSanityProduct);
-    }
+    const [sanityResult, fwResult] = await Promise.allSettled([
+      sanityClient
+        .fetch(ALL_ACTIVE_PRODUCTS_QUERY)
+        .then((items) => (items && items.length > 0 ? items.map(mapSanityProduct) : []))
+        .catch(() => []),
+      getFourthwallProducts().catch(() => []),
+    ]);
+
+    const livePrompts: Product[] =
+      sanityResult.status === "fulfilled" && sanityResult.value.length > 0
+        ? sanityResult.value
+        : initialProducts.filter((p) => p.category === "prompt");
+
+    const liveMerch: Product[] =
+      fwResult.status === "fulfilled" ? fwResult.value : [];
+
+    return [...livePrompts, ...liveMerch];
   } catch (err) {
-    console.warn("Notice: Fetching from Sanity failed or not yet seeded, using initial products:", err);
+    console.warn("Notice: Fetching live products encountered an error, using initial products:", err);
+    return initialProducts;
   }
-  return initialProducts;
 }
 
 // Synchronous helper for instant client-side fallback rendering

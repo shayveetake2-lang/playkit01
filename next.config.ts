@@ -26,6 +26,14 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "**.fourthwall.dev",
+      },
+      {
+        protocol: "https",
+        hostname: "imgproxy.fourthwall.dev",
+      },
+      {
+        protocol: "https",
         hostname: "storage.googleapis.com",
       },
     ],

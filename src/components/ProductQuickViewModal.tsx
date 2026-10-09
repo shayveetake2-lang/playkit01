@@ -234,13 +234,25 @@ export default function ProductQuickViewModal({
           {/* Action Row */}
           <div className="mt-8 pt-6 border-t border-[#E7E5E0] flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             {!isPrompt ? (
-              <button
-                onClick={handleAddToBag}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-[#121212] text-xs uppercase tracking-[0.2em] font-medium text-[#FAF9F5] hover:bg-[#262626] transition-colors"
-              >
-                <Plus className="h-3.5 w-3.5 stroke-[1.5]" />
-                <span>Add Garment to Bag</span>
-              </button>
+              <>
+                <button
+                  onClick={handleAddToBag}
+                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-[#121212] text-xs uppercase tracking-[0.2em] font-medium text-[#FAF9F5] hover:bg-[#262626] transition-colors cursor-pointer"
+                >
+                  <Plus className="h-3.5 w-3.5 stroke-[1.5]" />
+                  <span>Add Edition to Bag</span>
+                </button>
+                <a
+                  href={product.externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-3.5 border border-[#E7E5E0] hover:border-[#121212] text-xs uppercase tracking-[0.15em] font-medium text-[#121212] transition-colors flex items-center justify-center gap-1.5"
+                  title="View on Fourthwall"
+                >
+                  <span>Fourthwall</span>
+                  <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
+                </a>
+              </>
             ) : (
               <a
                 href={product.externalUrl}
