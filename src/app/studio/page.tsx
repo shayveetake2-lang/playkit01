@@ -1,8 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Terminal, Sparkles, Layers, ArrowUpRight } from "lucide-react";
-import { brandConfig } from "@/data/socials";
+import { ArrowRight, Terminal, Sparkles, Layers, ChevronRight, Mail } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Studio Monograph",
@@ -14,8 +13,17 @@ export default function StudioPage() {
   return (
     <div className="bg-[#FAF9F5] text-[#121212] min-h-screen">
       {/* 1. Header / Chapter Identifier */}
-      <section className="border-b border-[#E7E5E0] pt-12 sm:pt-20 pb-12 sm:pb-16">
+      <section className="border-b border-[#E7E5E0] pt-8 sm:pt-16 pb-12 sm:pb-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs uppercase tracking-wider text-[#7A6A5C]">
+            <Link href="/" className="hover:text-[#121212] transition-colors">
+              Home
+            </Link>
+            <ChevronRight className="h-3.5 w-3.5 stroke-[1.5]" />
+            <span className="font-semibold text-[#121212]">Studio Monograph</span>
+          </nav>
+
           <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-[#E7E5E0] pb-3 mb-10 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="font-mono text-[#121212] font-semibold">[CHAPTER NO. 00]</span>
@@ -141,32 +149,30 @@ export default function StudioPage() {
           </div>
 
           {/* Action Links */}
-          <div className="pt-6 border-t border-[#E7E5E0] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <div className="pt-6 border-t border-[#E7E5E0] grid grid-cols-1 sm:grid-cols-3 gap-3">
             <Link
               href="/prompts"
-              className="px-6 py-3.5 bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-colors flex items-center justify-center gap-2 text-xs uppercase tracking-[0.2em] font-medium"
+              className="px-4 py-3 bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-colors flex items-center justify-center gap-2 text-xs uppercase tracking-[0.16em] font-medium"
             >
               <Sparkles className="h-3.5 w-3.5 stroke-[1.5]" />
-              <span>Browse Prompt Archive</span>
+              <span>Prompt Archive</span>
             </Link>
 
             <Link
               href="/merch"
-              className="px-6 py-3.5 border border-[#121212] text-[#121212] hover:bg-[#121212] hover:text-[#FAF9F5] transition-colors flex items-center justify-center gap-2 text-xs uppercase tracking-[0.2em] font-medium"
+              className="px-4 py-3 border border-[#121212] text-[#121212] hover:bg-[#121212] hover:text-[#FAF9F5] transition-colors flex items-center justify-center gap-2 text-xs uppercase tracking-[0.16em] font-medium"
             >
-              <span>Explore Garments</span>
+              <span>Physical Merch</span>
               <ArrowRight className="h-3.5 w-3.5 stroke-[1.5]" />
             </Link>
 
-            <a
-              href={brandConfig.socials.linktree}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3.5 border border-[#E7E5E0] bg-[#FAF9F5] text-[#121212] hover:bg-[#F5F3EE] transition-colors flex items-center justify-center gap-2 text-xs uppercase tracking-[0.2em] font-medium"
+            <Link
+              href="/contact"
+              className="px-4 py-3 border border-[#E7E5E0] bg-[#FAF9F5] text-[#121212] hover:bg-[#F5F3EE] transition-colors flex items-center justify-center gap-2 text-xs uppercase tracking-[0.16em] font-medium"
             >
-              <span>Linktree Hub</span>
-              <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
-            </a>
+              <Mail className="h-3.5 w-3.5 stroke-[1.5]" />
+              <span>Contact Atelier</span>
+            </Link>
           </div>
         </div>
       </section>

@@ -10,7 +10,7 @@
  *   node scripts/sync-promptbase.js --profile ploykit
  * 
  * This script opens Google Chrome, navigates to your public PromptBase profile,
- * extracts your active prompt listings (titles, prices, direct buy links, engines),
+ * extracts your active prompt listings (titles, prices, direct buy links, engines, and image assets),
  * and updates `src/data/promptbaseProducts.ts`.
  */
 
@@ -20,6 +20,12 @@ const puppeteer = require("puppeteer-core");
 
 const CHROME_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const OUTPUT_FILE = path.join(__dirname, "../src/data/promptbaseProducts.ts");
+const IMAGES_DIR = path.join(__dirname, "../public/images/prompts");
+
+// Ensure public images directory exists
+if (!fs.existsSync(IMAGES_DIR)) {
+  fs.mkdirSync(IMAGES_DIR, { recursive: true });
+}
 
 // Parse CLI flags
 const args = process.argv.slice(2);
@@ -36,6 +42,19 @@ for (let i = 0; i < args.length; i++) {
 }
 
 const PROFILE_URL = `https://promptbase.com/profile/${username}`;
+
+async function downloadImage(url, destPath) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return false;
+    const arrayBuffer = await res.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    fs.writeFileSync(destPath, buffer);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 async function syncPromptBase() {
   console.log("=================================================");
@@ -72,7 +91,6 @@ async function syncPromptBase() {
   await page.goto(PROFILE_URL, { waitUntil: "domcontentloaded", timeout: 60000 });
 
   console.log("Waiting for security verification & Angular cards to mount...");
-  // Allow up to 30s for Turnstile check & card hydration
   let resolved = false;
   for (let i = 0; i < 30; i++) {
     await new Promise(r => setTimeout(r, 1000));
@@ -95,7 +113,7 @@ async function syncPromptBase() {
   // Brief pause for angular list elements to settle
   await new Promise(r => setTimeout(r, 4000));
 
-  console.log("Extracting prompt listings from profile...");
+  console.log("Extracting prompt listings and artwork from profile...");
   const extracted = await page.evaluate(() => {
     const items = [];
     const seenSlugs = new Set();
@@ -147,12 +165,26 @@ async function syncPromptBase() {
         line.length > 5
       ) || slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 
+      // Extract image source
+      let imageUrl = "";
+      const imgElem = (container ? container.querySelector("img") : null) || l.querySelector("img");
+      if (imgElem) {
+        imageUrl = imgElem.currentSrc || imgElem.src || imgElem.getAttribute("data-src") || imgElem.getAttribute("src") || "";
+      }
+      if (!imageUrl && container) {
+        const bg = window.getComputedStyle(container).backgroundImage;
+        if (bg && bg.startsWith("url(")) {
+          imageUrl = bg.slice(4, -1).replace(/["']/g, "");
+        }
+      }
+
       items.push({
         slug,
         title: titleCandidate,
         href,
         price,
-        engine
+        engine,
+        imageUrl
       });
     });
 
@@ -166,13 +198,22 @@ async function syncPromptBase() {
     return;
   }
 
-  extracted.forEach((p, idx) => {
-    console.log(`  [${(idx + 1).toString().padStart(2, "0")}] ${p.title} (${p.engine}) — $${p.price.toFixed(2)} -> ${p.href}`);
-  });
+  for (let idx = 0; idx < extracted.length; idx++) {
+    const p = extracted[idx];
+    console.log(`  [${(idx + 1).toString().padStart(2, "0")}] ${p.title} (${p.engine}) — $${p.price.toFixed(2)}`);
+    if (p.imageUrl && p.imageUrl.startsWith("http")) {
+      const ext = p.imageUrl.includes(".png") ? "png" : "jpg";
+      const localPath = path.join(IMAGES_DIR, `${p.slug}.${ext}`);
+      const success = await downloadImage(p.imageUrl, localPath);
+      if (success) {
+        console.log(`       ✓ Downloaded real image to /images/prompts/${p.slug}.${ext}`);
+      }
+    }
+  }
 
   await browser.close();
   console.log("-------------------------------------------------");
-  console.log(`Sync completed successfully! Discovered ${extracted.length} live PromptBase editions.`);
+  console.log(`Sync completed successfully! Processed ${extracted.length} live PromptBase editions.`);
   console.log("=================================================");
 }
 

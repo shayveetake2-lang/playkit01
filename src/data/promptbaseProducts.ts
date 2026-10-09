@@ -3,7 +3,8 @@ import type { Product } from "./products";
 /**
  * Real PromptBase Listings Catalog
  * Direct sync with @ploykit on PromptBase: https://promptbase.com/profile/ploykit
- * Every product links directly to its verified individual listing on PromptBase.
+ * Every product links directly to its verified individual listing on PromptBase,
+ * with authentic high-resolution artwork generated and stored locally in public/images/prompts/.
  */
 export const promptbaseProducts: Product[] = [
   // 1. Stylized Vintage Exotic Animal Illustrations
@@ -18,9 +19,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "Botanical and natural-history museum style archival wildlife engravings with artistic color accents.",
     description: "Generates ornate, antique-inspired wildlife portraits combining traditional 19th-century etching aesthetics with rich contemporary color palettes. Calibrated for deterministic precision on Gemini Image.",
     externalUrl: "https://promptbase.com/prompt/stylized-vintage-exotic-animal-illustrations",
-    primaryImage: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-vintage-animals.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-vintage-animals.jpg",
     ],
     tags: ["Gemini Image", "Animals", "Vintage", "Botanical", "Illustration"],
     isFeatured: true,
@@ -47,9 +48,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "Atmospheric double-exposure character silhouettes infused with natural landscapes and nebulae.",
     description: "Combines human silhouettes with misty pine forests, mountain ranges, and cosmic nebulas using delicate exposure-blending mathematics in Gemini Image.",
     externalUrl: "https://promptbase.com/prompt/cinematic-double-exposure-silhouette-art-2",
-    primaryImage: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-double-exposure.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-double-exposure.jpg",
     ],
     tags: ["Gemini Image", "Double Exposure", "Cinematic", "Silhouette", "Moody"],
     isFeatured: true,
@@ -76,9 +77,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "High-converting modern tech landing pages, hero sections, and minimalist design systems.",
     description: "Generates award-winning SaaS landing page mockups, clean hero sections, and elegant glassmorphism web layouts with realistic responsive layout grids.",
     externalUrl: "https://promptbase.com/prompt/minimalist-uiux-landing-page-concepts-2",
-    primaryImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-uiux-landing-pages.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-uiux-landing-pages.jpg",
     ],
     tags: ["Gemini Image", "UI/UX", "Web Design", "Minimalist", "Landing Page"],
     isFeatured: true,
@@ -105,9 +106,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "Studio-lit stone, marble, and minimalist geometric podiums for e-commerce brand photography.",
     description: "Creates commercial-grade podium stages with soft diffused studio lighting, realistic reflections, and subtle architectural shadows for luxury bottles, fragrances, and electronics.",
     externalUrl: "https://promptbase.com/prompt/professional-product-mockup-podiums-2",
-    primaryImage: "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-product-podiums.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-product-podiums.jpg",
     ],
     tags: ["Gemini Image", "Product Mockup", "Podium", "Studio Lighting", "Commercial"],
     isFeatured: true,
@@ -134,9 +135,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "Hand-painted botanical, floral, and lifestyle watercolor illustrations on isolated white backdrops.",
     description: "Produces soft wet-on-wet watercolor washes with transparent pigment granulation, organic edges, and isolated clean backgrounds perfect for stationery and wedding invitations.",
     externalUrl: "https://promptbase.com/prompt/delicate-watercolor-clipart-assets-2",
-    primaryImage: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-watercolor-clipart.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-watercolor-clipart.jpg",
     ],
     tags: ["Gemini Image", "Watercolor", "Clipart", "Floral", "Botanical"],
     isFeatured: false,
@@ -163,9 +164,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "Ultra-clean black and white coloring pages with intricate patterns and zero grayscale shading.",
     description: "Specially calibrated to output pure vector-style black outlines on white backgrounds with uniform stroke weights, perfect for Amazon KDP publishing and printable coloring pages.",
     externalUrl: "https://promptbase.com/prompt/adult-coloring-book-line-art-generator-2",
-    primaryImage: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-coloring-book.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-coloring-book.jpg",
     ],
     tags: ["Gemini Image", "Coloring Book", "Line Art", "Mandala", "Vector"],
     isFeatured: false,
@@ -192,9 +193,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "Ultra-crisp vintage badge and emblem vector illustrations optimized for merchandise and stickers.",
     description: "Crafted specifically for Gemini Image, this prompt generates detailed vintage badge graphics, distressed typography, and bold merchandise emblems ready for vinyl stickers and apparel printing.",
     externalUrl: "https://promptbase.com/prompt/retro-tshirt-sticker-badges-2",
-    primaryImage: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-retro-badges.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-retro-badges.jpg",
     ],
     tags: ["Gemini Image", "Badges", "Apparel", "Stickers", "Vintage"],
     isFeatured: true,
@@ -221,9 +222,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "Complete enterprise Product Requirement Documents with Jira user stories, acceptance criteria, and edge cases.",
     description: "Transforms rough feature ideas into battle-tested engineering specifications, user personas, API contracts, and INVEST-compliant user stories for sprint planning.",
     externalUrl: "https://promptbase.com/prompt/executive-technical-prd-agile-user-sto-2",
-    primaryImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-executive-prd.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-executive-prd.jpg",
     ],
     tags: ["Gemini", "PRD", "Agile", "User Stories", "Product Management"],
     isFeatured: false,
@@ -250,9 +251,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "Consistent, colorful lineal icon sets with 2px outlines and modern pastel accent fills.",
     description: "Produces unified sets of mobile and desktop app icons using geometric precision, consistent stroke widths, and harmonious modern color palettes.",
     externalUrl: "https://promptbase.com/prompt/modern-lineal-color-ui-icons-2",
-    primaryImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-lineal-icons.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-lineal-icons.jpg",
     ],
     tags: ["Gemini Image", "UI Icons", "Lineal Color", "Iconography", "App Design"],
     isFeatured: false,
@@ -279,9 +280,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "Michelin-grade culinary plating, dramatic rim lighting, and commercial food advertising styling.",
     description: "Captures mouth-watering culinary creations with macro steam textures, glistening garnishes, shallow depth of field, and dark slate restaurant table surfaces.",
     externalUrl: "https://promptbase.com/prompt/highend-food-advertising-photography-2",
-    primaryImage: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-food-photography.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-food-photography.jpg",
     ],
     tags: ["Gemini Image", "Food Photography", "Commercial", "Advertising", "Culinary"],
     isFeatured: false,
@@ -308,9 +309,9 @@ export const promptbaseProducts: Product[] = [
     shortDescription: "Contemporary minimalist tech logos with dynamic gradients and memorable geometric emblems.",
     description: "Generates iconic, scalable startup marks and app symbols combining clean geometry, modern gradients, and memorable brand silhouettes.",
     externalUrl: "https://promptbase.com/prompt/vibrant-startup-logos-31",
-    primaryImage: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1000&auto=format&fit=crop&q=85",
+    primaryImage: "/images/prompts/pb-startup-logos.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1000&auto=format&fit=crop&q=85",
+      "/images/prompts/pb-startup-logos.jpg",
     ],
     tags: ["Gemini Image", "Logo Design", "Startups", "Branding", "Minimalist"],
     isFeatured: false,
@@ -325,4 +326,3 @@ export const promptbaseProducts: Product[] = [
     },
   },
 ];
-

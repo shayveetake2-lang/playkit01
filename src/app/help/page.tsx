@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Plus, Minus, ArrowUpRight, HelpCircle } from "lucide-react";
+import Link from "next/link";
+import { Plus, Minus, ArrowUpRight, HelpCircle, ChevronRight, Mail } from "lucide-react";
 import { brandConfig } from "@/data/socials";
 
 interface FaqItem {
@@ -112,8 +113,17 @@ export default function HelpPage() {
   return (
     <div className="bg-[#FAF9F5] text-[#121212] min-h-screen">
       {/* 1. Atelier Header */}
-      <section className="border-b border-[#E7E5E0] pt-12 sm:pt-20 pb-12 sm:pb-16">
+      <section className="border-b border-[#E7E5E0] pt-8 sm:pt-16 pb-12 sm:pb-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs uppercase tracking-wider text-[#7A6A5C]">
+            <Link href="/" className="hover:text-[#121212] transition-colors">
+              Home
+            </Link>
+            <ChevronRight className="h-3.5 w-3.5 stroke-[1.5]" />
+            <span className="font-semibold text-[#121212]">Help & FAQ</span>
+          </nav>
+
           <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-[#E7E5E0] pb-3 mb-10 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="font-mono text-[#121212] font-semibold">[ATELIER PROTOCOLS]</span>
@@ -201,15 +211,25 @@ export default function HelpPage() {
               </p>
             </div>
 
-            <a
-              href={brandConfig.socials.linktree}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 py-3 border border-[#121212] bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-colors text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 shrink-0"
-            >
-              <span>Connect on Linktree</span>
-              <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
-            </a>
+            <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+              <Link
+                href="/contact"
+                className="px-5 py-3 border border-[#121212] bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-colors text-xs uppercase tracking-[0.16em] font-medium flex items-center gap-2"
+              >
+                <Mail className="h-3.5 w-3.5 stroke-[1.5]" />
+                <span>Contact Atelier</span>
+              </Link>
+
+              <a
+                href={brandConfig.socials.linktree}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-3 border border-[#E7E5E0] bg-white text-[#121212] hover:bg-[#FAF9F5] transition-colors text-xs uppercase tracking-[0.16em] font-medium flex items-center gap-1.5"
+              >
+                <span>Linktree</span>
+                <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
+              </a>
+            </div>
           </div>
         </div>
       </section>

@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
 import {
   Search,
   SlidersHorizontal,
   ArrowUpRight,
   Shirt,
   Loader2,
+  ChevronRight,
 } from "lucide-react";
 import { Product } from "@/data/products";
 import { initialFourthwallProducts } from "@/data/fourthwallProducts";
@@ -83,8 +85,17 @@ export default function MerchPage() {
   }, [products, searchQuery, selectedType, sortBy]);
 
   return (
-    <main className="min-h-screen bg-[#FAF9F5] text-[#121212] py-12 sm:py-20">
+    <main className="min-h-screen bg-[#FAF9F5] text-[#121212] py-10 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs uppercase tracking-wider text-[#7A6A5C]">
+          <Link href="/" className="hover:text-[#121212] transition-colors">
+            Home
+          </Link>
+          <ChevronRight className="h-3.5 w-3.5 stroke-[1.5]" />
+          <span className="font-semibold text-[#121212]">Physical Editions</span>
+        </nav>
+
         {/* Editorial Section Masthead */}
         <div className="border-b border-[#E7E5E0] pb-10 mb-12">
           <div className="flex flex-wrap items-center justify-between gap-4 mb-4">

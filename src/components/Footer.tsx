@@ -61,10 +61,10 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main Colophon Links */}
+      {/* Main Directory Links */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Brand Manifesto */}
+          {/* Brand Colophon */}
           <div className="lg:col-span-5 space-y-4">
             <Link href="/" className="inline-block">
               <span className="font-serif text-2xl font-normal tracking-[0.15em] text-[#121212] block">
@@ -75,7 +75,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-xs text-[#666662] leading-relaxed max-w-sm">
-              An independent creative studio dedicated to the intersection of generative artificial intelligence blueprints and physical apparel.
+              An independent creative studio exploring generative artificial intelligence prompt architecture and archival physical editions.
             </p>
             <div className="pt-2 flex items-center gap-4 text-xs">
               <a
@@ -100,71 +100,60 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Directory Column 1 */}
+          {/* Directory Column 1: Storefront */}
           <div className="lg:col-span-3 space-y-3">
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold block">
-              The Archive
+              Storefront
             </span>
             <ul className="space-y-2 text-xs uppercase tracking-wider text-[#121212]">
               <li>
                 <Link href="/prompts" className="hover:text-[#7A6A5C] transition-colors">
-                  All Prompt Formulas
+                  AI Prompt Formulas
                 </Link>
               </li>
               <li>
+                <Link href="/merch" className="hover:text-[#7A6A5C] transition-colors">
+                  Physical Merch & Editions
+                </Link>
+              </li>
+              <li>
+                <Link href="/" className="hover:text-[#7A6A5C] transition-colors">
+                  Selected Works Showcase
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Directory Column 2: Studio & Support */}
+          <div className="lg:col-span-2 space-y-3">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold block">
+              The Studio
+            </span>
+            <ul className="space-y-2 text-xs uppercase tracking-wider text-[#121212]">
+              <li>
                 <Link href="/studio" className="hover:text-[#7A6A5C] transition-colors">
-                  Studio Monograph
+                  About & Monograph
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-[#7A6A5C] transition-colors font-medium text-[#121212]">
+                  Contact Atelier
                 </Link>
               </li>
               <li>
                 <Link href="/help" className="hover:text-[#7A6A5C] transition-colors">
-                  Atelier FAQ & Help
+                  Help & FAQ
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Directory Column 2 */}
+          {/* Directory Column 3: Outlets */}
           <div className="lg:col-span-2 space-y-3">
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold block">
-              Physical Editions
+              Verified Outlets
             </span>
             <ul className="space-y-2 text-xs uppercase tracking-wider text-[#121212]">
-              <li>
-                <Link href="/merch" className="hover:text-[#7A6A5C] transition-colors">
-                  Apparel & T-Shirts
-                </Link>
-              </li>
-              <li>
-                <Link href="/merch" className="hover:text-[#7A6A5C] transition-colors">
-                  Die-Cut Vinyl Stickers
-                </Link>
-              </li>
-              <li>
-                <Link href="/merch" className="hover:text-[#7A6A5C] transition-colors">
-                  Ceramic Objects & Mugs
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Directory Column 3 */}
-          <div className="lg:col-span-2 space-y-3">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold block">
-              Inquiry / Socials
-            </span>
-            <ul className="space-y-2 text-xs uppercase tracking-wider text-[#121212]">
-              <li>
-                <a
-                  href={brandConfig.socials.linktree}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#7A6A5C] transition-colors flex items-center justify-between"
-                >
-                  <span>Linktree</span>
-                  <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
-                </a>
-              </li>
               <li>
                 <a
                   href={brandConfig.socials.promptbase}
@@ -187,6 +176,17 @@ export default function Footer() {
                   <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
                 </a>
               </li>
+              <li>
+                <a
+                  href={brandConfig.socials.linktree}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#7A6A5C] transition-colors flex items-center justify-between"
+                >
+                  <span>Linktree</span>
+                  <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -194,9 +194,17 @@ export default function Footer() {
         {/* Bottom Colophon Bar */}
         <div className="mt-16 pt-8 border-t border-[#E7E5E0] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#666662] tracking-wider">
           <p>© {new Date().getFullYear()} PLAYKIT 01 Studio. All rights reserved.</p>
-          <p className="mt-2 sm:mt-0 uppercase tracking-widest text-[10px] text-[#7A6A5C]">
-            Volume 01 • Printed in Digital Space
-          </p>
+          <div className="mt-2 sm:mt-0 flex items-center gap-4 text-[10px] uppercase tracking-widest text-[#7A6A5C]">
+            <Link href="/contact" className="hover:text-[#121212] transition-colors">
+              Contact
+            </Link>
+            <span>•</span>
+            <Link href="/help" className="hover:text-[#121212] transition-colors">
+              FAQ
+            </Link>
+            <span>•</span>
+            <span>Printed in Digital Space</span>
+          </div>
         </div>
       </div>
     </footer>

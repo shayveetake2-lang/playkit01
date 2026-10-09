@@ -8,18 +8,17 @@ import {
   ArrowUpRight,
   Sparkles,
   Shirt,
-  ShieldCheck,
   CheckCircle,
   Binary,
-  Layers,
+  Mail,
+  Copy,
+  Check,
 } from "lucide-react";
 import {
   Product,
   initialProducts,
   getLiveProducts,
   getFeaturedProducts,
-  getRecentlyAddedProducts,
-  getMostPurchasedProducts,
 } from "@/data/products";
 import { brandConfig } from "@/data/socials";
 import ProductCard from "@/components/ProductCard";
@@ -29,7 +28,8 @@ import SectionHeader from "@/components/SectionHeader";
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [selectedChapterTab, setSelectedChapterTab] = useState<"all" | "prompts" | "merch">("all");
+  const [selectedCategoryTab, setSelectedCategoryTab] = useState<"all" | "prompts" | "merch">("all");
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   useEffect(() => {
     getLiveProducts().then((live) => {
@@ -41,75 +41,76 @@ export default function HomePage() {
 
   const promptProducts = products.filter((p) => p.category === "prompt");
   const merchProducts = products.filter((p) => p.category === "merch");
-
   const featured = getFeaturedProducts(products);
   const featuredPrompts = featured.filter((p) => p.category === "prompt");
   const featuredMerch = featured.filter((p) => p.category === "merch");
-  const recentlyAdded = getRecentlyAddedProducts(products);
-  const mostPurchased = getMostPurchasedProducts(products);
 
   // Balanced hybrid for Selected Works: 4 top prompts + 4 top Fourthwall physical items
   const selectedWorksItems =
-    selectedChapterTab === "all"
+    selectedCategoryTab === "all"
       ? [
           ...(featuredPrompts.length > 0 ? featuredPrompts.slice(0, 4) : promptProducts.slice(0, 4)),
           ...(featuredMerch.length > 0 ? featuredMerch.slice(0, 4) : merchProducts.slice(0, 4)),
         ]
-      : selectedChapterTab === "prompts"
+      : selectedCategoryTab === "prompts"
       ? (featuredPrompts.length > 0 ? featuredPrompts.slice(0, 8) : promptProducts.slice(0, 8))
       : (featuredMerch.length > 0 ? featuredMerch.slice(0, 8) : merchProducts.slice(0, 8));
 
-  // Real Fourthwall item for the hero curated specimen
+  // Curated hero spotlight piece
   const heroMerchProduct =
     merchProducts.find((p) => p.isFeatured) || merchProducts[0] || products[0];
 
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("contact@playkit01.store");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
+
   return (
     <div className="bg-[#FAF9F5] text-[#121212]">
-      {/* 1. COMPACT EDITORIAL HERO SPREAD */}
-      <section className="border-b border-[#E7E5E0] pt-6 sm:pt-8 pb-8 sm:pb-12">
+      {/* 1. CLEAN EDITORIAL HERO */}
+      <section className="border-b border-[#E7E5E0] pt-8 sm:pt-12 pb-10 sm:pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Masthead Subline */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E7E5E0] pb-3 mb-6 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
+          {/* Subline Masthead */}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E7E5E0] pb-3 mb-8 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
             <div className="flex items-center gap-3">
-              <span className="font-semibold text-[#121212]">ISSUE NO. 01</span>
+              <span className="font-semibold text-[#121212]">INDEPENDENT STUDIO</span>
               <span>•</span>
-              <span>AUTUMN / WINTER ARCHIVE</span>
+              <span>ISSUE NO. 01 ARCHIVE</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#121212]" />
               <span className="truncate">
-                OFFICIAL DISPATCH • PROMPTBASE & FOURTHWALL VERIFIED
+                VERIFIED DISPATCH • PROMPTBASE & FOURTHWALL
               </span>
             </div>
           </div>
 
-          {/* Hero Editorial Asymmetrical Grid */}
+          {/* Hero Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Column: Locked Manifesto, 3-Section Buttons & Inline Telemetry */}
-            <div className="lg:col-span-7 space-y-5">
+            {/* Left Column: Headline, Clear CTAs & Studio Metrics */}
+            <div className="lg:col-span-7 space-y-6">
               <div className="space-y-3">
                 <span className="text-[10px] uppercase tracking-[0.3em] text-[#7A6A5C] font-semibold block">
-                  Studio Manifesto • Vol. 01
+                  Studio Atelier • Issue 01
                 </span>
-                <h1 className="font-serif text-2xl sm:text-4xl lg:text-[40px] text-[#121212] font-normal leading-[1.16] tracking-tight">
-                  PLAYKIT 01 — An independent creative studio exploring the intersection of{" "}
-                  <span className="italic font-normal">generative prompt architecture</span> and{" "}
-                  <span className="italic font-normal">physical editions.</span>
+                <h1 className="font-serif text-3xl sm:text-4xl lg:text-[42px] text-[#121212] font-normal leading-[1.16] tracking-tight">
+                  Deterministic AI Prompt Blueprints & Archival Physical Editions.
                 </h1>
               </div>
 
               <p className="text-xs sm:text-sm text-[#666662] max-w-xl leading-relaxed font-light">
-                Engineering deterministic prompt formulas for Gemini Image, Claude, and Midjourney alongside heavyweight streetwear and archival physical goods fulfilled globally via Fourthwall.
+                PLAYKIT 01 is an independent creative studio engineering battle-tested prompt formulas for Gemini Image, Claude, and Midjourney alongside heavyweight standard cotton streetwear fulfilled globally via Fourthwall.
               </p>
 
-              {/* Compact Inline Studio Metrics Counter Bar */}
-              <div className="flex flex-wrap items-center gap-3 sm:gap-6 border-y border-[#E7E5E0] py-3 text-xs">
+              {/* Minimal Key Metrics */}
+              <div className="flex flex-wrap items-center gap-4 sm:gap-8 border-y border-[#E7E5E0] py-3.5 text-xs">
                 <div className="flex items-baseline gap-1.5">
                   <span className="font-serif font-medium text-base text-[#121212]">
                     14+
                   </span>
                   <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C]">
-                    Blueprints
+                    Prompt Blueprints
                   </span>
                 </div>
                 <span className="text-[#E7E5E0] hidden sm:inline">•</span>
@@ -118,7 +119,7 @@ export default function HomePage() {
                     31+
                   </span>
                   <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C]">
-                    Fourthwall Editions
+                    Physical Editions
                   </span>
                 </div>
                 <span className="text-[#E7E5E0] hidden sm:inline">•</span>
@@ -127,55 +128,41 @@ export default function HomePage() {
                     5.0★
                   </span>
                   <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C]">
-                    Store Rating
-                  </span>
-                </div>
-                <span className="text-[#E7E5E0] hidden sm:inline">•</span>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="font-serif font-medium text-base text-[#121212]">
-                    220 GSM
-                  </span>
-                  <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C]">
-                    Cotton Standard
+                    Storefront Rating
                   </span>
                 </div>
               </div>
 
-              {/* 3 Core Section Quick Navigation Buttons */}
-              <div className="space-y-2 pt-1">
-                <span className="text-[9px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold block">
-                  Quick Navigation • 3 Core Sections
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs uppercase tracking-[0.16em]">
-                  <Link
-                    href="/prompts"
-                    className="px-4 py-3 bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-all flex items-center justify-center gap-2 font-medium shadow-xs group"
-                  >
-                    <Sparkles className="h-3.5 w-3.5 stroke-[1.5] text-[#D4AF37] group-hover:scale-110 transition-transform shrink-0" />
-                    <span className="truncate">The Prompt Archive</span>
-                  </Link>
+              {/* Intuitive Action CTAs */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 text-xs uppercase tracking-[0.16em]">
+                <Link
+                  href="/prompts"
+                  className="px-5 py-3.5 bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-all flex items-center justify-center gap-2 font-medium shadow-xs group"
+                >
+                  <Sparkles className="h-3.5 w-3.5 stroke-[1.5] text-[#D4AF37] group-hover:scale-110 transition-transform shrink-0" />
+                  <span>Explore AI Prompts</span>
+                </Link>
 
-                  <Link
-                    href="/merch"
-                    className="px-4 py-3 border-2 border-[#121212] bg-white text-[#121212] hover:bg-[#121212] hover:text-[#FAF9F5] transition-all flex items-center justify-center gap-2 font-medium shadow-xs group"
-                  >
-                    <Shirt className="h-3.5 w-3.5 stroke-[1.5] group-hover:scale-110 transition-transform shrink-0" />
-                    <span className="truncate">Physical Editions</span>
-                  </Link>
+                <Link
+                  href="/merch"
+                  className="px-5 py-3.5 border-2 border-[#121212] bg-white text-[#121212] hover:bg-[#121212] hover:text-[#FAF9F5] transition-all flex items-center justify-center gap-2 font-medium shadow-xs group"
+                >
+                  <Shirt className="h-3.5 w-3.5 stroke-[1.5] group-hover:scale-110 transition-transform shrink-0" />
+                  <span>Shop Physical Merch</span>
+                </Link>
 
-                  <a
-                    href="#creator"
-                    className="px-4 py-3 border border-[#D4D0C8] bg-[#F5F3EE] text-[#121212] hover:bg-[#EBE7DE] hover:border-[#121212] transition-all flex items-center justify-center gap-2 font-medium shadow-xs group"
-                  >
-                    <Layers className="h-3.5 w-3.5 stroke-[1.5] text-[#7A6A5C] group-hover:scale-110 transition-transform shrink-0" />
-                    <span className="truncate">About Creator</span>
-                  </a>
-                </div>
+                <Link
+                  href="/contact"
+                  className="px-5 py-3.5 border border-[#D4D0C8] bg-[#F5F3EE] text-[#121212] hover:bg-[#EBE7DE] hover:border-[#121212] transition-all flex items-center justify-center gap-2 font-medium shadow-xs"
+                >
+                  <Mail className="h-3.5 w-3.5 stroke-[1.5] text-[#7A6A5C] shrink-0" />
+                  <span>Contact Atelier</span>
+                </Link>
               </div>
 
-              {/* Verified Outlets Footnote */}
-              <div className="pt-2 flex flex-wrap items-center gap-4 text-[11px] uppercase tracking-wider text-[#666662]">
-                <span className="text-[#121212] font-semibold">Verified Channels:</span>
+              {/* Verified Channels Footnote */}
+              <div className="pt-2 flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-wider text-[#666662]">
+                <span className="text-[#121212] font-semibold">Official Channels:</span>
                 <a
                   href={brandConfig.socials.promptbase}
                   target="_blank"
@@ -186,17 +173,19 @@ export default function HomePage() {
                   <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
                 </a>
                 <span>•</span>
-                <Link
-                  href="/merch"
+                <a
+                  href="https://checkout.playkit01.store"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-[#121212] transition-colors flex items-center gap-1 font-medium text-[#121212]"
                 >
                   <span>Fourthwall Storefront</span>
                   <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
-                </Link>
+                </a>
               </div>
             </div>
 
-            {/* Right Column: Real Fourthwall Product Spotlight Plate */}
+            {/* Right Column: Hero Spotlight Plate */}
             <div className="lg:col-span-5 relative">
               <div
                 onClick={() => heroMerchProduct && setSelectedProduct(heroMerchProduct)}
@@ -216,7 +205,7 @@ export default function HomePage() {
                   {/* Archival Stamp */}
                   <div className="absolute top-3 left-3 z-10">
                     <span className="px-2.5 py-1 text-[9px] uppercase tracking-[0.2em] font-semibold bg-[#FAF9F5]/95 backdrop-blur-xs text-[#121212] border border-[#E7E5E0] shadow-2xs">
-                      Curated Edition • Fourthwall
+                      Curated Spotlight Edition
                     </span>
                   </div>
 
@@ -240,11 +229,10 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                {/* Archival Specimen Swatch Card (z-20 stacking tier) */}
                 <div className="mt-3 pt-3 border-t border-[#E7E5E0] flex items-center justify-between text-[11px] text-[#666662]">
                   <div className="flex items-center gap-1.5">
                     <Binary className="h-3 w-3 text-[#7A6A5C] stroke-[1.5]" />
-                    <span>Fourthwall Tracked Logistics</span>
+                    <span>Global Tracked Logistics</span>
                   </div>
                   <span className="font-mono text-[10px] text-[#7A6A5C] uppercase tracking-wider">
                     {heroMerchProduct.merchDetails?.merchType || "Physical Edition"}
@@ -256,228 +244,35 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 1.5. HOW IT WORKS EDITORIAL GUIDE */}
-      <section className="border-b border-[#E7E5E0] bg-[#FAF9F5] py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-[#E7E5E0] pb-3 mb-8 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <span className="font-semibold text-[#121212]">METHODOLOGY</span>
-              <span>•</span>
-              <span>THREE-STEP ACQUISITION WORKFLOW</span>
-            </div>
-            <span className="font-mono text-[9px] hidden sm:inline">PROTOCOL 01</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 divide-y md:divide-y-0 divide-[#E7E5E0] border border-[#E7E5E0] md:border-0">
-            {/* Step 1: Discover */}
-            <div className="p-5 sm:p-6 bg-white border-0 md:border md:border-[#E7E5E0] shadow-[0_2px_12px_rgba(0,0,0,0.04)] flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-4 border-b border-[#E7E5E0] pb-2">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
-                    [01]
-                  </span>
-                  <span className="text-[9px] uppercase tracking-[0.2em] px-2 py-0.5 bg-[#FAF9F5] border border-[#E7E5E0] text-[#121212]">
-                    Exploration
-                  </span>
-                </div>
-                <h3 className="font-serif text-xl sm:text-2xl text-[#121212] font-normal mb-2">
-                  Discover
-                </h3>
-                <p className="font-sans text-xs sm:text-sm text-[#666662] leading-relaxed font-light">
-                  Browse digital formulas or physical artifacts. Hand-curated blueprints stress-tested across premier AI engines alongside archival heavyweight apparel.
-                </p>
-              </div>
-            </div>
-
-            {/* Step 2: Acquire */}
-            <div className="p-5 sm:p-6 bg-white border-0 md:border md:border-[#E7E5E0] shadow-[0_2px_12px_rgba(0,0,0,0.04)] flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-4 border-b border-[#E7E5E0] pb-2">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
-                    [02]
-                  </span>
-                  <span className="text-[9px] uppercase tracking-[0.2em] px-2 py-0.5 bg-[#FAF9F5] border border-[#E7E5E0] text-[#121212]">
-                    Fulfillment
-                  </span>
-                </div>
-                <h3 className="font-serif text-xl sm:text-2xl text-[#121212] font-normal mb-2">
-                  Acquire
-                </h3>
-                <p className="font-sans text-xs sm:text-sm text-[#666662] leading-relaxed font-light">
-                  Instant digital delivery or verified Fourthwall physical dispatch. Direct access to prompt variables and parameters, or worldwide tracked apparel logistics.
-                </p>
-              </div>
-            </div>
-
-            {/* Step 3: Create */}
-            <div className="p-5 sm:p-6 bg-white border-0 md:border md:border-[#E7E5E0] shadow-[0_2px_12px_rgba(0,0,0,0.04)] flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-4 border-b border-[#E7E5E0] pb-2">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
-                    [03]
-                  </span>
-                  <span className="text-[9px] uppercase tracking-[0.2em] px-2 py-0.5 bg-[#FAF9F5] border border-[#E7E5E0] text-[#121212]">
-                    Execution
-                  </span>
-                </div>
-                <h3 className="font-serif text-xl sm:text-2xl text-[#121212] font-normal mb-2">
-                  Create
-                </h3>
-                <p className="font-sans text-xs sm:text-sm text-[#666662] leading-relaxed font-light">
-                  Apply prompts to your workflow or wear your gear. Seamlessly integrate calibrated outputs into production pipelines or represent the studio in standard cotton.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. CONTINUOUS EDITORIAL MARQUEE TICKER (35s Majestic Pace with Hover-to-Pause) */}
-      <section className="border-b border-[#E7E5E0] bg-[#F5F3EE] overflow-hidden py-3">
-        <div className="animate-marquee items-center gap-8 text-[11px] uppercase tracking-[0.25em] text-[#121212] font-medium whitespace-nowrap">
-          <span>ISSUE 01 • COMPUTATIONAL FORMULAS</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>VERIFIED ON PROMPTBASE ARCHIVE</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>FOURTHWALL ARCHIVAL APPAREL</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>100% COMBED COTTON APPAREL</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>DETERMINISTIC SEED ARCHITECTURE</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>ZERO PLACEHOLDERS</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>GEMINI IMAGE & CLAUDE CALIBRATED</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>LIMITED VOLUME EDITIONS</span>
-          <span className="text-[#7A6A5C]">•</span>
-          {/* Loop repeat duplicate */}
-          <span>ISSUE 01 • COMPUTATIONAL FORMULAS</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>VERIFIED ON PROMPTBASE ARCHIVE</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>FOURTHWALL ARCHIVAL APPAREL</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>100% COMBED COTTON APPAREL</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>DETERMINISTIC SEED ARCHITECTURE</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>ZERO PLACEHOLDERS</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>GEMINI IMAGE & CLAUDE CALIBRATED</span>
-          <span className="text-[#7A6A5C]">•</span>
-          <span>LIMITED VOLUME EDITIONS</span>
-        </div>
-      </section>
-
-      {/* 3. TABLE OF CONTENTS / 3-SECTION DIRECTORY INDEX */}
-      <section className="border-b border-[#E7E5E0] bg-[#FAF9F5]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#E7E5E0]">
-            {/* Section 01: Prompt Archive */}
-            <Link
-              href="/prompts"
-              className="group py-6 sm:py-8 px-0 md:px-6 first:pl-0 last:pr-0 flex items-center justify-between hover:bg-[#F5F3EE] transition-colors duration-200"
-            >
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
-                    [01] Directory
-                  </span>
-                  <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 bg-white border border-[#E7E5E0] text-[#121212]">
-                    14+ Blueprints
-                  </span>
-                </div>
-                <h3 className="font-serif text-lg sm:text-xl text-[#121212] font-normal group-hover:text-[#7A6A5C] transition-colors">
-                  The Prompt Archive
-                </h3>
-                <p className="text-xs text-[#666662] mt-1 font-light line-clamp-1">
-                  Deterministic formulas for Gemini, Claude & Midjourney
-                </p>
-              </div>
-              <ArrowRight className="h-4 w-4 text-[#666662] group-hover:text-[#121212] group-hover:translate-x-1.5 transition-all stroke-[1.5] shrink-0 ml-3" />
-            </Link>
-
-            {/* Section 02: Physical Editions */}
-            <Link
-              href="/merch"
-              className="group py-6 sm:py-8 px-0 md:px-6 flex items-center justify-between hover:bg-[#F5F3EE] transition-colors duration-200"
-            >
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
-                    [02] Directory
-                  </span>
-                  <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 bg-[#121212] text-[#FAF9F5]">
-                    31+ Editions
-                  </span>
-                </div>
-                <h3 className="font-serif text-lg sm:text-xl text-[#121212] font-normal group-hover:text-[#7A6A5C] transition-colors">
-                  Physical Editions & Garments
-                </h3>
-                <p className="text-xs text-[#666662] mt-1 font-light line-clamp-1">
-                  Heavyweight tees, hoodies, phone cases & objects via Fourthwall
-                </p>
-              </div>
-              <ArrowRight className="h-4 w-4 text-[#666662] group-hover:text-[#121212] group-hover:translate-x-1.5 transition-all stroke-[1.5] shrink-0 ml-3" />
-            </Link>
-
-            {/* Section 03: Creator Dossier */}
-            <a
-              href="#creator"
-              className="group py-6 sm:py-8 px-0 md:px-6 last:pr-0 flex items-center justify-between hover:bg-[#F5F3EE] transition-colors duration-200"
-            >
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
-                    [03] Directory
-                  </span>
-                  <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 bg-white border border-[#E7E5E0] text-[#7A6A5C]">
-                    Atelier Dossier
-                  </span>
-                </div>
-                <h3 className="font-serif text-lg sm:text-xl text-[#121212] font-normal group-hover:text-[#7A6A5C] transition-colors">
-                  About the Creator
-                </h3>
-                <p className="text-xs text-[#666662] mt-1 font-light line-clamp-1">
-                  Full-stack engineer, AI prompt research & studio monograph
-                </p>
-              </div>
-              <ArrowRight className="h-4 w-4 text-[#666662] group-hover:text-[#121212] group-hover:translate-x-1.5 transition-all stroke-[1.5] shrink-0 ml-3" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. CHAPTER I: SELECTED WORKS (FEATURED SPREAD WITH CATEGORY TABS) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      {/* 2. UNIFIED STOREFRONT SHOWCASE: SELECTED WORKS */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <SectionHeader
-          chapter="NO. I"
+          chapter="CATALOG"
           title="Selected Works"
           subtitle="Top releases across computational blueprints and physical apparel, hand-curated for aesthetic precision."
           badge="Collection Issue 01"
-          viewAllHref={selectedChapterTab === "merch" ? "/merch" : "/prompts"}
-          viewAllText={selectedChapterTab === "merch" ? "Explore physical archive" : "Explore all blueprints"}
+          viewAllHref={selectedCategoryTab === "merch" ? "/merch" : "/prompts"}
+          viewAllText={selectedCategoryTab === "merch" ? "Explore all physical editions →" : "Explore all prompt blueprints →"}
         />
 
         {/* Category Filter Tabs */}
         <div className="flex flex-wrap items-center gap-2 mb-8 border-b border-[#E7E5E0] pb-3 text-xs uppercase tracking-wider">
           <button
             type="button"
-            onClick={() => setSelectedChapterTab("all")}
+            onClick={() => setSelectedCategoryTab("all")}
             className={`px-4 py-2 transition-all font-medium cursor-pointer ${
-              selectedChapterTab === "all"
+              selectedCategoryTab === "all"
                 ? "bg-[#121212] text-[#FAF9F5]"
                 : "bg-white border border-[#E7E5E0] text-[#666662] hover:text-[#121212]"
             }`}
           >
-            All Releases ({promptProducts.length + merchProducts.length})
+            All Works ({promptProducts.length + merchProducts.length})
           </button>
           <button
             type="button"
-            onClick={() => setSelectedChapterTab("prompts")}
+            onClick={() => setSelectedCategoryTab("prompts")}
             className={`px-4 py-2 transition-all font-medium cursor-pointer ${
-              selectedChapterTab === "prompts"
+              selectedCategoryTab === "prompts"
                 ? "bg-[#121212] text-[#FAF9F5]"
                 : "bg-white border border-[#E7E5E0] text-[#666662] hover:text-[#121212]"
             }`}
@@ -486,9 +281,9 @@ export default function HomePage() {
           </button>
           <button
             type="button"
-            onClick={() => setSelectedChapterTab("merch")}
+            onClick={() => setSelectedCategoryTab("merch")}
             className={`px-4 py-2 transition-all font-medium cursor-pointer ${
-              selectedChapterTab === "merch"
+              selectedCategoryTab === "merch"
                 ? "bg-[#121212] text-[#FAF9F5]"
                 : "bg-white border border-[#E7E5E0] text-[#666662] hover:text-[#121212]"
             }`}
@@ -497,8 +292,8 @@ export default function HomePage() {
           </button>
         </div>
 
-        {/* Museum Matting Product Grid with Single-Column Mobile Stacking */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Unified Product Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {selectedWorksItems.map((product, idx) => (
             <ProductCard
               key={product.id}
@@ -508,107 +303,166 @@ export default function HomePage() {
             />
           ))}
         </div>
-      </section>
 
-      {/* 4.2. CHAPTER II: PHYSICAL EDITIONS ARCHIVE (FOURTHWALL SHOWCASE) */}
-      <section className="bg-[#F5F3EE] border-y border-[#E7E5E0] py-14 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            chapter="NO. II"
-            title="Physical Editions Archive"
-            subtitle="Archival heavyweight streetwear garments, impact-resistant cases, candles, and accessories fulfilled globally via Fourthwall."
-            badge="Fourthwall Verified"
-            viewAllHref="/merch"
-            viewAllText="Explore all 31 physical editions"
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {merchProducts.slice(0, 4).map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onQuickView={(p) => setSelectedProduct(p)}
-              />
-            ))}
+        {/* Quick Discovery Navigation Bar */}
+        <div className="mt-12 p-6 bg-white border border-[#E7E5E0] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h4 className="font-serif text-base text-[#121212]">
+              Looking for something specific?
+            </h4>
+            <p className="text-xs text-[#666662] font-light mt-0.5">
+              Browse our complete catalog with search, filtering by engine, and material categories.
+            </p>
+          </div>
+          <div className="flex items-center gap-3 text-xs uppercase tracking-wider font-medium">
+            <Link
+              href="/prompts"
+              className="px-4 py-2.5 bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-colors"
+            >
+              All 14+ Prompts
+            </Link>
+            <Link
+              href="/merch"
+              className="px-4 py-2.5 border border-[#121212] text-[#121212] hover:bg-[#FAF9F5] transition-colors"
+            >
+              All 31+ Physical Goods
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* 4.5. ABOUT THE CREATOR (ARCHIVAL FOUNDER PROFILE) */}
-      <section id="creator" className="scroll-mt-24 border-t border-[#E7E5E0] bg-[#FAF9F5] py-20 sm:py-28">
+      {/* 3. HOW IT WORKS / TWO ATELIER DISCIPLINES */}
+      <section className="border-y border-[#E7E5E0] bg-[#F5F3EE] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="border border-[#E7E5E0] bg-[#FFFFFF] p-8 sm:p-14 lg:p-16 shadow-[0_4px_24px_rgba(18,18,18,0.04)]">
-            {/* Dossier Header */}
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E7E5E0] pb-6 mb-10 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E7E5E0] pb-3 mb-8 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-[#121212]">ATELIER ARCHITECTURE</span>
+              <span>•</span>
+              <span>TWO CREATIVE DISCIPLINES</span>
+            </div>
+            <span className="font-mono text-[9px]">METHODOLOGY</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Box 1: Digital Formulas */}
+            <div className="p-6 bg-white border border-[#E7E5E0] shadow-xs flex flex-col justify-between space-y-4">
+              <div>
+                <div className="flex items-center justify-between mb-3 border-b border-[#E7E5E0] pb-2">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+                    [01] DIGITAL
+                  </span>
+                  <span className="text-[9px] uppercase tracking-wider px-2 py-0.5 bg-[#FAF9F5] border border-[#E7E5E0] text-[#121212]">
+                    Instant Access
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl text-[#121212] mb-2 font-normal">
+                  Deterministic AI Prompts
+                </h3>
+                <p className="text-xs text-[#666662] leading-relaxed font-light">
+                  Mathematical prompt formulas calibrated across Gemini Image, Claude, and Midjourney with verified seeds, eliminating hallucination and token drift.
+                </p>
+              </div>
+              <Link
+                href="/prompts"
+                className="text-xs uppercase tracking-wider text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1 font-medium pt-2 border-t border-[#E7E5E0]"
+              >
+                <span>Browse prompt archive</span>
+                <ArrowRight className="h-3 w-3 stroke-[1.5]" />
+              </Link>
+            </div>
+
+            {/* Box 2: Physical Streetwear */}
+            <div className="p-6 bg-white border border-[#E7E5E0] shadow-xs flex flex-col justify-between space-y-4">
+              <div>
+                <div className="flex items-center justify-between mb-3 border-b border-[#E7E5E0] pb-2">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+                    [02] PHYSICAL
+                  </span>
+                  <span className="text-[9px] uppercase tracking-wider px-2 py-0.5 bg-[#FAF9F5] border border-[#E7E5E0] text-[#121212]">
+                    Tracked Dispatch
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl text-[#121212] mb-2 font-normal">
+                  Archival Streetwear & Goods
+                </h3>
+                <p className="text-xs text-[#666662] leading-relaxed font-light">
+                  Heavyweight 220 GSM ringspun cotton tees, impact-resistant cases, and ceramic editions dispatched globally via Fourthwall&apos;s verified logistics.
+                </p>
+              </div>
+              <Link
+                href="/merch"
+                className="text-xs uppercase tracking-wider text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1 font-medium pt-2 border-t border-[#E7E5E0]"
+              >
+                <span>Shop physical editions</span>
+                <ArrowRight className="h-3 w-3 stroke-[1.5]" />
+              </Link>
+            </div>
+
+            {/* Box 3: Custom Commissions */}
+            <div className="p-6 bg-white border border-[#E7E5E0] shadow-xs flex flex-col justify-between space-y-4">
+              <div>
+                <div className="flex items-center justify-between mb-3 border-b border-[#E7E5E0] pb-2">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
+                    [03] BESPOKE
+                  </span>
+                  <span className="text-[9px] uppercase tracking-wider px-2 py-0.5 bg-[#121212] text-[#FAF9F5]">
+                    Direct Direct
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl text-[#121212] mb-2 font-normal">
+                  Commissions & Inquiries
+                </h3>
+                <p className="text-xs text-[#666662] leading-relaxed font-light">
+                  Bespoke prompt architecture, autonomous enterprise AI agents, full-stack Next.js web applications, or custom physical merchandise requests.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="text-xs uppercase tracking-wider text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1 font-medium pt-2 border-t border-[#E7E5E0]"
+              >
+                <span>Initiate an inquiry</span>
+                <ArrowRight className="h-3 w-3 stroke-[1.5]" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. ABOUT THE CREATOR & STUDIO PROFILE */}
+      <section id="creator" className="scroll-mt-24 border-b border-[#E7E5E0] bg-[#FAF9F5] py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="border border-[#E7E5E0] bg-[#FFFFFF] p-8 sm:p-12 shadow-[0_4px_24px_rgba(18,18,18,0.04)]">
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E7E5E0] pb-4 mb-8 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#7A6A5C]">
               <div className="flex items-center gap-3">
-                <span className="font-mono font-semibold text-[#121212]">[CHAPTER NO. 00]</span>
+                <span className="font-mono font-semibold text-[#121212]">[ATELIER DOSSIER]</span>
                 <span>•</span>
-                <span>CREATOR DOSSIER</span>
+                <span>ABOUT THE CREATOR</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#121212]" />
-                <span>FOUNDER & ATELIER PROFILE</span>
+                <span>FOUNDER & STUDIO MONOGRAPH</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-              {/* Left Column: Creator Bio & Studio Vision */}
-              <div className="lg:col-span-7 space-y-6">
-                <div>
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#8C7A6B] font-semibold block mb-2">
-                    About the Creator
-                  </span>
-                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#121212] font-normal leading-[1.15] tracking-tight">
-                    Engineering deterministic AI intelligence & archival physical streetwear.
-                  </h2>
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+              {/* Left Column: Bio */}
+              <div className="lg:col-span-7 space-y-5">
+                <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#121212] font-normal tracking-tight leading-tight">
+                  Bridging software craftsmanship, generative model research, and tangible goods.
+                </h2>
 
-                <p className="font-serif text-lg sm:text-xl text-[#121212] leading-relaxed font-normal pt-2">
+                <p className="font-serif text-base sm:text-lg text-[#121212] leading-relaxed font-normal">
                   PLAYKIT 01 is founded by a full-stack software engineer specializing in custom web applications, autonomous AI agents, and high-performance prompts that streamline business workflows.
                 </p>
 
-                <div className="space-y-4 text-xs sm:text-sm text-[#666662] leading-relaxed font-light pt-2 border-t border-[#E7E5E0]">
-                  <p>
-                    Rooted at the convergence of software craftsmanship and generative model research, the studio develops deterministic prompt formulas designed to eliminate AI hallucination and prompt pollution across Gemini Image, Claude, and Midjourney.
-                  </p>
-                  <p>
-                    Simultaneously, the physical arm of PLAYKIT 01 translates this cyber-aesthetic discipline into tangible heavyweight cotton streetwear, impact-resistant cases, and archival editions—fabricated to exacting standards and fulfilled globally via Fourthwall.
-                  </p>
-                </div>
+                <p className="text-xs sm:text-sm text-[#666662] leading-relaxed font-light">
+                  Rooted at the convergence of software engineering and model research, the studio develops deterministic prompt formulas designed to eliminate hallucination across Gemini Image, Claude, and Midjourney. Simultaneously, the physical arm translates this aesthetic into heavyweight cotton streetwear fulfilled globally via Fourthwall.
+                </p>
 
-                {/* Creator Metrics */}
-                <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-[#E7E5E0]">
-                  <div>
-                    <span className="font-serif text-2xl text-[#121212] block">31+</span>
-                    <span className="text-[9px] uppercase tracking-wider text-[#7A6A5C] font-semibold block mt-0.5">
-                      Fourthwall Editions
-                    </span>
-                  </div>
-                  <div>
-                    <span className="font-serif text-2xl text-[#121212] block">14+</span>
-                    <span className="text-[9px] uppercase tracking-wider text-[#7A6A5C] font-semibold block mt-0.5">
-                      Prompt Blueprints
-                    </span>
-                  </div>
-                  <div>
-                    <span className="font-serif text-2xl text-[#121212] block">5.0★</span>
-                    <span className="text-[9px] uppercase tracking-wider text-[#7A6A5C] font-semibold block mt-0.5">
-                      Store Rating
-                    </span>
-                  </div>
-                  <div>
-                    <span className="font-serif text-2xl text-[#121212] block">220 GSM</span>
-                    <span className="text-[9px] uppercase tracking-wider text-[#7A6A5C] font-semibold block mt-0.5">
-                      Cotton Baseline
-                    </span>
-                  </div>
-                </div>
-
-                {/* Creator Links & Channels */}
-                <div className="pt-6 flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.2em]">
+                <div className="pt-4 flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.18em]">
                   <Link
                     href="/studio"
-                    className="px-6 py-3.5 bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-colors flex items-center gap-2 font-medium"
+                    className="px-5 py-3 bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-colors flex items-center gap-2 font-medium"
                   >
                     <span>Read Studio Monograph</span>
                     <ArrowRight className="h-3.5 w-3.5 stroke-[1.5]" />
@@ -618,7 +472,7 @@ export default function HomePage() {
                     href={brandConfig.socials.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-3.5 border border-[#121212] text-[#121212] hover:bg-[#121212] hover:text-[#FAF9F5] transition-colors flex items-center gap-2 font-medium"
+                    className="px-5 py-3 border border-[#121212] text-[#121212] hover:bg-[#FAF9F5] transition-colors flex items-center gap-2 font-medium"
                   >
                     <span>Connect on LinkedIn</span>
                     <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
@@ -626,57 +480,38 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Right Column: Key Engineering Disciplines */}
-              <div className="lg:col-span-5 space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-[#E7E5E0] text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold">
-                  <Layers className="h-3.5 w-3.5 stroke-[1.5]" />
-                  <span>Core Technical Disciplines</span>
+              {/* Right Column: Disciplines Grid */}
+              <div className="lg:col-span-5 space-y-3">
+                <div className="p-4 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1">
+                  <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[01] AUTONOMOUS</span>
+                  <h3 className="font-serif text-sm text-[#121212] font-medium">Automated AI Agents</h3>
+                  <p className="text-xs text-[#666662] font-light">
+                    Custom AI agents, LLM pipelines, and orchestration layers to automate repetitive enterprise workflows.
+                  </p>
                 </div>
 
-                <div className="space-y-3">
-                  <div className="p-5 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1.5 transition-colors hover:border-[#121212]">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[01]</span>
-                      <span className="text-[9px] uppercase tracking-wider text-[#8C7A6B] font-mono">AUTONOMOUS</span>
-                    </div>
-                    <h3 className="font-serif text-base text-[#121212] font-normal">Automated AI Agents</h3>
-                    <p className="text-xs text-[#666662] font-light leading-relaxed">
-                      Custom AI agents, LLM pipelines, and orchestration layers built to automate repetitive enterprise workflows.
-                    </p>
-                  </div>
+                <div className="p-4 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1">
+                  <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[02] DETERMINISTIC</span>
+                  <h3 className="font-serif text-sm text-[#121212] font-medium">Calibrated Prompt Formulas</h3>
+                  <p className="text-xs text-[#666662] font-light">
+                    Reproducible, battle-tested prompt architectures for Gemini Image, Claude, and Midjourney on PromptBase.
+                  </p>
+                </div>
 
-                  <div className="p-5 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1.5 transition-colors hover:border-[#121212]">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[02]</span>
-                      <span className="text-[9px] uppercase tracking-wider text-[#8C7A6B] font-mono">DETERMINISTIC</span>
-                    </div>
-                    <h3 className="font-serif text-base text-[#121212] font-normal">Calibrated Prompt Formulas</h3>
-                    <p className="text-xs text-[#666662] font-light leading-relaxed">
-                      Reproducible, battle-tested prompt architectures for Gemini Image, Claude, and Midjourney on PromptBase.
-                    </p>
-                  </div>
+                <div className="p-4 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1">
+                  <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[03] FULL-STACK</span>
+                  <h3 className="font-serif text-sm text-[#121212] font-medium">Custom Web Applications</h3>
+                  <p className="text-xs text-[#666662] font-light">
+                    High-performance Next.js architectures, TypeScript, headless commerce APIs, and microservice backends.
+                  </p>
+                </div>
 
-                  <div className="p-5 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1.5 transition-colors hover:border-[#121212]">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[03]</span>
-                      <span className="text-[9px] uppercase tracking-wider text-[#8C7A6B] font-mono">FULL-STACK</span>
-                    </div>
-                    <h3 className="font-serif text-base text-[#121212] font-normal">Custom Web Applications</h3>
-                    <p className="text-xs text-[#666662] font-light leading-relaxed">
-                      High-performance Next.js architectures, TypeScript, headless commerce APIs, and microservice backends.
-                    </p>
-                  </div>
-
-                  <div className="p-5 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1.5 transition-colors hover:border-[#121212]">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[04]</span>
-                      <span className="text-[9px] uppercase tracking-wider text-[#8C7A6B] font-mono">PHYSICAL LOGISTICS</span>
-                    </div>
-                    <h3 className="font-serif text-base text-[#121212] font-normal">Archival Physical Streetwear</h3>
-                    <p className="text-xs text-[#666662] font-light leading-relaxed">
-                      Translating cyber-aesthetic linework into heavyweight apparel, tech sleeves, and vinyl stickers fulfilled by Fourthwall.
-                    </p>
-                  </div>
+                <div className="p-4 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1">
+                  <span className="font-mono text-[10px] text-[#7A6A5C] font-semibold tracking-widest">[04] PHYSICAL LOGISTICS</span>
+                  <h3 className="font-serif text-sm text-[#121212] font-medium">Archival Physical Streetwear</h3>
+                  <p className="text-xs text-[#666662] font-light">
+                    Heavyweight apparel, tech cases, and vinyl stickers fulfilled by Fourthwall.
+                  </p>
                 </div>
               </div>
             </div>
@@ -684,149 +519,130 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. FULL-WIDTH STUDIO PULL-QUOTE MANIFESTO BANNER */}
-      <section className="border-y border-[#E7E5E0] bg-[#121212] text-[#FAF9F5] py-20 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#8C7A6B] font-semibold block">
-            Archival Philosophy
-          </span>
-          <blockquote className="font-serif text-2xl sm:text-4xl lg:text-5xl font-normal leading-snug tracking-tight">
-            &ldquo;We do not build generic prompts. We engineer reproducible aesthetic frameworks — calibrated down to the seed token and printed on heavyweight garments.&rdquo;
-          </blockquote>
-          <div className="pt-2">
-            <span className="text-xs uppercase tracking-[0.25em] text-[#E7E5E0]/70 font-mono">
-              — PLAYKIT 01 Studio Atelier
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. CHAPTER III: PERMANENT COLLECTION (MOST PURCHASED) */}
-      <section className="bg-[#F5F3EE] border-b border-[#E7E5E0] py-16 sm:py-24">
+      {/* 5. NEW: CONTACT & COMMISSIONS SECTION ON DASHBOARD */}
+      <section id="inquiries" className="scroll-mt-24 border-b border-[#E7E5E0] bg-[#FAF9F5] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            chapter="NO. III"
-            title="The Permanent Collection"
-            subtitle="The highest-rated community editions with verified acquisitions on PromptBase and Fourthwall."
-            badge="Archival Standards"
-            viewAllHref="/merch"
-            viewAllText="Explore all editions"
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {mostPurchased.slice(0, 4).map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onQuickView={(p) => setSelectedProduct(p)}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. CHAPTER IV: FRESH EDITIONS (RECENTLY ADDED DROPS) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-        <SectionHeader
-          chapter="NO. IV"
-          title="Recent Additions"
-          subtitle="Fresh off the studio: newly calibrated prompt blueprints and newly fabricated apparel editions."
-          badge="Fresh Releases"
-          viewAllHref="/prompts"
-          viewAllText="Browse new releases"
-        />
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {recentlyAdded.slice(0, 4).map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onQuickView={(p) => setSelectedProduct(p)}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* 8. ATELIER & VERIFIED FULFILLMENT PROTOCOL */}
-      <section className="border-t border-[#E7E5E0] bg-[#FAF9F5] py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="border border-[#E7E5E0] bg-[#FFFFFF] p-8 sm:p-14 shadow-[0_4px_24px_rgba(18,18,18,0.04)]">
+          <div className="border border-[#E7E5E0] bg-[#FFFFFF] p-8 sm:p-12 shadow-[0_4px_24px_rgba(18,18,18,0.04)]">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7 space-y-6">
+              {/* Left Column: Inquiry Invitation */}
+              <div className="lg:col-span-7 space-y-5">
                 <span className="text-[10px] uppercase tracking-[0.25em] text-[#7A6A5C] font-semibold flex items-center gap-1.5">
-                  <ShieldCheck className="h-4 w-4 stroke-[1.5]" />
-                  <span>Atelier Protocol & Fulfillment</span>
+                  <Mail className="h-3.5 w-3.5 stroke-[1.5]" />
+                  <span>Direct Atelier Dispatch</span>
                 </span>
 
-                <h2 className="font-serif text-3xl sm:text-4xl text-[#121212] font-normal tracking-tight">
-                  How PLAYKIT 01 Dispatches Your Editions
+                <h2 className="font-serif text-2xl sm:text-4xl text-[#121212] font-normal tracking-tight">
+                  Initiate a Custom Prompt Commission or Atelier Inquiry
                 </h2>
 
-                <p className="text-sm text-[#666662] leading-relaxed max-w-xl font-light">
-                  We engineer artificial intelligence prompt formulas and streetwear designs in-house, partnering exclusively with global verification platforms for seamless acquisition and delivery:
+                <p className="text-xs sm:text-sm text-[#666662] leading-relaxed max-w-xl font-light">
+                  Need a bespoke prompt formula tuned to your enterprise design system, an autonomous agent pipeline, or bulk physical apparel? Send an inquiry directly to the studio.
                 </p>
 
-                <div className="space-y-4 pt-2">
-                  <div className="flex items-start gap-3">
+                <div className="space-y-3 pt-1">
+                  <div className="flex items-start gap-2.5">
                     <CheckCircle className="h-4 w-4 text-[#121212] shrink-0 mt-0.5 stroke-[1.5]" />
-                    <p className="text-xs text-[#666662] leading-relaxed">
-                      <strong className="text-[#121212] font-medium">PromptBase Fulfillment:</strong> Instant access to formulas, copy-paste variable parameters, seed settings, and verified creator assistance.
+                    <p className="text-xs text-[#666662]">
+                      <strong className="text-[#121212] font-medium">Bespoke Prompt Engineering:</strong> Custom calibrated seeds, brackets, and negative prompts for Gemini, Midjourney & Claude.
                     </p>
                   </div>
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-2.5">
                     <CheckCircle className="h-4 w-4 text-[#121212] shrink-0 mt-0.5 stroke-[1.5]" />
-                    <p className="text-xs text-[#666662] leading-relaxed">
-                      <strong className="text-[#121212] font-medium">Fourthwall Headless Commerce:</strong> Premium ringspun cotton screen prints, tracked worldwide logistics, and secure checkout on checkout.playkit01.store.
+                    <p className="text-xs text-[#666662]">
+                      <strong className="text-[#121212] font-medium">Direct Founder Review:</strong> All dispatches reviewed with a guaranteed 24–48 hour response window.
                     </p>
                   </div>
                 </div>
+
+                <div className="pt-4 flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.18em]">
+                  <Link
+                    href="/contact"
+                    className="px-6 py-3.5 bg-[#121212] text-[#FAF9F5] hover:bg-[#262626] transition-colors flex items-center gap-2 font-medium shadow-xs"
+                  >
+                    <span>Open Full Contact Portal</span>
+                    <ArrowRight className="h-3.5 w-3.5 stroke-[1.5]" />
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    className="px-5 py-3.5 border border-[#121212] text-[#121212] hover:bg-[#FAF9F5] transition-colors flex items-center gap-2 font-medium cursor-pointer"
+                  >
+                    {copiedEmail ? (
+                      <>
+                        <Check className="h-3.5 w-3.5 text-emerald-600" />
+                        <span>Email Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-3.5 w-3.5" />
+                        <span>Copy Studio Email</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
 
-              <div className="lg:col-span-5 space-y-4">
+              {/* Right Column: Direct Channels Card */}
+              <div className="lg:col-span-5 space-y-3">
+                <div className="p-4 bg-[#FAF9F5] border border-[#E7E5E0] space-y-1">
+                  <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C] font-semibold block">
+                    Direct Email
+                  </span>
+                  <span className="font-mono text-xs text-[#121212] font-medium block">
+                    contact@playkit01.store
+                  </span>
+                  <span className="text-[11px] text-[#666662] block">
+                    General inquiries, collaborations & commissions
+                  </span>
+                </div>
+
                 <a
                   href={brandConfig.socials.promptbase}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-6 border border-[#E7E5E0] bg-[#FAF9F5] hover:bg-[#F5F3EE] transition-colors flex items-center justify-between group block shadow-2xs"
+                  className="p-4 bg-[#FAF9F5] border border-[#E7E5E0] hover:border-[#121212] transition-colors flex items-center justify-between group block"
                 >
                   <div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#7A6A5C] font-semibold block">
-                      Digital Blueprint Archive
+                    <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C] font-semibold block">
+                      PromptBase Store
                     </span>
-                    <span className="font-serif text-lg text-[#121212] font-normal group-hover:text-[#7A6A5C] transition-colors mt-0.5 block">
-                      PromptBase @ploykit
+                    <span className="font-serif text-sm text-[#121212] group-hover:text-[#7A6A5C] transition-colors block">
+                      @ploykit
                     </span>
-                    <p className="text-xs text-[#666662] mt-1 font-light">
-                      5.0★ verified prompt formulas
-                    </p>
+                    <span className="text-[11px] text-[#666662] block">
+                      Direct prompt formula support & parameter advice
+                    </span>
                   </div>
-                  <ArrowUpRight className="h-5 w-5 text-[#121212] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform stroke-[1.5]" />
+                  <ArrowUpRight className="h-4 w-4 text-[#121212] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
 
-                <Link
-                  href="/merch"
-                  className="p-6 border border-[#E7E5E0] bg-[#FAF9F5] hover:bg-[#F5F3EE] transition-colors flex items-center justify-between group block shadow-2xs"
+                <a
+                  href="https://checkout.playkit01.store"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-4 bg-[#FAF9F5] border border-[#E7E5E0] hover:border-[#121212] transition-colors flex items-center justify-between group block"
                 >
                   <div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#7A6A5C] font-semibold block">
-                      Physical Garments & Goods
+                    <span className="text-[10px] uppercase tracking-wider text-[#7A6A5C] font-semibold block">
+                      Fourthwall Storefront
                     </span>
-                    <span className="font-serif text-lg text-[#121212] font-normal group-hover:text-[#7A6A5C] transition-colors mt-0.5 block">
-                      Fourthwall Physical Editions
+                    <span className="font-serif text-sm text-[#121212] group-hover:text-[#7A6A5C] transition-colors block">
+                      checkout.playkit01.store
                     </span>
-                    <p className="text-xs text-[#666662] mt-1 font-light">
-                      Heavyweight tees, vinyl stickers & mugs
-                    </p>
+                    <span className="text-[11px] text-[#666662] block">
+                      Physical order tracking & shipping logistics
+                    </span>
                   </div>
-                  <ArrowUpRight className="h-5 w-5 text-[#121212] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform stroke-[1.5]" />
-                </Link>
+                  <ArrowUpRight className="h-4 w-4 text-[#121212] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* QUICK VIEW EDITORIAL MODAL (Strict z-60) */}
+      {/* QUICK VIEW EDITORIAL MODAL */}
       <ProductQuickViewModal
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}

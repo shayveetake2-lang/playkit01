@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUpRight, ShoppingBag } from "lucide-react";
+import { Menu, X, ArrowUpRight, ShoppingBag, HelpCircle, Mail } from "lucide-react";
 import { brandConfig } from "@/data/socials";
 import { useCart } from "@/context/CartContext";
 
@@ -47,10 +47,11 @@ export default function Navbar() {
   }
 
   const navLinks = [
-    { href: "/", label: "Index" },
-    { href: "/prompts", label: "Archive", subtext: "(AI Prompts)" },
-    { href: "/merch", label: "Editions", subtext: "(Physical Goods)" },
-    { href: "/#creator", label: "Creator", subtext: "(About)" },
+    { href: "/", label: "Home" },
+    { href: "/prompts", label: "AI Prompts" },
+    { href: "/merch", label: "Merch" },
+    { href: "/studio", label: "About" },
+    { href: "/contact", label: "Contact" },
   ];
 
   return (
@@ -66,82 +67,33 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main Sticky Masthead (Strict z-40 in stacking hierarchy) */}
+      {/* Main Sticky Masthead */}
       <header
         className={`sticky top-0 z-40 w-full transition-transform duration-300 ease-in-out border-b border-[#E7E5E0] bg-[#FAF9F5]/90 backdrop-blur-md ${
           isVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-20">
-          {/* Locked 3-Column Architecture: Left Links | Center Roman Masthead | Right Suite */}
-          <div className="h-full grid grid-cols-2 md:grid-cols-3 items-center">
-            {/* Column 1: Left Navigation Links (Desktop) / Mobile Menu Trigger */}
+          <div className="h-full flex items-center justify-between gap-4">
+            {/* Left: Brand Logo */}
             <div className="flex items-center">
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 text-[#121212] hover:text-[#7A6A5C] transition-colors"
-                aria-label="Toggle navigation"
-              >
-                {mobileMenuOpen ? (
-                  <X className="h-6 w-6 stroke-[1.5]" />
-                ) : (
-                  <Menu className="h-6 w-6 stroke-[1.5]" />
-                )}
-              </button>
-
-              {/* Desktop Concise Links */}
-              <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-                {navLinks.map((link) => {
-                  const isActive = pathname === link.href;
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="group relative py-1 flex flex-col items-start hover:text-[#7A6A5C] transition-colors"
-                    >
-                      <span
-                        className={`text-xs uppercase tracking-[0.2em] font-medium ${
-                          isActive
-                            ? "text-[#121212] font-semibold"
-                            : "text-[#666662]"
-                        }`}
-                      >
-                        {link.label}
-                      </span>
-                      {link.subtext && (
-                        <span className="font-sans text-[9px] text-[#7A6A5C] tracking-normal font-normal">
-                          {link.subtext}
-                        </span>
-                      )}
-                      {isActive && (
-                        <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#121212]" />
-                      )}
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
-
-            {/* Column 2: Center Roman Serif Masthead with Seamless public/logo.png Fallback */}
-            <div className="hidden md:flex flex-col items-center justify-center text-center">
-              <Link href="/" className="inline-flex flex-col items-center group text-center">
+              <Link href="/" className="inline-flex flex-col items-start group">
                 {logoAvailable ? (
                   <Image
                     src="/logo.png"
                     alt="PLAYKIT 01"
-                    width={140}
-                    height={36}
+                    width={130}
+                    height={32}
                     onError={() => setLogoAvailable(false)}
-                    className="h-7 w-auto object-contain"
+                    className="h-6 sm:h-7 w-auto object-contain"
                     priority
                   />
                 ) : (
                   <>
-                    <span className="font-serif text-2xl lg:text-3xl font-normal tracking-[0.18em] text-[#121212] block">
+                    <span className="font-serif text-xl sm:text-2xl font-normal tracking-[0.16em] text-[#121212] block">
                       PLAYKIT 01
                     </span>
-                    <span className="text-[9px] uppercase tracking-[0.3em] text-[#7A6A5C] font-semibold block -mt-0.5">
+                    <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-[#7A6A5C] font-semibold block -mt-0.5">
                       Studio Archive
                     </span>
                   </>
@@ -149,28 +101,48 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Brand Title (When screen < md) */}
-            <div className="md:hidden flex items-center justify-center">
-              <Link href="/" className="inline-block text-center">
-                {logoAvailable ? (
-                  <Image
-                    src="/logo.png"
-                    alt="PLAYKIT 01"
-                    width={120}
-                    height={30}
-                    onError={() => setLogoAvailable(false)}
-                    className="h-6 w-auto object-contain"
-                  />
-                ) : (
-                  <span className="font-serif text-xl font-normal tracking-[0.15em] text-[#121212] block">
-                    PLAYKIT 01
-                  </span>
-                )}
-              </Link>
-            </div>
+            {/* Center: Clean Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="group relative py-1.5 flex items-center hover:text-[#7A6A5C] transition-colors"
+                  >
+                    <span
+                      className={`text-xs uppercase tracking-[0.18em] font-medium transition-colors ${
+                        isActive
+                          ? "text-[#121212] font-semibold"
+                          : "text-[#666662] hover:text-[#121212]"
+                      }`}
+                    >
+                      {link.label}
+                    </span>
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#121212]" />
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
 
-            {/* Column 3: Right Action Suite (Bag Trigger + Verified Profile) */}
-            <div className="flex items-center justify-end gap-3 sm:gap-6">
+            {/* Right: Quick Action Suite (Help, PromptBase, Bag & Mobile Toggle) */}
+            <div className="flex items-center gap-2.5 sm:gap-4">
+              {/* Help / FAQ Link */}
+              <Link
+                href="/help"
+                className={`hidden sm:inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.15em] transition-colors ${
+                  pathname === "/help" ? "text-[#121212] font-semibold" : "text-[#666662] hover:text-[#121212]"
+                }`}
+                title="Atelier FAQ & Help"
+              >
+                <HelpCircle className="h-3.5 w-3.5 stroke-[1.5]" />
+                <span className="hidden lg:inline">Help</span>
+              </Link>
+
+              {/* PromptBase External Link */}
               <a
                 href={brandConfig.socials.promptbase}
                 target="_blank"
@@ -181,14 +153,28 @@ export default function Navbar() {
                 <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
               </a>
 
+              {/* Shopping Bag Button */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 border border-[#121212] text-xs uppercase tracking-widest text-[#121212] hover:bg-[#121212] hover:text-[#FAF9F5] transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 border border-[#121212] text-xs uppercase tracking-widest text-[#121212] hover:bg-[#121212] hover:text-[#FAF9F5] transition-colors cursor-pointer"
                 aria-label="Open Archive Bag"
               >
                 <ShoppingBag className="h-3.5 w-3.5 stroke-[1.5]" />
                 <span className="hidden sm:inline">Bag</span>
                 <span className="font-mono text-[11px]">({itemsCount})</span>
+              </button>
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-1.5 text-[#121212] hover:text-[#7A6A5C] transition-colors cursor-pointer"
+                aria-label="Toggle navigation"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-6 w-6 stroke-[1.5]" />
+                ) : (
+                  <Menu className="h-6 w-6 stroke-[1.5]" />
+                )}
               </button>
             </div>
           </div>
@@ -197,46 +183,70 @@ export default function Navbar() {
         {/* Mobile Slide-down Drawer */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-[#E7E5E0] bg-[#FAF9F5] px-6 py-8 space-y-6 animate-in slide-in-from-top-2 duration-200">
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex flex-col py-1 text-[#121212] ${
+                  className={`flex items-center justify-between py-2 border-b border-[#E7E5E0]/60 ${
                     pathname === link.href
-                      ? "font-semibold underline underline-offset-4"
+                      ? "text-[#121212] font-semibold"
                       : "text-[#666662]"
                   }`}
                 >
                   <span className="text-xs uppercase tracking-[0.25em]">
                     {link.label}
                   </span>
-                  {link.subtext && (
-                    <span className="font-sans text-[10px] text-[#7A6A5C] tracking-normal font-normal mt-0.5">
-                      {link.subtext}
-                    </span>
+                  {pathname === link.href && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#121212]" />
                   )}
                 </Link>
               ))}
+
+              <Link
+                href="/help"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center justify-between py-2 border-b border-[#E7E5E0]/60 ${
+                  pathname === "/help"
+                    ? "text-[#121212] font-semibold"
+                    : "text-[#666662]"
+                }`}
+              >
+                <span className="text-xs uppercase tracking-[0.25em]">
+                  Help & FAQ
+                </span>
+                <HelpCircle className="h-3.5 w-3.5" />
+              </Link>
             </div>
 
-            <div className="pt-6 border-t border-[#E7E5E0] flex flex-col space-y-3 text-xs tracking-wider text-[#666662]">
+            <div className="pt-4 flex flex-col space-y-2.5 text-xs tracking-wider text-[#666662]">
               <a
                 href={brandConfig.socials.promptbase}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between"
+                className="flex items-center justify-between py-1"
               >
-                <span>PromptBase Archive (@ploykit)</span>
+                <span>PromptBase Store (@ploykit)</span>
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </a>
               <Link
                 href="/merch"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between text-[#121212]"
+                className="flex items-center justify-between py-1 text-[#121212]"
               >
                 <span>Fourthwall Physical Editions</span>
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+              <Link
+                href="/contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between py-1 text-[#121212] font-medium"
+              >
+                <span className="flex items-center gap-1.5">
+                  <Mail className="h-3 w-3" />
+                  <span>Contact Atelier</span>
+                </span>
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             </div>
