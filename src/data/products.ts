@@ -1,5 +1,6 @@
 import { sanityClient, ALL_ACTIVE_PRODUCTS_QUERY, urlForImage } from "@/sanity/sanity.client";
 import { getFourthwallProducts } from "@/lib/fourthwall";
+import { initialFourthwallProducts } from "@/data/fourthwallProducts";
 
 export type ProductCategory = "prompt" | "merch";
 
@@ -53,7 +54,7 @@ export interface Product {
 }
 
 // REAL INITIAL SEED LISTINGS (Linked directly to verified PromptBase & Redbubble profiles)
-export const initialProducts: Product[] = [
+export const initialPromptProducts: Product[] = [
   // 1. PromptBase: Retro Tshirt Sticker Badges
   {
     id: "prompt-retro-badges",
@@ -316,6 +317,12 @@ export const initialProducts: Product[] = [
   },
 ];
 
+// Unified real initial catalog: PromptBase digital formulas + real Fourthwall physical editions
+export const initialProducts: Product[] = [
+  ...initialPromptProducts,
+  ...initialFourthwallProducts,
+];
+
 // Helper to convert Sanity raw item to local Product interface
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function mapSanityProduct(item: any): Product {
@@ -365,16 +372,18 @@ export async function getLiveProducts(): Promise<Product[]> {
         .fetch(ALL_ACTIVE_PRODUCTS_QUERY)
         .then((items) => (items && items.length > 0 ? items.map(mapSanityProduct) : []))
         .catch(() => []),
-      getFourthwallProducts().catch(() => []),
+      getFourthwallProducts().catch(() => initialFourthwallProducts),
     ]);
 
     const livePrompts: Product[] =
       sanityResult.status === "fulfilled" && sanityResult.value.length > 0
         ? sanityResult.value
-        : initialProducts.filter((p) => p.category === "prompt");
+        : initialPromptProducts;
 
     const liveMerch: Product[] =
-      fwResult.status === "fulfilled" ? fwResult.value : [];
+      fwResult.status === "fulfilled" && fwResult.value.length > 0
+        ? fwResult.value
+        : initialFourthwallProducts;
 
     return [...livePrompts, ...liveMerch];
   } catch (err) {

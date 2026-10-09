@@ -1,4 +1,5 @@
 import type { Product, FourthwallVariant } from "@/data/products";
+import { initialFourthwallProducts } from "@/data/fourthwallProducts";
 
 export const FOURTHWALL_STOREFRONT_DOMAIN = "checkout.playkit01.store";
 export const FOURTHWALL_SHOP_DOMAIN = "playkit01-shop.fourthwall.com";
@@ -207,7 +208,7 @@ export function mapFourthwallProduct(item: any): Product {
  */
 export async function getFourthwallProducts(): Promise<Product[]> {
   if (!FOURTHWALL_TOKEN) {
-    return [];
+    return initialFourthwallProducts;
   }
 
   try {
@@ -241,10 +242,10 @@ export async function getFourthwallProducts(): Promise<Product[]> {
     }
   } catch (err: unknown) {
     console.error("Fourthwall live catalog fetch notice:", err instanceof Error ? err.message : err);
-    return [];
   }
 
-  return [];
+  // Gracefully fallback to verified pre-cached 31 real Fourthwall editions
+  return initialFourthwallProducts;
 }
 
 /**

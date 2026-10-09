@@ -9,6 +9,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { Product } from "@/data/products";
+import { initialFourthwallProducts } from "@/data/fourthwallProducts";
 import { getFourthwallProducts, FOURTHWALL_STOREFRONT_DOMAIN } from "@/lib/fourthwall";
 import ProductCard from "@/components/ProductCard";
 import ProductQuickViewModal from "@/components/ProductQuickViewModal";
@@ -25,8 +26,8 @@ const CATEGORIES = [
 ];
 
 export default function MerchPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>(initialFourthwallProducts);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string>("All");
   const [sortBy, setSortBy] = useState<string>("popular");
