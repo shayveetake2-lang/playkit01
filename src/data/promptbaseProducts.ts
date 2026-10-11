@@ -2,7 +2,7 @@ import type { Product } from "./products";
 
 /**
  * Real PromptBase Listings Catalog
- * Direct sync with @ploykit on PromptBase: https://promptbase.com/profile/ploykit
+ * Direct sync with @Playkit01 on PromptBase: https://promptbase.com/profile/Playkit01
  * Every product links directly to its verified individual listing on PromptBase,
  * with authentic high-resolution artwork generated and stored locally in public/images/prompts/.
  */

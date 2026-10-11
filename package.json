@@ -7,7 +7,8 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "sync:prompts": "node scripts/sync-promptbase.js"
+    "sync:prompts": "node scripts/sync-promptbase.js",
+    "sync:fourthwall": "node scripts/sync-fourthwall.js"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",

@@ -32,10 +32,17 @@ export async function fetchFourthwall<T>(
     headers["Content-Type"] = "application/json";
   }
 
-  const response = await fetch(url, {
+  const fetchOptions: RequestInit = {
     ...options,
     headers,
-  });
+  };
+
+  if (!options.method || options.method === "GET") {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (fetchOptions as any).next = { revalidate: 86400, ...(options as any)?.next };
+  }
+
+  const response = await fetch(url, fetchOptions);
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => "");

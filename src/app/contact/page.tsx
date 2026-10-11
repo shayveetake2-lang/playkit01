@@ -510,7 +510,7 @@ export default function ContactPage() {
                       PromptBase Direct Message
                     </span>
                     <span className="text-[11px] text-[#666662] font-light">
-                      @ploykit • Digital formula support
+                      @Playkit01 • Digital formula support
                     </span>
                   </div>
                   <ArrowUpRight className="h-4 w-4 text-[#121212] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

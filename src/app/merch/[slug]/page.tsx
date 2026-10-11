@@ -6,11 +6,14 @@ import {
   getMerchProductBySlug,
   getRelatedProducts,
 } from "@/data/products";
+import { getFourthwallProducts } from "@/lib/fourthwall";
 import MerchDetailClient from "@/components/MerchDetailClient";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
+
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   return initialFourthwallProducts.map((product: { slug: string }) => ({
@@ -20,7 +23,12 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getMerchProductBySlug(slug);
+  let product = getMerchProductBySlug(slug);
+
+  if (!product) {
+    const live = await getFourthwallProducts().catch(() => []);
+    product = live.find((p) => p.slug === slug || p.id === slug);
+  }
 
   if (!product) {
     return {
@@ -61,7 +69,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function MerchDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const product = getMerchProductBySlug(slug);
+  let product = getMerchProductBySlug(slug);
+
+  if (!product) {
+    const live = await getFourthwallProducts().catch(() => []);
+    product = live.find((p) => p.slug === slug || p.id === slug);
+  }
 
   if (!product) {
     notFound();

@@ -169,7 +169,7 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="hover:text-[#121212] transition-colors flex items-center gap-1"
                 >
-                  <span>PromptBase @ploykit</span>
+                  <span>PromptBase @Playkit01</span>
                   <ArrowUpRight className="h-3 w-3 stroke-[1.5]" />
                 </a>
                 <span>•</span>
@@ -608,7 +608,7 @@ export default function HomePage() {
                       PromptBase Store
                     </span>
                     <span className="font-serif text-sm text-[#121212] group-hover:text-[#7A6A5C] transition-colors block">
-                      @ploykit
+                      @Playkit01
                     </span>
                     <span className="text-[11px] text-[#666662] block">
                       Direct prompt formula support & parameter advice

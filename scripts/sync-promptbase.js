@@ -7,7 +7,7 @@
  * Usage:
  *   npm run sync:prompts
  *   node scripts/sync-promptbase.js
- *   node scripts/sync-promptbase.js --profile ploykit
+ *   node scripts/sync-promptbase.js --profile Playkit01
  * 
  * This script opens Google Chrome, navigates to your public PromptBase profile,
  * extracts your active prompt listings (titles, prices, direct buy links, engines, and image assets),
@@ -29,7 +29,7 @@ if (!fs.existsSync(IMAGES_DIR)) {
 
 // Parse CLI flags
 const args = process.argv.slice(2);
-let username = "ploykit";
+let username = "Playkit01";
 let headless = false;
 
 for (let i = 0; i < args.length; i++) {
