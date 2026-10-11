@@ -15,7 +15,7 @@ export const brandConfig = {
   socials: {
     instagram: "https://instagram.com/playkit01",
     linkedin: "https://www.linkedin.com/in/play-kit-380995440/",
-    promptbase: "https://promptbase.com/profile/Playkit01",
+    promptbase: "https://promptbase.com/profile/playkit01",
     fourthwall: "https://checkout.playkit01.store",
     linktree: "https://linktr.ee/playkit01",
   },

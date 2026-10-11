@@ -84,7 +84,7 @@ export default function PrivacyPage() {
                 <strong>Physical Editions & Merchandise (Fourthwall):</strong> When checking out with garments, tech cases, or ceramics, your order is processed securely through Fourthwall (<code className="font-mono text-xs bg-[#F5F3EE] px-1 py-0.5 border border-[#E7E5E0]">checkout.playkit01.store</code>). Fourthwall handles PCI-compliant payment billing, address verification, global shipping logistics, and courier dispatch.
               </li>
               <li>
-                <strong>Digital Prompt Blueprints (PromptBase):</strong> Digital formulas are acquired directly through PromptBase (<code className="font-mono text-xs bg-[#F5F3EE] px-1 py-0.5 border border-[#E7E5E0]">promptbase.com/profile/Playkit01</code>), which securely manages prompt licensing, token generation, and account ownership.
+                <strong>Digital Prompt Blueprints (PromptBase):</strong> Digital formulas are acquired directly through PromptBase (<code className="font-mono text-xs bg-[#F5F3EE] px-1 py-0.5 border border-[#E7E5E0]">promptbase.com/profile/playkit01</code>), which securely manages prompt licensing, token generation, and account ownership.
               </li>
             </ul>
           </section>

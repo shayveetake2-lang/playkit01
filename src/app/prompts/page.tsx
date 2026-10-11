@@ -110,7 +110,7 @@ export default function PromptsPage() {
               rel="noopener noreferrer"
               className="text-[#121212] hover:text-[#7A6A5C] transition-colors flex items-center gap-1 font-semibold"
             >
-              <span>PromptBase @Playkit01</span>
+              <span>PromptBase @playkit01</span>
               <ArrowUpRight className="h-3.5 w-3.5 stroke-[1.5]" />
             </a>
             <span>•</span>

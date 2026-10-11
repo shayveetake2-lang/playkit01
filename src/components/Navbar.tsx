@@ -221,7 +221,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-between py-1"
               >
-                <span>PromptBase Store (@Playkit01)</span>
+                <span>PromptBase Store (@playkit01)</span>
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </a>
               <Link

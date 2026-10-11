@@ -56,7 +56,7 @@ export interface Product {
   variants?: FourthwallVariant[];
 }
 
-// REAL VERIFIED PROMPTBASE LISTINGS (Direct sync with @Playkit01 on PromptBase)
+// REAL VERIFIED PROMPTBASE LISTINGS (Direct sync with @playkit01 on PromptBase)
 export const initialPromptProducts: Product[] = promptbaseProducts;
 
 // Unified real initial catalog: PromptBase digital formulas + real Fourthwall physical editions
@@ -83,7 +83,7 @@ export function mapSanityProduct(item: any): Product {
     reviewsCount: item.reviewsCount || 10,
     shortDescription: item.description?.slice(0, 110) || "Curated digital prompt or apparel item from playkit01.",
     description: item.description || "Created and tested by playkit01.",
-    externalUrl: item.externalUrl || (item.category === "prompt" ? "https://promptbase.com/profile/Playkit01" : "https://checkout.playkit01.store"),
+    externalUrl: item.externalUrl || (item.category === "prompt" ? "https://promptbase.com/profile/playkit01" : "https://checkout.playkit01.store"),
     primaryImage: imageUrl,
     galleryImages: [imageUrl],
     tags: [item.category === "prompt" ? item.aiEngine || "AI Prompt" : item.merchType || "Merch", "playkit01"],
