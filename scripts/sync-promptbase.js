@@ -1,5 +1,5 @@
-/* eslint-disable */
 #!/usr/bin/env node
+/* eslint-disable */
 
 /**
  * PromptBase Profile Sync CLI
